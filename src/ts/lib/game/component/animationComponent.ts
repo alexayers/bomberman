@@ -4,10 +4,10 @@ import {AnimatedSprite} from "../../rendering/animatedSprite";
 
 export class AnimationComponent implements GameComponent {
 
-    private _animatedSprite:AnimatedSprite;
+    private _animatedSprite:Map<string,AnimatedSprite>;
 
     constructor() {
-
+        this._animatedSprite = new Map<string, AnimatedSprite>();
     }
 
 
@@ -15,12 +15,12 @@ export class AnimationComponent implements GameComponent {
         return "animation";
     }
 
-    public setAnimatedSprite(animatedSprite:AnimatedSprite) : void {
-        this._animatedSprite = animatedSprite;
+    public setAnimatedSprite(direction:string,animatedSprite:AnimatedSprite) : void {
+        this._animatedSprite.set(direction,animatedSprite);
     }
 
-    public getAnimatedSprite() : AnimatedSprite {
-        return this._animatedSprite;
+    public getAnimatedSprite(direction:string) : AnimatedSprite {
+        return this._animatedSprite.get(direction);
     }
 
 }

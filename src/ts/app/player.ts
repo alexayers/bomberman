@@ -7,6 +7,7 @@ import {PositionComponent} from "../lib/game/component/positionComponent";
 import {SpeedComponent} from "../lib/game/component/speedComponent";
 import {VelocityComponent} from "../lib/game/component/velocityComponent";
 import {RenderPositionComponent} from "../lib/game/component/renderPositionComponent";
+import {DirectionComponent} from "../lib/game/component/directionComponent";
 
 
 
@@ -16,7 +17,6 @@ export class Player extends GameEntity {
         super("player");
 
         let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("players");
-    //    let sprite : Sprite = spriteSheet.getSprite("whitePlayer","front1");
 
         let position : PositionComponent = new PositionComponent();
         position.setX(1);
@@ -34,18 +34,38 @@ export class Player extends GameEntity {
             renderPosition
         );
 
-        let animatedSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
-        animatedSprite.addSprite(spriteSheet.getSprite("whitePlayer","front1"));
-        animatedSprite.addSprite(spriteSheet.getSprite("whitePlayer","front2"));
-        animatedSprite.addSprite(spriteSheet.getSprite("whitePlayer","front3"));
+        let frontSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        frontSprite.addSprite(spriteSheet.getSprite("whitePlayer","front1"));
+        frontSprite.addSprite(spriteSheet.getSprite("whitePlayer","front2"));
+        frontSprite.addSprite(spriteSheet.getSprite("whitePlayer","front3"));
 
         let animationComponent : AnimationComponent = new AnimationComponent();
-        animationComponent.setAnimatedSprite(animatedSprite);
+        animationComponent.setAnimatedSprite("down",frontSprite);
+
+        let backSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        backSprite.addSprite(spriteSheet.getSprite("whitePlayer","back1"));
+        backSprite.addSprite(spriteSheet.getSprite("whitePlayer","back2"));
+        backSprite.addSprite(spriteSheet.getSprite("whitePlayer","back3"));
+
+        animationComponent.setAnimatedSprite("up",backSprite);
+
+        let leftSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        leftSprite.addSprite(spriteSheet.getSprite("whitePlayer","left1"));
+        leftSprite.addSprite(spriteSheet.getSprite("whitePlayer","left2"));
+        leftSprite.addSprite(spriteSheet.getSprite("whitePlayer","left3"));
+
+        animationComponent.setAnimatedSprite("left",leftSprite);
+
+        let rightSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        rightSprite.addSprite(spriteSheet.getSprite("whitePlayer","right1"));
+        rightSprite.addSprite(spriteSheet.getSprite("whitePlayer","right2"));
+        rightSprite.addSprite(spriteSheet.getSprite("whitePlayer","right3"));
+
+        animationComponent.setAnimatedSprite("right",rightSprite);
 
         this.addComponent(
             animationComponent
         );
-
 
         let speed : SpeedComponent = new SpeedComponent();
         speed.setSpeed(8);
@@ -62,40 +82,12 @@ export class Player extends GameEntity {
             velocity
         );
 
-        /*
-        super("players");
-        let downAnimation : AnimatedSprite = new AnimatedSprite();
-        downAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "front1"));
-        downAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "front2"));
-        downAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "front3"));
+        let directionComponent : DirectionComponent = new DirectionComponent();
+        directionComponent.setDirection("down");
 
-        this._animatedSprites.set("down", downAnimation);
-
-        let upAnimation : AnimatedSprite = new AnimatedSprite();
-        upAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "back1"));
-        upAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "back2"));
-        upAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "back3"));
-
-        this._animatedSprites.set("up", upAnimation);
-
-
-        let leftAnimation : AnimatedSprite = new AnimatedSprite();
-        leftAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "left1"));
-        leftAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "left2"));
-        leftAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "left3"));
-
-        this._animatedSprites.set("left", leftAnimation);
-
-
-        let rightAnimation : AnimatedSprite = new AnimatedSprite();
-        rightAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "right1"));
-        rightAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "right2"));
-        rightAnimation.addSprite(this._spriteSheet.getSprite("whitePlayer", "right3"));
-
-        this._animatedSprites.set("right", rightAnimation);
-
-         */
-
+        this.addComponent(
+            directionComponent
+        );
     }
 
 

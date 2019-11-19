@@ -18,9 +18,11 @@ export interface SpriteSheetDefinition {
 export class SpriteSheet {
     _spriteSheet: HTMLImageElement;
     _spriteSheetDefinition: SpriteSheetDefinition;
+    _spriteCache: Map<string, Sprite>;
 
     constructor(spriteSheetDefinition:SpriteSheetDefinition) {
         this._spriteSheetDefinition = spriteSheetDefinition;
+        this._spriteCache = new Map<string, Sprite>();
     }
 
     public load(imageFilename: string) {
@@ -30,10 +32,16 @@ export class SpriteSheet {
 
     public getSprite(spriteName: string, frameName: string) : Sprite {
 
+        if (this._spriteCache.has(spriteName + "#" + frameName)) {
+            return this._spriteCache.get(spriteName + "#" + frameName);
+        }
+
         for (let i = 0; i < this._spriteSheetDefinition.sprites.length; i++) {
             if (this._spriteSheetDefinition.sprites[i].name === spriteName) {
                 for (let j = 0; j < this._spriteSheetDefinition.sprites[i].definition.length; j++) {
                     if (this._spriteSheetDefinition.sprites[i].definition[j].name === frameName) {
+
+                        this._spriteCache.set(spriteName + "#" + frameName, this._spriteSheetDefinition.sprites[i].definition[j]);
                         return this._spriteSheetDefinition.sprites[i].definition[j];
                     }
                 }
@@ -58,11 +66,7 @@ export class SpriteSheet {
 
 
 
-    public render(sprite: Sprite, x: number, y: number) {
-
-        let canvas: HTMLCanvasElement = document.getElementById('canvas') as
-            HTMLCanvasElement;
-        let ctx: CanvasRenderingContext2D = canvas.getContext("2d");
+    public render(ctx: CanvasRenderingContext2D, sprite: Sprite, x: number, y: number) {
 
         try {
             ctx.drawImage(

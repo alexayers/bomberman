@@ -8,7 +8,6 @@ export class AnimatedSprite {
     private _spriteSheet:SpriteSheet;
     private _sprites:Array<Sprite>;
 
-
     constructor(spriteSheet:SpriteSheet) {
         this._spriteSheet = spriteSheet;
         this._tick = 0;
@@ -22,9 +21,11 @@ export class AnimatedSprite {
         this._sprites.push(sprite);
     }
 
-    public animate(x:number, y:number) : void {
-       this._spriteSheet.render(this._sprites[this._currentFrame],x,y);
+    public render(ctx: CanvasRenderingContext2D,x:number,y:number) : void {
+        this._spriteSheet.render(ctx,this._sprites[this._currentFrame],x,y);
+    }
 
+    public animate() : void {
         this._tick++;
         if (this._tick === this._frameRate) {
             this._currentFrame++;

@@ -27,7 +27,6 @@ export class Renderer {
 
 
 
-        console.log("loop");
 
     }
 
@@ -35,6 +34,7 @@ export class Renderer {
         if (this._canvas !== undefined) {
             this._canvas.width = window.innerWidth;
             this._canvas.height = window.innerHeight;
+            this._ctx.imageSmoothingEnabled = false;
         }
     }
 }

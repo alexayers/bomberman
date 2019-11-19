@@ -4,6 +4,7 @@ import {VelocityComponent} from "../component/velocityComponent";
 import {GameMap} from "../gameMap";
 import {PositionComponent} from "../component/positionComponent";
 import {RenderPositionComponent} from "../component/renderPositionComponent";
+import {AnimateComponent} from "../component/animateComponent";
 
 
 
@@ -43,6 +44,8 @@ export class CollisionSystem implements GameSystem {
                     renderPosition.setX(renderPosition.getX() + velocity.getVelX());
                     renderPosition.setY(renderPosition.getY() + velocity.getVelY());
 
+                    let animate : AnimateComponent = new AnimateComponent();
+                    gameEntity.addComponent(animate);
 
 
 

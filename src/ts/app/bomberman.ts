@@ -13,6 +13,7 @@ import {Player} from "./player";
 import {KeyboardInput} from "../lib/input/keyboard";
 import {SpeedComponent} from "../lib/game/component/speedComponent";
 import {VelocityComponent} from "../lib/game/component/velocityComponent";
+import {DirectionComponent} from "../lib/game/component/directionComponent";
 
 
 
@@ -59,18 +60,23 @@ export class Bomberman extends Game implements EventHandler {
         if (gameEvent.channel === "keyboardEvent") {
             let speed : SpeedComponent = this._player.getComponent("speed") as SpeedComponent;
             let velocity : VelocityComponent = this._player.getComponent("velocity") as VelocityComponent;
+            let direction : DirectionComponent = this._player.getComponent("direction") as DirectionComponent;
 
             let x : number = 0;
             let y : number = 0;
 
             if (gameEvent.payload == KeyboardInput.LEFT) {
                 x = speed.getSpeed() * -1;
+                direction.setDirection("left");
             } else if (gameEvent.payload == KeyboardInput.RIGHT) {
                 x = speed.getSpeed();
+                direction.setDirection("right");
             } else if (gameEvent.payload == KeyboardInput.UP) {
                 y = speed.getSpeed() * -1;
+                direction.setDirection("up");
             } else if (gameEvent.payload == KeyboardInput.DOWN) {
                 y = speed.getSpeed();
+                direction.setDirection("down");
             } else if (gameEvent.payload == KeyboardInput.SPACE) {
                 console.log("space");
             }

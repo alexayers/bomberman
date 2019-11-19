@@ -3,6 +3,7 @@ import {SpriteSheet} from "../lib/rendering/spriteSheet";
 import {AnimatedSprite} from "../lib/rendering/animatedSprite";
 import {AnimationComponent} from "../lib/game/component/animationComponent";
 import {SpriteSheetManager} from "../lib/rendering/spriteSheetManager";
+import {DirectionComponent} from "../lib/game/component/directionComponent";
 
 
 export class Grass extends GameEntity {
@@ -15,10 +16,17 @@ export class Grass extends GameEntity {
         animatedSprite.addSprite(spriteSheet.getSprite("grass","grass"));
 
         let animationComponent : AnimationComponent = new AnimationComponent();
-        animationComponent.setAnimatedSprite(animatedSprite);
+        animationComponent.setAnimatedSprite("down",animatedSprite);
 
         this.addComponent(
             animationComponent
+        );
+
+        let directionComponent : DirectionComponent = new DirectionComponent();
+        directionComponent.setDirection("down");
+
+        this.addComponent(
+            directionComponent
         );
 
     }

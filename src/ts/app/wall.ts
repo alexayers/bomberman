@@ -5,6 +5,7 @@ import {SpriteSheet} from "../lib/rendering/spriteSheet";
 import {SpriteSheetManager} from "../lib/rendering/spriteSheetManager";
 import {AnimatedSprite} from "../lib/rendering/animatedSprite";
 import {AnimationComponent} from "../lib/game/component/animationComponent";
+import {DirectionComponent} from "../lib/game/component/directionComponent";
 
 
 export class Wall extends GameEntity {
@@ -20,12 +21,18 @@ export class Wall extends GameEntity {
         animatedSprite.addSprite(spriteSheet.getSprite("wall","wall"));
 
         let animationComponent : AnimationComponent = new AnimationComponent();
-        animationComponent.setAnimatedSprite(animatedSprite);
+        animationComponent.setAnimatedSprite("down",animatedSprite);
 
         this.addComponent(
             animationComponent
         );
 
+        let directionComponent : DirectionComponent = new DirectionComponent();
+        directionComponent.setDirection("down");
+
+        this.addComponent(
+            directionComponent
+        );
 
     }
 }
