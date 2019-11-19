@@ -1,0 +1,35 @@
+{
+  "filename": "level.png",
+  "sprites": [{
+      "name": "wall",
+      "definition": [
+        {
+          "name": "wall",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "name": "grass",
+      "definition": [
+        {
+          "name": "grass",
+          "x": 24,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "name": "crate",
+      "definition": [
+        {
+          "name": "crate",
+          "x": 48,
+          "y": 0
+        }
+      ]
+    }
+
+  ]
+}

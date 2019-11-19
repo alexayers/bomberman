@@ -1,0 +1,108 @@
+{
+  "filename": "player.png",
+  "sprites": [{
+    "name": "whitePlayer",
+    "definition": [
+      {
+        "name": "front1",
+        "x": 0,
+        "y": 0
+      },
+      {
+        "name": "front2",
+        "x": 0,
+        "y": 24
+      },
+      {
+        "name": "front3",
+        "x": 0,
+        "y": 48
+      },
+      {
+        "name": "right1",
+        "x": 0,
+        "y": 72
+      },
+      {
+        "name": "right2",
+        "x": 0,
+        "y": 96
+      },
+      {
+        "name": "right3",
+        "x": 0,
+        "y": 120
+      },
+      {
+        "name": "left1",
+        "x": 0,
+        "y": 144
+      },
+      {
+        "name": "left2",
+        "x": 0,
+        "y": 168
+      },
+      {
+        "name": "left3",
+        "x": 0,
+        "y": 192
+      },
+      {
+        "name": "back1",
+        "x": 0,
+        "y": 216
+      },
+      {
+        "name": "back2",
+        "x": 0,
+        "y": 240
+      },
+      {
+        "name": "back3",
+        "x": 0,
+        "y": 264
+      },
+      {
+        "name": "death1",
+        "x": 0,
+        "y": 288
+      },
+      {
+        "name": "death2",
+        "x": 0,
+        "y": 312
+      },
+      {
+        "name": "death3",
+        "x": 0,
+        "y": 336
+      },
+      {
+        "name": "death4",
+        "x": 0,
+        "y": 360
+      },
+      {
+        "name": "death5",
+        "x": 0,
+        "y": 384
+      },
+      {
+        "name": "death6",
+        "x": 0,
+        "y": 408
+      },
+      {
+        "name": "death7",
+        "x": 0,
+        "y": 432
+      },
+      {
+        "name": "death8",
+        "x": 0,
+        "y": 456
+      }
+    ]
+  }]
+}
