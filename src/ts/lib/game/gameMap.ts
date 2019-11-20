@@ -54,7 +54,7 @@ export class GameMap {
                 } else if (tile === TileType.GRASS) {
                     tileEntity = EntityManager.getInstance().getEntity("grass");
                 } else if (tile === TileType.BRICK) {
-                    tileEntity = EntityManager.getInstance().getEntity("grass");
+                    tileEntity = EntityManager.getInstance().getEntity("destroyedBrick");
                     itemEntity = EntityManager.getInstance().getEntity("brick");
                 } else if (tile === TileType.GRASSY) {
                     tileEntity = EntityManager.getInstance().getEntity("grassy");
@@ -65,13 +65,13 @@ export class GameMap {
                 } else if (tile === TileType.WALL_STONE) {
                     tileEntity = EntityManager.getInstance().getEntity("wallStone");
                 } else if (tile === TileType.WATER_WALL) {
-                    tileEntity = EntityManager.getInstance().getEntity("grass");
+                    tileEntity = EntityManager.getInstance().getEntity("destroyedWaterWall");
                     itemEntity = EntityManager.getInstance().getEntity("waterWall");
                 } else if (tile === TileType.CRATE) {
-                    tileEntity = EntityManager.getInstance().getEntity("grass");
+                    tileEntity = EntityManager.getInstance().getEntity("destroyedGrass");
                     itemEntity = EntityManager.getInstance().getEntity("crate");
                 } else if (tile === TileType.BUSH) {
-                    tileEntity = EntityManager.getInstance().getEntity("grass");
+                    tileEntity = EntityManager.getInstance().getEntity("destroyedBush");
                     itemEntity = EntityManager.getInstance().getEntity("bush");
                 } else if (tile === TileType.FLOWERS) {
                     tileEntity = EntityManager.getInstance().getEntity("flowers");
@@ -114,6 +114,14 @@ export class GameMap {
     }
 
     setGameEntity(layer: string, x: number, y: number, entity: GameEntity) {
+
+        if (entity != null) {
+            let position: PositionComponent = new PositionComponent();
+            position.setX(x);
+            position.setY(y);
+            entity.addComponent(position);
+        }
+
         this._level.get(layer)[x + (y * this.width)] = entity;
     }
 
@@ -129,6 +137,16 @@ export class GameMap {
             return true;
         }
 
+
+        return false;
+    }
+
+    hasComponent(componentName: string, x: number, y: number) {
+        let item : GameEntity = this.getGameEntity("item",x,y);
+
+        if (item != null && item.hasComponent(componentName)) {
+            return true;
+        }
 
         return false;
     }

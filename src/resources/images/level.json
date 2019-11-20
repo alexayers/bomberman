@@ -71,10 +71,10 @@
       ]
     },
     {
-      "name": "water3",
+      "name": "destroyedWaterWall",
       "definition": [
         {
-          "name": "water3",
+          "name": "destroyedWaterWall",
           "x": 48,
           "y": 24
         }
@@ -297,6 +297,106 @@
           "name": "shieldUp",
           "x": 96,
           "y": 120
+        }
+      ]
+    },
+    {
+      "name": "destroyedGrass",
+      "definition": [
+        {
+          "name": "destroyedGrass",
+          "x": 0,
+          "y": 144
+        }
+      ]
+    },
+    {
+      "name": "destroyedBrick",
+      "definition": [
+        {
+          "name": "destroyedBrick",
+          "x": 24,
+          "y": 144
+        }
+      ]
+    },
+    {
+      "name": "destroyedBush",
+      "definition": [
+        {
+          "name": "destroyedBush",
+          "x": 48,
+          "y": 144
+        }
+      ]
+    },
+    {
+      "name": "mushrooms",
+      "definition": [
+        {
+          "name": "mushrooms",
+          "x": 72,
+          "y": 144
+        }
+      ]
+    },
+    {
+      "name": "shieldUp",
+      "definition": [
+        {
+          "name": "shieldUp",
+          "x": 96,
+          "y": 144
+        }
+      ]
+    },
+    {
+      "name": "waterPlant1",
+      "definition": [
+        {
+          "name": "waterPlant1",
+          "x": 0,
+          "y": 168
+        }
+      ]
+    },
+    {
+      "name": "waterPlant2",
+      "definition": [
+        {
+          "name": "waterPlant2",
+          "x": 24,
+          "y": 168
+        }
+      ]
+    },
+    {
+      "name": "waterPlant3",
+      "definition": [
+        {
+          "name": "waterPlant3",
+          "x": 48,
+          "y": 168
+        }
+      ]
+    },
+    {
+      "name": "waterPlant4",
+      "definition": [
+        {
+          "name": "waterPlant4",
+          "x": 72,
+          "y": 168
+        }
+      ]
+    },
+    {
+      "name": "waterPlant5",
+      "definition": [
+        {
+          "name": "waterPlant5",
+          "x": 96,
+          "y": 168
         }
       ]
     }

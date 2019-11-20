@@ -2,7 +2,6 @@ import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {AnimationComponent} from "../component/animationComponent";
 import {PositionComponent} from "../component/positionComponent";
-//import {RenderPositionComponent} from "../component/renderPositionComponent";
 import {DirectionComponent} from "../component/directionComponent";
 
 
@@ -23,11 +22,7 @@ export class RenderSystem implements GameSystem {
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
             let direction: DirectionComponent = gameEntity.getComponent("direction") as DirectionComponent;
 
-
             if (gameEntity.hasComponent("renderPosition")) {
-           //     let renderPosition: RenderPositionComponent = gameEntity.getComponent("renderPosition") as RenderPositionComponent;
-
-                //animation.getAnimatedSprite(direction.getDirection()).render(this._ctx, renderPosition.getX(),renderPosition.getY());
                 animation.getAnimatedSprite(direction.getDirection()).render(this._ctx,position.getX() * 64,position.getY() * 64);
 
                 if (gameEntity.hasComponent("animate")) {

@@ -3,6 +3,7 @@ import {CollisionSystem} from "./collisionSystem";
 import {RenderSystem} from "./renderSystem";
 import {TimerSystem} from "./timerSystem";
 import {AttackSystem} from "./attackSystem";
+import {DamageSystem} from "./damageSystem";
 
 
 export class SystemManager {
@@ -24,6 +25,7 @@ export class SystemManager {
         this.register(new CollisionSystem());
         this.register(new TimerSystem());
         this.register(new AttackSystem());
+        this.register(new DamageSystem());
 
 
         this.register(new RenderSystem());

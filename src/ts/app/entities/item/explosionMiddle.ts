@@ -8,6 +8,7 @@ import {DamageComponent} from "../../../lib/game/component/damageComponent";
 import {TimerComponent} from "../../../lib/game/component/timerComponent";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {GameMap} from "../../../lib/game/gameMap";
+import {DestroyedGrass} from "../tile/destroyedGrass";
 
 
 export class ExplosionMiddle extends GameEntity {
@@ -40,6 +41,12 @@ export class ExplosionMiddle extends GameEntity {
         timerComponent.setCallback((gameEntity:GameEntity) => {
             let position : PositionComponent = gameEntity.getComponent("position") as PositionComponent;
             GameMap.getInstance().setGameEntity("item",position.getX(),position.getY(), null);
+
+            let tile = GameMap.getInstance().getGameEntity("tile",position.getX(),position.getY());
+
+            if (tile.getName() === "grassy" || tile.getName() === "grass" || tile.getName() === "flowers" || tile.getName() === "mushrooms") {
+                GameMap.getInstance().setGameEntity("tile",position.getX(),position.getY(), new DestroyedGrass());
+            }
         });
 
         this.addComponent(

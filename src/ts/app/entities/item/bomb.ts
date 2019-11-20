@@ -12,6 +12,7 @@ import {ExplosiveComponent} from "../../../lib/game/component/explosiveComponent
 import {GameMap} from "../../../lib/game/gameMap";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {EntityManager} from "../../../lib/game/entity/entityManager";
+import {DamageComponent} from "../../../lib/game/component/damageComponent";
 
 
 export class Bomb extends GameEntity {
@@ -55,11 +56,18 @@ export class Bomb extends GameEntity {
             // left
             for (let i = 1; i <= explosive.getArea(); i++) {
                 let explosionLeft: GameEntity = EntityManager.getInstance().getEntity("explosionLeft");
-                let explosionPosition: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
+                let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX() - i);
                 explosionPosition.setY(position.getY());
+
+                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
+                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                    break;
+                }
+
                 explosionLeft.addComponent(explosionPosition);
+                explosionLeft.addComponent(new DamageComponent());
 
                 GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionLeft);
             }
@@ -67,24 +75,37 @@ export class Bomb extends GameEntity {
             // right
             for (let i = 1; i <= explosive.getArea(); i++) {
                 let explosionRight: GameEntity = EntityManager.getInstance().getEntity("explosionRight");
-                let explosionPosition: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
+                let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX() + i);
                 explosionPosition.setY(position.getY());
 
+                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
+                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                    break;
+                }
+
+                explosionRight.addComponent(new DamageComponent());
                 explosionRight.addComponent(explosionPosition);
 
-                GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionRight);
+               GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionRight);
             }
 
             // up
             for (let i = 1; i <= explosive.getArea(); i++) {
                 let explosionTop: GameEntity = EntityManager.getInstance().getEntity("explosionTop");
-                let explosionPosition: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
+                let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX());
                 explosionPosition.setY(position.getY() - i);
+
+                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
+                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                    break;
+                }
+
                 explosionTop.addComponent(explosionPosition);
+                explosionTop.addComponent(new DamageComponent());
 
                 GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionTop);
             }
@@ -92,11 +113,18 @@ export class Bomb extends GameEntity {
             // bottom
             for (let i = 1; i <= explosive.getArea(); i++) {
                 let explosionBottom: GameEntity = EntityManager.getInstance().getEntity("explosionBottom");
-                let explosionPosition: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
+                let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX());
                 explosionPosition.setY(position.getY() + i);
+
+                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
+                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                    break;
+                }
+
                 explosionBottom.addComponent(explosionPosition);
+                explosionBottom.addComponent(new DamageComponent());
 
                 GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionBottom);
             }
