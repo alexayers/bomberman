@@ -1,6 +1,8 @@
 import {GameSystem} from "./gameSystem";
 import {CollisionSystem} from "./collisionSystem";
 import {RenderSystem} from "./renderSystem";
+import {TimerSystem} from "./timerSystem";
+import {AttackSystem} from "./attackSystem";
 
 
 export class SystemManager {
@@ -20,7 +22,12 @@ export class SystemManager {
 
     private init() : void {
         this.register(new CollisionSystem());
+        this.register(new TimerSystem());
+        this.register(new AttackSystem());
+
+
         this.register(new RenderSystem());
+
     }
 
     private constructor() {

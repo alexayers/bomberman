@@ -9,13 +9,14 @@ import {GameMap} from "../lib/game/gameMap";
 import {GameEntity} from "../lib/game/entity/gameEntity";
 import {SystemManager} from "../lib/game/system/systemManager";
 import {GameSystem} from "../lib/game/system/gameSystem";
-import {Player} from "./player";
+import {Player} from "./entities/player";
 import {KeyboardInput} from "../lib/input/keyboard";
 import {SpeedComponent} from "../lib/game/component/speedComponent";
 import {VelocityComponent} from "../lib/game/component/velocityComponent";
 import {DirectionComponent} from "../lib/game/component/directionComponent";
+import {AttackComponent} from "../lib/game/component/attackComponent";
 
-
+const framesPerSecond : number = 60;
 
 export class Bomberman extends Game implements EventHandler {
 
@@ -38,20 +39,35 @@ export class Bomberman extends Game implements EventHandler {
     gameLoop() {
         this._renderer.clearScreen();
 
-        let gameMap : Array<GameEntity> = this._gameMap.getMap();
-        gameMap.push(this._player);
-
+        let gameEntityMap : Map<string,Array<GameEntity>> = this._gameMap.getMap();
         let gameSystems: Array<GameSystem> = SystemManager.getInstance().getSystems();
 
-        for (let i = 0; i < gameMap.length; i++) {
-            let gameEntity : GameEntity = gameMap[i];
+        for (let i = 0; i < gameEntityMap.get("tile").length; i++) {
+            let gameEntity : GameEntity = gameEntityMap.get("tile")[i];
 
             for (let j = 0; j < gameSystems.length; j++) {
                 gameSystems[j].process(gameEntity);
             }
         }
 
-        requestAnimationFrame(this.gameLoop.bind(this));
+        for (let i = 0; i < gameEntityMap.get("item").length; i++) {
+            let gameEntity : GameEntity = gameEntityMap.get("item")[i];
+
+            if (gameEntity != null) {
+                for (let j = 0; j < gameSystems.length; j++) {
+                    gameSystems[j].process(gameEntity);
+                }
+            }
+        }
+
+        for (let j = 0; j < gameSystems.length; j++) {
+            gameSystems[j].process(this._player);
+        }
+
+        setTimeout(() => {
+                requestAnimationFrame(this.gameLoop.bind(this));
+        }, 1000 / framesPerSecond);
+
     }
 
     handleEvent(gameEvent: GameEvent): void {
@@ -78,7 +94,8 @@ export class Bomberman extends Game implements EventHandler {
                 y = speed.getSpeed();
                 direction.setDirection("down");
             } else if (gameEvent.payload == KeyboardInput.SPACE) {
-                console.log("space");
+                let attackComponent : AttackComponent = new AttackComponent();
+                this._player.addComponent(attackComponent);
             }
 
             velocity.setVelX(x);

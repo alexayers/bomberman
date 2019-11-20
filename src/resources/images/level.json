@@ -21,12 +21,282 @@
       ]
     },
     {
+      "name": "brick",
+      "definition": [
+        {
+          "name": "brick",
+          "x": 48,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "name": "wallStone",
+      "definition": [
+        {
+          "name": "wallStone",
+          "x": 72,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "name": "grassy",
+      "definition": [
+        {
+          "name": "grassy",
+          "x": 96,
+          "y": 0
+        }
+      ]
+    },
+    {
+      "name": "water1",
+      "definition": [
+        {
+          "name": "water1",
+          "x": 0,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "name": "water2",
+      "definition": [
+        {
+          "name": "water2",
+          "x": 24,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "name": "water3",
+      "definition": [
+        {
+          "name": "water3",
+          "x": 48,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "name": "water4",
+      "definition": [
+        {
+          "name": "water4",
+          "x": 72,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "name": "water5",
+      "definition": [
+        {
+          "name": "water5",
+          "x": 96,
+          "y":24
+        }
+      ]
+    },
+    {
+      "name": "bomb1",
+      "definition": [
+        {
+          "name": "bomb1",
+          "x": 0,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "name": "bomb2",
+      "definition": [
+        {
+          "name": "bomb2",
+          "x": 24,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "name": "bomb3",
+      "definition": [
+        {
+          "name": "bomb3",
+          "x": 48,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "name": "bomb4",
+      "definition": [
+        {
+          "name": "bomb4",
+          "x": 72,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "name": "bomb5",
+      "definition": [
+        {
+          "name": "bomb5",
+          "x": 96,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "name": "explosionLeft",
+      "definition": [
+        {
+          "name": "explosionLeft",
+          "x": 0,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "name": "explosionMiddle",
+      "definition": [
+        {
+          "name": "explosionMiddle",
+          "x": 24,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "name": "explosionRight",
+      "definition": [
+        {
+          "name": "explosionRight",
+          "x": 48,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "name": "explosionBottom",
+      "definition": [
+        {
+          "name": "explosionBottom",
+          "x": 72,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "name": "explosionTop",
+      "definition": [
+        {
+          "name": "explosionTop",
+          "x": 96,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "name": "bombUp",
+      "definition": [
+        {
+          "name": "bombUp",
+          "x": 0,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "name": "skull",
+      "definition": [
+        {
+          "name": "skull",
+          "x": 24,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "name": "fireUp",
+      "definition": [
+        {
+          "name": "fireUp",
+          "x": 48,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "name": "speedUp",
+      "definition": [
+        {
+          "name": "speedUp",
+          "x": 72,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "name": "shieldUp",
+      "definition": [
+        {
+          "name": "shieldUp",
+          "x": 96,
+          "y": 96
+        }
+      ]
+    },
+    {
       "name": "crate",
       "definition": [
         {
           "name": "crate",
+          "x": 0,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "name": "bush",
+      "definition": [
+        {
+          "name": "bush",
+          "x": 24,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "name": "flowers",
+      "definition": [
+        {
+          "name": "flowers",
           "x": 48,
-          "y": 0
+          "y": 120
+        }
+      ]
+    },
+    {
+      "name": "mushrooms",
+      "definition": [
+        {
+          "name": "mushrooms",
+          "x": 72,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "name": "shieldUp",
+      "definition": [
+        {
+          "name": "shieldUp",
+          "x": 96,
+          "y": 120
         }
       ]
     }

@@ -2,7 +2,7 @@ import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {AnimationComponent} from "../component/animationComponent";
 import {PositionComponent} from "../component/positionComponent";
-import {RenderPositionComponent} from "../component/renderPositionComponent";
+//import {RenderPositionComponent} from "../component/renderPositionComponent";
 import {DirectionComponent} from "../component/directionComponent";
 
 
@@ -25,10 +25,10 @@ export class RenderSystem implements GameSystem {
 
 
             if (gameEntity.hasComponent("renderPosition")) {
-                let renderPosition: RenderPositionComponent = gameEntity.getComponent("renderPosition") as RenderPositionComponent;
+           //     let renderPosition: RenderPositionComponent = gameEntity.getComponent("renderPosition") as RenderPositionComponent;
 
-
-                animation.getAnimatedSprite(direction.getDirection()).render(this._ctx, renderPosition.getX(),renderPosition.getY());
+                //animation.getAnimatedSprite(direction.getDirection()).render(this._ctx, renderPosition.getX(),renderPosition.getY());
+                animation.getAnimatedSprite(direction.getDirection()).render(this._ctx,position.getX() * 64,position.getY() * 64);
 
                 if (gameEntity.hasComponent("animate")) {
                     animation.getAnimatedSprite(direction.getDirection()).animate();

@@ -1,13 +1,13 @@
-import {GameEntity} from "../lib/game/entity/gameEntity";
-import {SpriteSheet} from "../lib/rendering/spriteSheet";
-import {SpriteSheetManager} from "../lib/rendering/spriteSheetManager";
-import {AnimatedSprite} from "../lib/rendering/animatedSprite";
-import {AnimationComponent} from "../lib/game/component/animationComponent";
-import {PositionComponent} from "../lib/game/component/positionComponent";
-import {SpeedComponent} from "../lib/game/component/speedComponent";
-import {VelocityComponent} from "../lib/game/component/velocityComponent";
-import {RenderPositionComponent} from "../lib/game/component/renderPositionComponent";
-import {DirectionComponent} from "../lib/game/component/directionComponent";
+import {GameEntity} from "../../lib/game/entity/gameEntity";
+import {SpriteSheet} from "../../lib/rendering/spriteSheet";
+import {SpriteSheetManager} from "../../lib/rendering/spriteSheetManager";
+import {AnimatedSprite} from "../../lib/rendering/animatedSprite";
+import {AnimationComponent} from "../../lib/game/component/animationComponent";
+import {PositionComponent} from "../../lib/game/component/positionComponent";
+import {SpeedComponent} from "../../lib/game/component/speedComponent";
+import {VelocityComponent} from "../../lib/game/component/velocityComponent";
+import {RenderPositionComponent} from "../../lib/game/component/renderPositionComponent";
+import {DirectionComponent} from "../../lib/game/component/directionComponent";
 
 
 
@@ -68,7 +68,7 @@ export class Player extends GameEntity {
         );
 
         let speed : SpeedComponent = new SpeedComponent();
-        speed.setSpeed(8);
+        speed.setSpeed(12);
 
         this.addComponent(
             speed

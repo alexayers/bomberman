@@ -17,6 +17,10 @@ export class AnimatedSprite {
 
     }
 
+    public setFrameRate(frameRate: number) : void {
+        this._frameRate = frameRate;
+    }
+
     public addSprite(sprite: Sprite) : void {
         this._sprites.push(sprite);
     }
