@@ -27,6 +27,7 @@ export class GameMap {
 
     private static _instance: GameMap;
     private _level: Map<string, Array<GameEntity>>;
+    private _particles:Array<GameEntity>;
     private width: number;
     private height: number;
 
@@ -40,6 +41,8 @@ export class GameMap {
     }
 
     private init(): void {
+        this._particles = new Array<GameEntity>();
+
         for (let y = 0; y < this.height; y++) {
             for (let x = 0; x < this.width; x++) {
                 let tile = level1.map[x + (y * this.width)];
@@ -149,5 +152,17 @@ export class GameMap {
         }
 
         return false;
+    }
+
+    public addParticle(gameEntity:GameEntity) : void {
+        this._particles.push(gameEntity);
+    }
+
+    public getParticles() : Array<GameEntity> {
+        return this._particles;
+    }
+
+    public removeParticle(id: number) : void {
+
     }
 }

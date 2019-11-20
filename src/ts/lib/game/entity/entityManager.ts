@@ -22,6 +22,12 @@ import {DestoryedWaterWall} from "../../../app/entities/tile/destoryedWaterWall"
 import {DestroyedGrass} from "../../../app/entities/tile/destroyedGrass";
 import {DestroyedBrick} from "../../../app/entities/tile/destroyedBrick";
 import {DestroyedBush} from "../../../app/entities/tile/destroyedBush";
+import {BombUp} from "../../../app/entities/powerups/bombUp";
+import {ExplosionUp} from "../../../app/entities/powerups/explosionUp";
+import {SheildUp} from "../../../app/entities/powerups/sheildUp";
+import {Skull} from "../../../app/entities/powerups/skull";
+import {SpeedUp} from "../../../app/entities/powerups/speedUp";
+import {SmokeParticle} from "../../../app/entities/particles/smokeParticle";
 var cloneDeep = require('lodash.clonedeep');
 
 
@@ -64,6 +70,14 @@ export class EntityManager {
         this.register(new DestroyedGrass());
         this.register(new DestroyedBrick());
         this.register(new DestroyedBush());
+
+        this.register(new BombUp());
+        this.register(new ExplosionUp());
+        this.register(new SheildUp());
+        this.register(new Skull());
+        this.register(new SpeedUp());
+
+        this.register(new SmokeParticle());
     }
 
     private constructor() {

@@ -221,10 +221,10 @@
       ]
     },
     {
-      "name": "fireUp",
+      "name": "explosionUp",
       "definition": [
         {
-          "name": "fireUp",
+          "name": "explosionUp",
           "x": 48,
           "y": 96
         }
@@ -331,10 +331,10 @@
       ]
     },
     {
-      "name": "mushrooms",
+      "name": "particle",
       "definition": [
         {
-          "name": "mushrooms",
+          "name": "particle",
           "x": 72,
           "y": 144
         }

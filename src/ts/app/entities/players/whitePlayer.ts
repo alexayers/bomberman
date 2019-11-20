@@ -1,17 +1,17 @@
-import {GameEntity} from "../../lib/game/entity/gameEntity";
-import {SpriteSheet} from "../../lib/rendering/spriteSheet";
-import {SpriteSheetManager} from "../../lib/rendering/spriteSheetManager";
-import {AnimatedSprite} from "../../lib/rendering/animatedSprite";
-import {AnimationComponent} from "../../lib/game/component/animationComponent";
-import {PositionComponent} from "../../lib/game/component/positionComponent";
-import {SpeedComponent} from "../../lib/game/component/speedComponent";
-import {VelocityComponent} from "../../lib/game/component/velocityComponent";
-import {RenderPositionComponent} from "../../lib/game/component/renderPositionComponent";
-import {DirectionComponent} from "../../lib/game/component/directionComponent";
+import {GameEntity} from "../../../lib/game/entity/gameEntity";
+import {SpriteSheet} from "../../../lib/rendering/spriteSheet";
+import {SpriteSheetManager} from "../../../lib/rendering/spriteSheetManager";
+import {AnimatedSprite} from "../../../lib/rendering/animatedSprite";
+import {AnimationComponent} from "../../../lib/game/component/animationComponent";
+import {PositionComponent} from "../../../lib/game/component/positionComponent";
+import {SpeedComponent} from "../../../lib/game/component/speedComponent";
+import {VelocityComponent} from "../../../lib/game/component/velocityComponent";
+import {RenderPositionComponent} from "../../../lib/game/component/renderPositionComponent";
+import {DirectionComponent} from "../../../lib/game/component/directionComponent";
 
 
 
-export class Player extends GameEntity {
+export class WhitePlayer extends GameEntity {
 
     constructor() {
         super("player");
@@ -62,6 +62,18 @@ export class Player extends GameEntity {
         rightSprite.addSprite(spriteSheet.getSprite("whitePlayer","right3"));
 
         animationComponent.setAnimatedSprite("right",rightSprite);
+
+        let deadSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death1"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death2"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death3"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death4"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death5"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death6"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death7"));
+        deadSprite.addSprite(spriteSheet.getSprite("whitePlayer","death8"));
+
+        animationComponent.setAnimatedSprite("dead",deadSprite);
 
         this.addComponent(
             animationComponent

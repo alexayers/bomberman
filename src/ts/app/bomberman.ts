@@ -9,18 +9,20 @@ import {GameMap} from "../lib/game/gameMap";
 import {GameEntity} from "../lib/game/entity/gameEntity";
 import {SystemManager} from "../lib/game/system/systemManager";
 import {GameSystem} from "../lib/game/system/gameSystem";
-import {Player} from "./entities/player";
 import {KeyboardInput} from "../lib/input/keyboard";
 import {SpeedComponent} from "../lib/game/component/speedComponent";
 import {VelocityComponent} from "../lib/game/component/velocityComponent";
 import {DirectionComponent} from "../lib/game/component/directionComponent";
 import {AttackComponent} from "../lib/game/component/attackComponent";
+import {WhitePlayer} from "./entities/players/whitePlayer";
+
+
 
 const framesPerSecond : number = 60;
 
 export class Bomberman extends Game implements EventHandler {
 
-    private _player: Player;
+    private _player: WhitePlayer;
     private _gameMap:GameMap;
 
     init() {
@@ -30,7 +32,7 @@ export class Bomberman extends Game implements EventHandler {
         SpriteSheetManager.getInstance();
         SystemManager.getInstance();
         this._renderer = new Renderer();
-        this._player = new Player();
+        this._player = new WhitePlayer();
         this._gameMap = GameMap.getInstance();
 
         this.gameLoop();
@@ -62,6 +64,18 @@ export class Bomberman extends Game implements EventHandler {
 
         for (let j = 0; j < gameSystems.length; j++) {
             gameSystems[j].process(this._player);
+        }
+
+        let particles: Array<GameEntity> = GameMap.getInstance().getParticles();
+
+        for (let i = 0; i <  particles.length; i++) {
+            let gameEntity : GameEntity = particles[i];
+
+            if (gameEntity != null) {
+                for (let j = 0; j < gameSystems.length; j++) {
+                    gameSystems[j].process(gameEntity);
+                }
+            }
         }
 
         setTimeout(() => {

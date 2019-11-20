@@ -4,6 +4,7 @@ import {RenderSystem} from "./renderSystem";
 import {TimerSystem} from "./timerSystem";
 import {AttackSystem} from "./attackSystem";
 import {DamageSystem} from "./damageSystem";
+import {ParticleSystem} from "./particleSystem";
 
 
 export class SystemManager {
@@ -29,7 +30,7 @@ export class SystemManager {
 
 
         this.register(new RenderSystem());
-
+        this.register(new ParticleSystem());
     }
 
     private constructor() {

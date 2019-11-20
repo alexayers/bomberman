@@ -9,6 +9,7 @@ import {TimerComponent} from "../../../lib/game/component/timerComponent";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {GameMap} from "../../../lib/game/gameMap";
 import {DestroyedGrass} from "../tile/destroyedGrass";
+import {ParticleFactory} from "../../factories/ParticleFactory";
 
 
 export class ExplosionTop extends GameEntity {
@@ -45,8 +46,19 @@ export class ExplosionTop extends GameEntity {
             let tile = GameMap.getInstance().getGameEntity("tile",position.getX(),position.getY());
 
             if (tile.getName() === "grassy" || tile.getName() === "grass" || tile.getName() === "flowers" || tile.getName() === "mushrooms") {
-                GameMap.getInstance().setGameEntity("tile",position.getX(),position.getY(), new DestroyedGrass());
+                let damageTile : GameEntity = new DestroyedGrass();
+                damageTile.addComponent(position);
+
+                GameMap.getInstance().setGameEntity("tile",position.getX(),position.getY(), damageTile);
             }
+
+            for (let i = 0; i < 5; i++) {
+                let smokeParticle = ParticleFactory.getParticle("smokeParticle", position.getX(), position.getY());
+                GameMap.getInstance().addParticle(smokeParticle);
+            }
+
+
+            tile.addComponent(new DamageComponent());
         });
 
         this.addComponent(

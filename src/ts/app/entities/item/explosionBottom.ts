@@ -10,7 +10,6 @@ import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {GameMap} from "../../../lib/game/gameMap";
 import {DestroyedGrass} from "../tile/destroyedGrass";
 
-
 export class ExplosionBottom extends GameEntity {
 
     constructor() {
@@ -45,8 +44,17 @@ export class ExplosionBottom extends GameEntity {
             let tile = GameMap.getInstance().getGameEntity("tile",position.getX(),position.getY());
 
             if (tile.getName() === "grassy" || tile.getName() === "grass" || tile.getName() === "flowers" || tile.getName() === "mushrooms") {
-                GameMap.getInstance().setGameEntity("tile",position.getX(),position.getY(), new DestroyedGrass());
+                let damageTile : GameEntity = new DestroyedGrass();
+                damageTile.addComponent(position);
+
+                GameMap.getInstance().setGameEntity("tile",position.getX(),position.getY(), damageTile);
             }
+
+            tile.addComponent(position);
+            tile.addComponent(new DamageComponent());
+
+
+
 
         });
 
