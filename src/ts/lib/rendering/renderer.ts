@@ -70,8 +70,8 @@ export class Renderer implements EventHandler  {
                 sprite.y,
                 24,
                 24,
-                x + this._renderingEffects.offsetX + this.getRenderOffset(),
-                y +this._renderingEffects.offsetY  + this.getRenderOffset(),
+                x + this._renderingEffects.offsetX + this.getRenderOffsetX(),
+                y +this._renderingEffects.offsetY  + this.getRenderOffsetY(),
                 this._spriteSize + this._renderingEffects.width,
                 this._spriteSize + this._renderingEffects.height
             );
@@ -80,7 +80,11 @@ export class Renderer implements EventHandler  {
         }
     }
 
-    public getRenderOffset(): number {
+    public getRenderOffsetY(): number {
+        return + 20;
+    }
+
+    public getRenderOffsetX(): number {
         return + 100;
     }
 

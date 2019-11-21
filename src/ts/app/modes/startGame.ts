@@ -68,7 +68,8 @@ export class StartGame extends OverLayBase implements OverLayScreen {
 
 
 
-        Renderer.getInstance().print("[ Press Enter ]", 650, 800, "Garamond", 30, this._color);
+        Renderer.getInstance().print("[ Press Enter ]", 750, 750, "Garamond", 30, this._color);
+        Renderer.getInstance().print("Arrows to Move. Spacebar to place bombs.", 520, 830, "Garamond", 20, this._color);
 
     }
 

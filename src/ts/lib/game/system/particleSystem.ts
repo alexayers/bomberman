@@ -37,8 +37,8 @@ export class ParticleSystem implements GameSystem {
                 this._ctx.globalAlpha = particle.getColor().getAlpha();
 
                 this._ctx.beginPath();
-                this._ctx.rect(particle.getX() + particle.getRenderOffset(),
-                    particle.getY() + particle.getRenderOffset(),
+                this._ctx.rect(particle.getX() + particle.getRenderOffsetX(),
+                    particle.getY() + particle.getRenderOffsetY(),
                     particle.getWidth(),
                     particle.getHeight());
                 this._ctx.fillStyle = RGBtoHex(particle.getColor().getRed(), particle.getColor().getGreen(), particle.getColor().getBlue());
