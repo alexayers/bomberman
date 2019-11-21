@@ -63,14 +63,8 @@ export class AiSystem implements GameSystem {
                         ai.updateMove();
                     }
                 }
-
-
-
-
             }
-
         }
-
     }
 
     private findWhitePosition() : Point {

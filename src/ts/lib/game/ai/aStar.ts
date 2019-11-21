@@ -52,7 +52,6 @@ export class AStar {
     }
 
     private isOnOpenedList(idx: number): boolean {
-        // Iterator<Map.Entry<Integer, Node>> it = openSet.entrySet().iterator();
 
         // @ts-ignore
         for (let [k,pathNode] of this._openSet) {
@@ -75,8 +74,6 @@ export class AStar {
     private findLowestCost(): PathNode {
         let f: number = 99999;
         let lowestCostIdx: number = 0;
-
-        //Iterator<Map.Entry<Integer, Node>> it = openSet.entrySet().iterator();
 
         // @ts-ignore
         for (let [k,pathNode] of this._openSet) {
@@ -147,7 +144,11 @@ export class AStar {
                         x >= 0 &&
                         x < (this._gameMap.getWidth() - 1) &&
                         y < (this._gameMap.getHeight() - 1) &&
-                        !GameMap.getInstance().canDestroy(x, y)) {
+                        !GameMap.getInstance().canDestroy(x, y) &&
+                        !GameMap.getInstance().hasComponent("damage",x,y) &&
+                        !GameMap.getInstance().hasComponent("futureDamage",x,y) &&
+                        !GameMap.getInstance().isItemPresent("bomb",x,y)
+                    ) {
                         let cost: number = this._currentNode.getG() + this.calculateGValue(x, y);
                         let idx: number = GameMap.getInstance().translateCoordinatesToIdx(x, y);
 

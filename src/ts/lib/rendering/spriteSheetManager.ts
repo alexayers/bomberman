@@ -6,8 +6,6 @@ const playerDefinition = require("../../../resources/images/player.json");
 const levelSprites = require("../../../resources/images/level.png");
 const levelDefinition = require("../../../resources/images/level.json");
 
-
-
 export class SpriteSheetManager {
     private static _instance: SpriteSheetManager;
     private _spriteSheets:Map<string, SpriteSheet>;
@@ -18,7 +16,6 @@ export class SpriteSheetManager {
             this._instance = new SpriteSheetManager();
             this._instance._spriteSheets = new Map();
             this._instance.init();
-
         }
 
         return this._instance;

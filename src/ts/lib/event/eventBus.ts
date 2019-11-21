@@ -19,7 +19,7 @@ export class EventBus {
 
     public register(channel: string, eventhandler: EventHandler): void {
         if (!this._channels.has(channel)) {
-            //console.log("Creating new channel ->" + channel);
+            console.log("Creating new channel ->" + channel);
             this._channels.set(channel, new Array());
         }
 

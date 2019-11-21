@@ -54,19 +54,6 @@ export class SpriteSheet {
         throw Error("Unable to find sprite ->" + spriteName);
     }
 
-    public getSpriteSeries(spriteName: string) : SpriteSeries {
-
-        for (let i = 0; i < this._spriteSheetDefinition.sprites.length; i++) {
-            if (this._spriteSheetDefinition.sprites[i].name === spriteName) {
-                return this._spriteSheetDefinition.sprites[i];
-            }
-        }
-
-        return null;
-    }
-
-
-
     public render(ctx: CanvasRenderingContext2D, sprite: Sprite, x: number, y: number) {
         Renderer.getInstance()
             .render(sprite, this._image, x,y);

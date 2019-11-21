@@ -9,8 +9,6 @@ export class TimerSystem implements GameSystem {
 
         if (gameEntity.hasComponent("timer")) {
             let timer : TimerComponent = gameEntity.getComponent("timer") as TimerComponent;
-
-
             timer.setTimer(timer.getTimer() - 1);
 
             let animate : AnimateComponent = new AnimateComponent();

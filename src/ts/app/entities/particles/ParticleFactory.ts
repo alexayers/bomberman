@@ -91,7 +91,7 @@ export class ParticleFactory {
             particle.addComponent(
                 particleComponent
             );
-        } else if (particleName === "mistParticle") {
+        }  else if (particleName === "mistParticle") {
 
             if (particle == null) {
                 particle = EntityManager.getInstance().getEntity("mistParticle");
@@ -146,8 +146,100 @@ export class ParticleFactory {
             particle.addComponent(
                 particleComponent
             );
+        } else if (particleName === "rainParticle") {
+
+            if (particle == null) {
+                particle = EntityManager.getInstance().getEntity("rainParticle");
+                particle.addComponent(new ParticleComponent());
+                particle.addComponent(new PositionComponent());
+            }
+
+            let someParticlePosition: PositionComponent = particle.getComponent("position") as PositionComponent;
+            someParticlePosition.setX(getRandomInt(1000) );
+            someParticlePosition.setY(getRandomInt(1000) * -1);
+            particle.addComponent(someParticlePosition);
+
+            let particleComponent: ParticleComponent = particle.getComponent("particle") as ParticleComponent;
+            particleComponent.setVelX((getRandomInt(4) / 10) );
+            particleComponent.setVelY((getRandomInt(500)) );
 
 
+            if (!refresh) {
+                particleComponent.setX(getRandomInt(2048));
+                particleComponent.setY(getRandomInt(1024) * -1);
+            } else {
+                particleComponent.setX(getRandomInt(2048));
+                particleComponent.setY(getRandomInt(1024) * -1);
+            }
+
+            particleComponent.setHeight(getRandomInt(800));
+            particleComponent.setWidth(getRandomInt(3));
+            particleComponent.setDecay(getRandomInt(40));
+            particleComponent.setRespawn(true);
+            particleComponent.setResize(false);
+            particleComponent.setAlive(true);
+
+            let color : Color = new Color();
+
+            let gray =getRandomInt(255);
+
+            color.setRed(gray);
+            color.setGreen(gray);
+            color.setBlue(gray);
+            color.setAlpha(0.15);
+            particleComponent.setColor(color);
+
+            particle.addComponent(
+                particleComponent
+            );
+        }  else if (particleName === "winningParticle") {
+
+            if (particle == null) {
+                particle = EntityManager.getInstance().getEntity("winningParticle");
+                particle.addComponent(new ParticleComponent());
+                particle.addComponent(new PositionComponent());
+            }
+
+            let someParticlePosition: PositionComponent = particle.getComponent("position") as PositionComponent;
+            someParticlePosition.setX(getRandomInt(1000) );
+            someParticlePosition.setY(getRandomInt(1000));
+            particle.addComponent(someParticlePosition);
+
+            let particleComponent: ParticleComponent = particle.getComponent("particle") as ParticleComponent;
+            particleComponent.setVelX((getRandomInt(4) / 10) );
+            particleComponent.setVelY((getRandomInt(500)) * -1);
+
+
+            if (!refresh) {
+                particleComponent.setX(getRandomInt(2048));
+                particleComponent.setY(getRandomInt(1024));
+            } else {
+                particleComponent.setX(getRandomInt(2048));
+                particleComponent.setY(getRandomInt(1024) );
+            }
+
+            particleComponent.setHeight(getRandomInt(800));
+            particleComponent.setWidth(getRandomInt(128));
+            particleComponent.setDecay(getRandomInt(40));
+            particleComponent.setRespawn(true);
+            particleComponent.setResize(false);
+            particleComponent.setAlive(true);
+
+            let color : Color = new Color();
+
+            let colorOffset =getRandomInt(50);
+
+
+
+            color.setRed(50 + colorOffset);
+            color.setGreen(115);
+            color.setBlue(168 + colorOffset);
+            color.setAlpha(0.70);
+            particleComponent.setColor(color);
+
+            particle.addComponent(
+                particleComponent
+            );
         }
 
         return particle;

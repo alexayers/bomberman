@@ -98,6 +98,8 @@ export class GameMap {
                     this._level.get("item").push(null);
                 }
 
+                this._level.get("decal").push(null);
+
             }
         }
     }
@@ -106,6 +108,7 @@ export class GameMap {
         this._level = new Map<string, Array<GameEntity>>();
         this._level.set("tile", new Array<GameEntity>());
         this._level.set("item", new Array<GameEntity>());
+        this._level.set("decal", new Array<GameEntity>());
 
         this._width = 19;
         this._height = 14;
@@ -162,6 +165,12 @@ export class GameMap {
             return true;
         }
 
+        let tile : GameEntity = this.getGameEntity("tile",x,y);
+
+        if (tile != null && tile.hasComponent(componentName)) {
+            return true;
+        }
+
         return false;
     }
 
@@ -203,5 +212,15 @@ export class GameMap {
             let mistParticle : GameEntity = ParticleFactory.getParticle("mistParticle", x, y);
             this.addParticle(mistParticle);
         }
+    }
+
+    isItemPresent(itemName: string, x: number, y: number) {
+        let item : GameEntity = this.getGameEntity("item",x,y);
+
+        if (item != null && item.getName() === itemName) {
+            return true;
+        }
+
+        return false;
     }
 }

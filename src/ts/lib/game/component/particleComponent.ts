@@ -17,6 +17,7 @@ export class ParticleComponent implements GameComponent {
 
     private _originalX:number;
     private _originalY:number;
+    private _resize:boolean;
 
     constructor() {
         this._x = null;
@@ -24,6 +25,7 @@ export class ParticleComponent implements GameComponent {
         this._decay = 50;
         this._respawn = false;
         this._alive = true;
+        this._resize = true;
     }
 
     name(): string {
@@ -134,5 +136,13 @@ export class ParticleComponent implements GameComponent {
 
     public isAlive() : boolean {
         return this._alive;
+    }
+
+    public setResize(resize:boolean) : void {
+        this._resize = resize;
+    }
+
+    public shouldResize() : boolean {
+        return this._resize;
     }
 }

@@ -8,9 +8,7 @@ import {DeadComponent} from "../component/deadComponent";
 import {DirectionComponent} from "../component/directionComponent";
 import {GameEvent} from "../../event/gameEvent";
 import {EventBus} from "../../event/eventBus";
-import {GameMode} from "../../../app/bomberman";
-
-
+import {GameMode} from "../../../app/modes/modes";
 
 export class DamageSystem implements GameSystem {
 
@@ -20,9 +18,8 @@ export class DamageSystem implements GameSystem {
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
             let item = GameMap.getInstance().getGameEntity("item",position.getX(),position.getY());
 
-
-
             if (item != null && item.getName() === "crate") {
+                console.log("create destroy");
                 let randomPowerUps : string [] = ["bombUp","explosionUp","shieldUp","skull","speedUp"];
                 let  powerUpName = randomPowerUps[Math.floor(Math.random()*randomPowerUps.length)];
 
@@ -37,10 +34,9 @@ export class DamageSystem implements GameSystem {
             this.killPlayer(position.getX(), position.getY());
 
             gameEntity.removeComponent("damage");
+            gameEntity.removeComponent("futureDamage");
         }
-
     }
-
 
     private killPlayer(x:number, y: number) : void {
         let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer"];
@@ -63,9 +59,10 @@ export class DamageSystem implements GameSystem {
                     direction.setDirection("dead");
 
                     if (player.getName() === "whitePlayer") {
-                        EventBus.getInstance().publish(new GameEvent("modeChange", GameMode.DEAD));
+                        EventBus.getInstance().publish(new GameEvent("modeChange", GameMode.GAME_OVER));
+                    } else {
+                        EventBus.getInstance().publish(new GameEvent("death", null));
                     }
-                    console.log("Kill " + players[i]);
                 }
             }
         }

@@ -19,7 +19,8 @@ import {RenderingEffect} from "../../../lib/rendering/renderer";
 import {Color} from "../../../lib/rendering/Color";
 import {OwnerComponent} from "../../../lib/game/component/ownerComponent";
 import {InventoryComponent} from "../../../lib/game/component/inventoryComponent";
-import {getRandomInt} from "../../../lib/game/util/mathUtil";
+import {getRandomInt, positiveNegative} from "../../../lib/game/util/mathUtil";
+import {FutureDamageComponent} from "../../../lib/game/component/futureDamage";
 
 
 export class Bomb extends GameEntity {
@@ -65,13 +66,15 @@ export class Bomb extends GameEntity {
             explosionColor.setGreen(236);
             explosionColor.setBlue(60);
 
+
             EventBus.getInstance().publish(new GameEvent("rendering", {
-                offsetX: getRandomInt(50),
-                offsetY: getRandomInt(50),
-                width: getRandomInt(8),
-                height: getRandomInt(8),
+                offsetX: getRandomInt(50) * positiveNegative(),
+                offsetY: getRandomInt(50) * positiveNegative(),
+                width: getRandomInt(8) * positiveNegative(),
+                height: getRandomInt(8) * positiveNegative(),
                 color: explosionColor
             } as RenderingEffect));
+
 
 
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
@@ -82,6 +85,8 @@ export class Bomb extends GameEntity {
             GameMap.getInstance().setGameEntity("item", position.getX(), position.getY(), explosionMiddle);
 
             let explosive: ExplosiveComponent = gameEntity.getComponent("explosive") as ExplosiveComponent;
+
+            this.setFutureDamage(position, explosive);
 
             // left
             for (let i = 1; i <= explosive.getArea(); i++) {
@@ -165,8 +170,6 @@ export class Bomb extends GameEntity {
             return false;
         }
 
-
-
         explosionEntity.addComponent(explosionPosition);
         explosionEntity.addComponent(new DamageComponent());
 
@@ -175,4 +178,29 @@ export class Bomb extends GameEntity {
     }
 
 
+    private setFutureDamage(position: PositionComponent, explosive: ExplosiveComponent) : void {
+        // left
+        for (let i = 1; i <= explosive.getArea(); i++) {
+            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() - i,position.getY());
+            tile.addComponent(new FutureDamageComponent());
+        }
+
+        // right
+        for (let i = 1; i <= explosive.getArea(); i++) {
+            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() + i,position.getY());
+            tile.addComponent(new FutureDamageComponent());
+        }
+
+        // up
+        for (let i = 1; i <= explosive.getArea(); i++) {
+            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX(),position.getY() - i);
+            tile.addComponent(new FutureDamageComponent());
+        }
+
+        // bottom
+        for (let i = 1; i <= explosive.getArea(); i++) {
+            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() ,position.getY() + i);
+            tile.addComponent(new FutureDamageComponent());
+        }
+    }
 }

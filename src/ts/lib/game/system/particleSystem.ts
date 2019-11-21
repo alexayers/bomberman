@@ -25,8 +25,12 @@ export class ParticleSystem implements GameSystem {
             if (particle.isAlive()) {
                 particle.setX(particle.getX() + particle.getVelX());
                 particle.setY(particle.getY() + particle.getVelY());
-                particle.setWidth(particle.getWidth() - 1);
-                particle.setHeight(particle.getHeight() - 1);
+
+                if (particle.shouldResize()) {
+                    particle.setWidth(particle.getWidth() - 1);
+                    particle.setHeight(particle.getHeight() - 1);
+                }
+
                 particle.getColor().setAlpha(particle.getColor().getAlpha() - 0.000001);
                 particle.setDecay(particle.getDecay() - 1);
 
