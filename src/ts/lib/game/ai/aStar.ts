@@ -1,5 +1,6 @@
 import {GameMap} from "../gameMap";
 import {PathNode} from "./pathNode";
+import {GameEntity} from "../entity/gameEntity";
 
 
 export class AStar {
@@ -94,19 +95,43 @@ export class AStar {
     private calculateGValue(x: number, y: number): number {
         // Checking behind me
         if (x == (this._currentNode.getX() - 1) && y == this._currentNode.getY()) {
-            return 10;
+            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX() - 1, this._currentNode.getY());
+            return this.getTileWeight(gameEntity);
+
             // Checking in front of me
         } else if (x == (this._currentNode.getX() + 1) && y == this._currentNode.getY()) {
-            return 10;
+            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX() + 1, this._currentNode.getY());
+            return this.getTileWeight(gameEntity);
             // Checking above me
         } else if (x == (this._currentNode.getX()) && y == this._currentNode.getY() + 1) {
-            return 10;
+            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX(), this._currentNode.getY() + 1);
+            return this.getTileWeight(gameEntity);
             // Checking below me
         } else if (x == (this._currentNode.getX()) && y == this._currentNode.getY() - 1) {
-            return 10;
+            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX(), this._currentNode.getY() -1 );
+            return this.getTileWeight(gameEntity);
             // Checking diagonal
         } else {
             return 1400;
+        }
+    }
+
+    private getTileWeight(gameEntity : GameEntity) : number {
+
+        if (gameEntity == null) {
+            return 10;
+        }
+
+        if (gameEntity.hasComponent("destructible")) {
+            if (gameEntity.getName() == "crate") {
+                return 5;
+            } else if (gameEntity.getName() == "bomb") {
+                return 100000;
+            } else {
+                return 15;
+            }
+        } else {
+            return 10;
         }
     }
 
@@ -122,7 +147,7 @@ export class AStar {
                         x >= 0 &&
                         x < (this._gameMap.getWidth() - 1) &&
                         y < (this._gameMap.getHeight() - 1) &&
-                        !GameMap.getInstance().isWall(x, y)) {
+                        !GameMap.getInstance().canDestroy(x, y)) {
                         let cost: number = this._currentNode.getG() + this.calculateGValue(x, y);
                         let idx: number = GameMap.getInstance().translateCoordinatesToIdx(x, y);
 

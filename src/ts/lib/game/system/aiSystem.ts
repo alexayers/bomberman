@@ -17,7 +17,7 @@ export class AiSystem implements GameSystem {
 
     process(gameEntity: GameEntity): void {
 
-        if (gameEntity.hasComponent("ai")) {
+        if (gameEntity.hasComponent("ai") && !gameEntity.hasComponent("dead")) {
             let ai: AiComponent = gameEntity.getComponent("ai") as AiComponent;
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
 
@@ -49,11 +49,22 @@ export class AiSystem implements GameSystem {
                     return;
                 }
 
-                if (new Date().getTime() > ai.getLastMove() + 250) {
-                    position.setX(path[path.length-1].getX());
-                    position.setY(path[path.length-1].getY());
-                    ai.updateMove();
+                let newNode : PathNode = path[path.length-1];
+
+                let item : GameEntity = GameMap.getInstance().getGameEntity("item", newNode.getX(), newNode.getY());
+
+                if (item != null) {
+                    gameEntity.addComponent(new AttackComponent());
+                    return;
+                } else {
+                    if (new Date().getTime() > ai.getLastMove() + 250) {
+                        position.setX(path[path.length-1].getX());
+                        position.setY(path[path.length-1].getY());
+                        ai.updateMove();
+                    }
                 }
+
+
 
 
             }

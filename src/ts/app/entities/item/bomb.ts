@@ -17,6 +17,8 @@ import {EventBus} from "../../../lib/event/eventBus";
 import {GameEvent} from "../../../lib/event/gameEvent";
 import {RenderingEffect} from "../../../lib/rendering/renderer";
 import {Color} from "../../../lib/rendering/Color";
+import {OwnerComponent} from "../../../lib/game/component/ownerComponent";
+import {InventoryComponent} from "../../../lib/game/component/inventoryComponent";
 
 
 export class Bomb extends GameEntity {
@@ -46,8 +48,14 @@ export class Bomb extends GameEntity {
         );
 
         let timerComponent: TimerComponent = new TimerComponent();
-        timerComponent.setTimer(42);
+        timerComponent.setTimer(20);
         timerComponent.setCallback((gameEntity: GameEntity) => {
+
+            let owner : OwnerComponent = gameEntity.getComponent("owner") as OwnerComponent;
+
+            let player : GameEntity = EntityManager.getInstance().getPlayer(owner.getOwner());
+            let inventory : InventoryComponent = player.getComponent("inventory") as InventoryComponent;
+            inventory.setCurrentItems(inventory.getCurrentItems() + 1);
 
             let explosionColor: Color = new Color();
             explosionColor.setAlpha(25);
@@ -154,6 +162,8 @@ export class Bomb extends GameEntity {
             !GameMap.getInstance().hasComponent("destructible", explosionPosition.getX(), explosionPosition.getY())) {
             return false;
         }
+
+
 
         explosionEntity.addComponent(explosionPosition);
         explosionEntity.addComponent(new DamageComponent());

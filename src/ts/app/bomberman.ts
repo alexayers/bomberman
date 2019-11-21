@@ -15,26 +15,36 @@ import {AttackComponent} from "../lib/game/component/attackComponent";
 import {WhitePlayer} from "./entities/players/whitePlayer";
 import {Player} from "./entities/players/player";
 import {BlackPlayer} from "./entities/players/blackPlayer";
+import {RedPlayer} from "./entities/players/redPlayer";
+import {BluePlayer} from "./entities/players/bluePlayer";
 
 const framesPerSecond: number = 60;
+
+export enum GameMode {
+    PLAYING = 0,
+    DEAD = 666
+}
 
 export class Bomberman extends Game implements EventHandler {
 
     private _players: Array<Player> = [];
     private _gameMap: GameMap;
+    private _mode: GameMode;
 
     init() {
 
         EventBus.getInstance().register("keyboardEvent", this);
+        EventBus.getInstance().register("modeChange", this);
 
         SpriteSheetManager.getInstance();
         SystemManager.getInstance();
         this._players.push(new WhitePlayer());
         this._players.push(new BlackPlayer());
-      //  this._players.push(new RedPlayer());
-    //    this._players.push(new BluePlayer());
+        this._players.push(new RedPlayer());
+        this._players.push(new BluePlayer());
 
         this._gameMap = GameMap.getInstance();
+        this._mode = GameMode.PLAYING;
 
         this.gameLoop();
     }
@@ -89,37 +99,43 @@ export class Bomberman extends Game implements EventHandler {
 
     handleEvent(gameEvent: GameEvent): void {
 
-
         if (gameEvent.channel === "keyboardEvent") {
-            let speed: SpeedComponent = this._players[0].getComponent("speed") as SpeedComponent;
-            let velocity: VelocityComponent = this._players[0].getComponent("velocity") as VelocityComponent;
-            let direction: DirectionComponent = this._players[0].getComponent("direction") as DirectionComponent;
 
-            let x: number = 0;
-            let y: number = 0;
-
-            if (gameEvent.payload == KeyboardInput.LEFT) {
-                x = speed.getSpeed() * -1;
-                direction.setDirection("left");
-            } else if (gameEvent.payload == KeyboardInput.RIGHT) {
-                x = speed.getSpeed();
-                direction.setDirection("right");
-            } else if (gameEvent.payload == KeyboardInput.UP) {
-                y = speed.getSpeed() * -1;
-                direction.setDirection("up");
-            } else if (gameEvent.payload == KeyboardInput.DOWN) {
-                y = speed.getSpeed();
-                direction.setDirection("down");
-            } else if (gameEvent.payload == KeyboardInput.SPACE) {
-                let attackComponent: AttackComponent = new AttackComponent();
-                this._players[0].addComponent(attackComponent);
+            if (this._mode === GameMode.PLAYING) {
+                this.gameKeyboard(gameEvent);
             }
+        } else if (gameEvent.channel === "modeChange") {
+            this._mode = gameEvent.payload;
+        }
+    }
 
-            velocity.setVelX(x);
-            velocity.setVelY(y);
+    private gameKeyboard(gameEvent: GameEvent) : void {
+        let speed: SpeedComponent = this._players[0].getComponent("speed") as SpeedComponent;
+        let velocity: VelocityComponent = this._players[0].getComponent("velocity") as VelocityComponent;
+        let direction: DirectionComponent = this._players[0].getComponent("direction") as DirectionComponent;
+
+        let x: number = 0;
+        let y: number = 0;
+
+        if (gameEvent.payload == KeyboardInput.LEFT) {
+            x = speed.getSpeed() * -1;
+            direction.setDirection("left");
+        } else if (gameEvent.payload == KeyboardInput.RIGHT) {
+            x = speed.getSpeed();
+            direction.setDirection("right");
+        } else if (gameEvent.payload == KeyboardInput.UP) {
+            y = speed.getSpeed() * -1;
+            direction.setDirection("up");
+        } else if (gameEvent.payload == KeyboardInput.DOWN) {
+            y = speed.getSpeed();
+            direction.setDirection("down");
+        } else if (gameEvent.payload == KeyboardInput.SPACE) {
+            let attackComponent: AttackComponent = new AttackComponent();
+            this._players[0].addComponent(attackComponent);
         }
 
-
+        velocity.setVelX(x);
+        velocity.setVelY(y);
     }
 
 

@@ -1,15 +1,13 @@
 import {GameComponent} from "./gameComponent";
-import {GameEntity} from "../entity/gameEntity";
-
 
 export class InventoryComponent implements GameComponent {
 
-    private _slots:Array<GameEntity>;
     private _maxItems:number;
+    private _currentItems:number;
 
     constructor() {
-        this._slots = new Array<GameEntity>();
         this._maxItems = 1;
+        this._currentItems = 1;
     }
 
     name(): string {
@@ -24,15 +22,12 @@ export class InventoryComponent implements GameComponent {
         this._maxItems = maxItems;
     }
 
-    addItem(gameEntity:GameEntity) : void {
-        this._slots.push(gameEntity);
+    getCurrentItems() : number {
+        return this._currentItems;
     }
 
-    getItem() : GameEntity {
-
-        return null;
-
+    setCurrentItems(currentItems: number) : void {
+        this._currentItems = currentItems;
     }
-
 
 }

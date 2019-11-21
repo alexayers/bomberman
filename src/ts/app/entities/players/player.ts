@@ -9,6 +9,7 @@ import {VelocityComponent} from "../../../lib/game/component/velocityComponent";
 import {RenderPositionComponent} from "../../../lib/game/component/renderPositionComponent";
 import {DirectionComponent} from "../../../lib/game/component/directionComponent";
 import {EntityManager} from "../../../lib/game/entity/entityManager";
+import {InventoryComponent} from "../../../lib/game/component/inventoryComponent";
 
 
 
@@ -100,6 +101,10 @@ export class Player extends GameEntity {
 
         this.addComponent(
             directionComponent
+        );
+
+        this.addComponent(
+            new InventoryComponent()
         );
 
         EntityManager.getInstance().registerPlayer(this);

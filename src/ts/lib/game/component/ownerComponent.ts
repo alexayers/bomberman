@@ -2,7 +2,7 @@ import {GameComponent} from "./gameComponent";
 
 export class OwnerComponent implements GameComponent {
 
-    private _owner:Object;
+    private _owner:string;
 
     constructor() {
     }
@@ -11,11 +11,11 @@ export class OwnerComponent implements GameComponent {
         return "owner";
     }
 
-    public setOwner(owner:Object) {
+    public setOwner(owner:string) {
         this._owner = owner;
     }
 
-    public getOwner() : Object {
+    public getOwner() : string {
         return this._owner;
     }
 

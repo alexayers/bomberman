@@ -148,10 +148,16 @@ export class GameMap {
         }
 
 
-        let players : Array<string> = ["whitePlayer"];
+        /*
+        let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer"];
 
         for (let i = 0; i < players.length; i++) {
             let player = EntityManager.getInstance().getPlayer(players[i]);
+
+            if (player === undefined) {
+                continue;
+            }
+
             let position : PositionComponent = player.getComponent("position") as PositionComponent;
 
             if (position.getX() == x && position.getY() == y) {
@@ -159,7 +165,7 @@ export class GameMap {
             }
         }
 
-
+         */
 
         return false;
     }
@@ -188,5 +194,22 @@ export class GameMap {
 
     public translateCoordinatesToIdx(x: number, y: number) :number {
         return x + (y * this._width);
+    }
+
+    canDestroy(x: number, y: number) {
+        let tile : GameEntity = this.getGameEntity("tile", x,y);
+        let item : GameEntity = this.getGameEntity("item",x,y);
+
+        if (item != null && item.hasComponent("wall") && !item.hasComponent("destructible")) {
+            return true;
+        }
+
+        if (tile.hasComponent("wall")) {
+            return true;
+        }
+
+
+
+        return false;
     }
 }
