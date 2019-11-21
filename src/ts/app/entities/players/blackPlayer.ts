@@ -1,5 +1,6 @@
 import {Player} from "./player";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
+import {AiComponent} from "../../../lib/game/component/aiComponent";
 
 
 
@@ -13,7 +14,7 @@ export class BlackPlayer extends Player {
         position.setX(17);
         position.setY(12);
 
-       // this.addComponent(new AiComponent());
+        this.addComponent(new AiComponent());
     }
 
 

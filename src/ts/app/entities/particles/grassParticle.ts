@@ -4,11 +4,10 @@ import {SpriteSheetManager} from "../../../lib/rendering/spriteSheetManager";
 import {AnimatedSprite} from "../../../lib/rendering/animatedSprite";
 import {DirectionComponent} from "../../../lib/game/component/directionComponent";
 
-export class SmokeParticle extends GameEntity {
+export class GrassParticle extends GameEntity {
 
     constructor() {
-        super("smokeParticle");
-
+        super("grassParticle");
 
         let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("level");
         let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("level"));

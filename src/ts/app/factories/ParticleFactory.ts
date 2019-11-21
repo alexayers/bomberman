@@ -45,6 +45,37 @@ export class ParticleFactory {
             );
         }
 
+        if (particleName === "grassParticle") {
+            particle = EntityManager.getInstance().getEntity("grassParticle");
+            let someParticlePosition: PositionComponent   = new PositionComponent();
+            someParticlePosition.setX(x*64);
+            someParticlePosition.setY(y*64);
+
+            particle.addComponent(someParticlePosition);
+
+            let particleComponent : ParticleComponent = new ParticleComponent();
+            particleComponent.setVelX(getRandomInt(4) * -1 / 10);
+            particleComponent.setVelY(getRandomInt(4) * -1 / 10);
+            particleComponent.setX(x*64 + getRandomInt(8));
+            particleComponent.setY(y*64 + 60);
+            particleComponent.setHeight(getRandomInt(8));
+            particleComponent.setWidth(getRandomInt(8));
+            particleComponent.setDecay(getRandomInt(10));
+
+            let color : Color = new Color();
+            let gray =getRandomInt(255);
+
+            color.setRed(gray);
+            color.setGreen(gray);
+            color.setBlue(gray);
+            color.setAlpha(0.10);
+            particleComponent.setColor(color);
+
+            particle.addComponent(
+                particleComponent
+            );
+        }
+
         return particle;
     }
 }

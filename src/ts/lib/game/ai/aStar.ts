@@ -39,14 +39,13 @@ export class AStar {
     }
 
     private isOnClosedList(idx: number): boolean {
-        // Iterator<Map.Entry<Integer, Node>> it = closedSet.entrySet().iterator();
 
-        //while (it.hasNext()) {
-        this._closedSet.forEach((pathNode: PathNode) => {
+        // @ts-ignore
+        for (let [k,pathNode] of this._closedSet) {
             if (pathNode.getIdx() == idx) {
                 return true;
             }
-        });
+        }
 
         return false;
     }
@@ -54,11 +53,12 @@ export class AStar {
     private isOnOpenedList(idx: number): boolean {
         // Iterator<Map.Entry<Integer, Node>> it = openSet.entrySet().iterator();
 
-        this._openSet.forEach((pathNode: PathNode) => {
+        // @ts-ignore
+        for (let [k,pathNode] of this._openSet) {
             if (pathNode.getIdx() == idx) {
                 return true;
             }
-        });
+        }
 
         return false;
     }
@@ -77,15 +77,16 @@ export class AStar {
 
         //Iterator<Map.Entry<Integer, Node>> it = openSet.entrySet().iterator();
 
-        this._openSet.forEach((pathNode: PathNode) => {
-            let n: PathNode = pathNode;
-            if (n.getF() <= f) {
-                f = n.getF();
-                lowestCostIdx = n.getIdx();
-            }
-        });
+        // @ts-ignore
+        for (let [k,pathNode] of this._openSet) {
 
-        let lowestNode : PathNode = this._openSet.get(lowestCostIdx);
+            if (pathNode.getF() <= f) {
+                f = pathNode.getF();
+                lowestCostIdx = pathNode.getIdx();
+            }
+        }
+
+        let lowestNode: PathNode = this._openSet.get(lowestCostIdx);
         this._openSet.delete(lowestCostIdx);
         return lowestNode;
     }
@@ -111,8 +112,8 @@ export class AStar {
 
     private buildNodeList(): void {
 
-         for (let y = (this._currentNode.getY() + 10); y >= (this._currentNode.getY() - 10); y--) {
-            for (let x = (this._currentNode.getX() - 10); x < (this._currentNode.getX() + 10); x++) {
+        for (let y = (this._currentNode.getY() + 1); y >= (this._currentNode.getY() - 1); y--) {
+            for (let x = (this._currentNode.getX() - 1); x < (this._currentNode.getX() + 2); x++) {
 
                 if (x == this._currentNode.getX() && y == this._currentNode.getY()) {
                     continue;
@@ -164,9 +165,8 @@ export class AStar {
 
     public isPathFound(): boolean {
         let pathFound: boolean = false;
-        let checkedBlocks: number = 0;
 
-        while (checkedBlocks < 400) {
+        while (this._openSet.size != 0) {
             this._currentNode = this.findLowestCost();
             this.addToClosedList(this._currentNode.getIdx(), this._currentNode);
 
@@ -179,7 +179,7 @@ export class AStar {
                 this.buildNodeList();
             }
 
-            checkedBlocks++;
+
         }
 
         return pathFound;

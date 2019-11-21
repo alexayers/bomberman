@@ -148,6 +148,19 @@ export class GameMap {
         }
 
 
+        let players : Array<string> = ["whitePlayer"];
+
+        for (let i = 0; i < players.length; i++) {
+            let player = EntityManager.getInstance().getPlayer(players[i]);
+            let position : PositionComponent = player.getComponent("position") as PositionComponent;
+
+            if (position.getX() == x && position.getY() == y) {
+                return true;
+            }
+        }
+
+
+
         return false;
     }
 
