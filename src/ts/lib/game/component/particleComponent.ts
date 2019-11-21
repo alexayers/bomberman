@@ -18,6 +18,7 @@ export class ParticleComponent implements GameComponent {
     private _originalX:number;
     private _originalY:number;
     private _resize:boolean;
+    private _renderOffset:number;
 
     constructor() {
         this._x = null;
@@ -26,6 +27,7 @@ export class ParticleComponent implements GameComponent {
         this._respawn = false;
         this._alive = true;
         this._resize = true;
+        this._renderOffset = 0;
     }
 
     name(): string {
@@ -144,5 +146,13 @@ export class ParticleComponent implements GameComponent {
 
     public shouldResize() : boolean {
         return this._resize;
+    }
+
+    public getRenderOffset() : number {
+        return this._renderOffset;
+    }
+
+    public setRenderOffset(renderOffset:number) : void {
+        this._renderOffset = renderOffset;
     }
 }

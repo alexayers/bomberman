@@ -68,7 +68,7 @@ export class GameOver extends OverLayBase implements OverLayScreen {
 
 
 
-        Renderer.getInstance().print("[ Press Enter ]", 550, 800, "Garamond", 30, this._color);
+        Renderer.getInstance().print("[ Press Enter ]", 650, 800, "Garamond", 30, this._color);
 
     }
 

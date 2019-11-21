@@ -4,6 +4,7 @@ import {ParticleComponent} from "../../../lib/game/component/particleComponent";
 import {getRandomInt} from "../../../lib/game/util/mathUtil";
 import {Color} from "../../../lib/rendering/color";
 import {GameEntity} from "../../../lib/game/entity/gameEntity";
+import {Renderer} from "../../../lib/rendering/renderer";
 
 
 export class ParticleFactory {
@@ -39,6 +40,7 @@ export class ParticleFactory {
             particleComponent.setWidth(getRandomInt(15) + 35);
             particleComponent.setDecay(getRandomInt(25));
             particleComponent.setAlive(true);
+            particleComponent.setRenderOffset(Renderer.getInstance().getRenderOffset());
 
             let color : Color = new Color();
 
@@ -78,6 +80,7 @@ export class ParticleFactory {
             particleComponent.setWidth(getRandomInt(8));
             particleComponent.setDecay(getRandomInt(10));
             particleComponent.setAlive(true);
+            particleComponent.setRenderOffset(Renderer.getInstance().getRenderOffset());
 
             let color : Color = new Color();
             let gray =getRandomInt(255);
@@ -132,6 +135,7 @@ export class ParticleFactory {
             particleComponent.setDecay(getRandomInt(128));
             particleComponent.setRespawn(true);
             particleComponent.setAlive(true);
+            particleComponent.setRenderOffset(Renderer.getInstance().getRenderOffset());
 
             let color : Color = new Color();
 

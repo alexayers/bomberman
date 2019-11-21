@@ -6,7 +6,6 @@ var bomberman : Bomberman;
 window.onload = () => {
     bomberman  = new Bomberman();
     bomberman.init();
-
 };
 
 window.onresize = function() {

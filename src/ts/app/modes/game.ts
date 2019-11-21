@@ -16,14 +16,19 @@ import {VelocityComponent} from "../../lib/game/component/velocityComponent";
 import {DirectionComponent} from "../../lib/game/component/directionComponent";
 import {KeyboardInput} from "../../lib/input/keyboard";
 import {AttackComponent} from "../../lib/game/component/attackComponent";
+import {ParticleSystem} from "../../lib/game/system/particleSystem";
 
 
 export class Game implements GameScreen {
 
     private _players: Array<Player> = [];
     private _gameMap: GameMap;
+    private _backgroundParticles:Array<GameEntity>;
+    private _particleSystem:ParticleSystem;
 
     public init() : void {
+
+        this._particleSystem = new ParticleSystem();
 
         this._players.push(new WhitePlayer());
         this._players.push(new BlackPlayer());
@@ -34,6 +39,12 @@ export class Game implements GameScreen {
 
         for (let i = 0; i < 250; i++) {
             GameMap.getInstance().addParticle(ParticleFactory.getParticle("rainParticle", null, null));
+        }
+
+        this._backgroundParticles = [];
+
+        for (let i = 0; i < 900; i++) {
+            this._backgroundParticles.push(ParticleFactory.getParticle("winningParticle", null, null));
         }
     }
 
@@ -59,6 +70,10 @@ export class Game implements GameScreen {
 
         let gameEntityMap: Map<string, Array<GameEntity>> = this._gameMap.getMap();
         let gameSystems: Array<GameSystem> = SystemManager.getInstance().getSystems();
+
+        for (let i = 0; i < this._backgroundParticles.length; i++) {
+            this._particleSystem.process(this._backgroundParticles[i]);
+        }
 
         this.processEntities("tile", gameEntityMap, gameSystems);
         this.processEntities("item", gameEntityMap, gameSystems);
