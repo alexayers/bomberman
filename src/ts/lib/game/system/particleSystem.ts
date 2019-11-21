@@ -22,8 +22,8 @@ export class ParticleSystem implements GameSystem {
             let particle: ParticleComponent = gameEntity.getComponent("particle") as ParticleComponent;
 
             if (particle.getDecay() >= 0) {
-                particle.setX(Math.floor(particle.getX() + particle.getVelX()));
-                particle.setY(Math.floor(particle.getY() + particle.getVelY()));
+                particle.setX(particle.getX() + particle.getVelX());
+                particle.setY(particle.getY() + particle.getVelY());
                 particle.setWidth(particle.getWidth() - 1);
                 particle.setHeight(particle.getHeight() - 1);
                 particle.getColor().setAlpha(particle.getColor().getAlpha() - 0.000001);

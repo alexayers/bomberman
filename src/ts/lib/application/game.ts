@@ -10,7 +10,7 @@ export class Game {
 
     constructor() {
 
-        this._renderer = new Renderer();
+        this._renderer = Renderer.getInstance();
 
         document.addEventListener('keydown', (event : KeyboardEvent) => {
             EventBus.getInstance().publish(

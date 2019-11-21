@@ -19,16 +19,20 @@ export class ParticleFactory {
 
             particle.addComponent(someParticlePosition);
 
+
+
             let particleComponent : ParticleComponent = new ParticleComponent();
-            particleComponent.setVelX(getRandomInt(2));
-            particleComponent.setVelY(getRandomInt(2));
+            particleComponent.setVelX(getRandomInt(4) * -1);
+            particleComponent.setVelY(getRandomInt(4) * -1);
+            particleComponent.setX(x*64+getRandomInt(10));
+            particleComponent.setY(y*64+getRandomInt(10));
             particleComponent.setHeight(getRandomInt(15)+ 35);
             particleComponent.setWidth(getRandomInt(15) + 35);
-            particleComponent.setDecay(25);
+            particleComponent.setDecay(getRandomInt(25));
 
             let color : Color = new Color();
 
-            let gray =getRandomInt(4);
+            let gray =getRandomInt(255);
 
             color.setRed(gray);
             color.setGreen(gray);
