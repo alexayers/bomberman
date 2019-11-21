@@ -6,6 +6,10 @@ export class Color {
     private _blue:number;
     private _alpha:number;
 
+    constructor() {
+        this._alpha = 0;
+    }
+
     public setRed(red: number) : void {
         this._red = red;
     }

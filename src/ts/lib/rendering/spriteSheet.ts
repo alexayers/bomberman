@@ -1,3 +1,4 @@
+import {Renderer} from "./renderer";
 
 export interface Sprite {
     name: string,
@@ -16,7 +17,7 @@ export interface SpriteSheetDefinition {
 }
 
 export class SpriteSheet {
-    _spriteSheet: HTMLImageElement;
+    _image: HTMLImageElement;
     _spriteSheetDefinition: SpriteSheetDefinition;
     _spriteCache: Map<string, Sprite>;
 
@@ -26,8 +27,8 @@ export class SpriteSheet {
     }
 
     public load(imageFilename: string) {
-        this._spriteSheet = new Image();
-        this._spriteSheet.src = imageFilename;
+        this._image = new Image();
+        this._image.src = imageFilename;
     }
 
     public getSprite(spriteName: string, frameName: string) : Sprite {
@@ -67,23 +68,10 @@ export class SpriteSheet {
 
 
     public render(ctx: CanvasRenderingContext2D, sprite: Sprite, x: number, y: number) {
-
-        try {
-            ctx.drawImage(
-                this._spriteSheet,
-                sprite.x,
-                sprite.y,
-                24,
-                24,
-                x,
-                y,
-                64,
-                64
-            );
-        } catch (e) {
-
-        }
+        Renderer.getInstance()
+            .render(sprite, this._image, x,y);
     }
+
 
 
 }

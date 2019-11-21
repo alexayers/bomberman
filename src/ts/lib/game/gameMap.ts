@@ -28,8 +28,8 @@ export class GameMap {
     private static _instance: GameMap;
     private _level: Map<string, Array<GameEntity>>;
     private _particles:Array<GameEntity>;
-    private width: number;
-    private height: number;
+    private _width: number;
+    private _height: number;
 
     public static getInstance(): GameMap {
         if (this._instance === undefined) {
@@ -43,9 +43,9 @@ export class GameMap {
     private init(): void {
         this._particles = new Array<GameEntity>();
 
-        for (let y = 0; y < this.height; y++) {
-            for (let x = 0; x < this.width; x++) {
-                let tile = level1.map[x + (y * this.width)];
+        for (let y = 0; y < this._height; y++) {
+            for (let x = 0; x < this._width; x++) {
+                let tile = level1.map[x + (y * this._width)];
                 let tileEntity: GameEntity = null;
                 let itemEntity: GameEntity = null;
                 let position: PositionComponent = new PositionComponent();
@@ -103,14 +103,21 @@ export class GameMap {
         this._level.set("tile", new Array<GameEntity>());
         this._level.set("item", new Array<GameEntity>());
 
-        this.width = 19;
-        this.height = 14;
+        this._width = 19;
+        this._height = 14;
     }
 
     public getGameEntity(layer: string, x: number, y: number): GameEntity {
-        return this._level.get(layer)[x + (y * this.width)];
+        return this._level.get(layer)[x + (y * this._width)];
     }
 
+    public getWidth() : number {
+        return this._width;
+    }
+
+    public getHeight() : number {
+        return this._height;
+    }
 
     public getMap(): Map<string, Array<GameEntity>> {
         return this._level;
@@ -125,7 +132,7 @@ export class GameMap {
             entity.addComponent(position);
         }
 
-        this._level.get(layer)[x + (y * this.width)] = entity;
+        this._level.get(layer)[x + (y * this._width)] = entity;
     }
 
     isWall(x: number, y: number) : boolean {
@@ -164,5 +171,9 @@ export class GameMap {
 
     public removeParticle(id: number) : void {
 
+    }
+
+    public translateCoordinatesToIdx(x: number, y: number) :number {
+        return x + (y * this._width);
     }
 }

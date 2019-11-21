@@ -5,7 +5,6 @@ import {GameMap} from "../gameMap";
 import {EntityManager} from "../entity/entityManager";
 
 
-
 export class AttackSystem implements GameSystem {
 
     process(gameEntity: GameEntity): void {

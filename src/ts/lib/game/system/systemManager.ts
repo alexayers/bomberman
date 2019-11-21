@@ -5,6 +5,7 @@ import {TimerSystem} from "./timerSystem";
 import {AttackSystem} from "./attackSystem";
 import {DamageSystem} from "./damageSystem";
 import {ParticleSystem} from "./particleSystem";
+import {AiSystem} from "./aiSystem";
 
 
 export class SystemManager {
@@ -27,6 +28,7 @@ export class SystemManager {
         this.register(new TimerSystem());
         this.register(new AttackSystem());
         this.register(new DamageSystem());
+        this.register(new AiSystem());
 
 
         this.register(new RenderSystem());

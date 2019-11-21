@@ -2,6 +2,7 @@ import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {ParticleComponent} from "../component/particleComponent";
 import {GameMap} from "../gameMap";
+import {RGBtoHex} from "../util/colorUtil";
 
 
 export class ParticleSystem implements GameSystem {
@@ -35,7 +36,7 @@ export class ParticleSystem implements GameSystem {
                     particle.getY(),
                     particle.getWidth(),
                     particle.getHeight());
-                this._ctx.fillStyle = "#" + particle.getColor().getRed().toString(16) + particle.getColor().getGreen().toString(16) + particle.getColor().getBlue().toString(16);
+                this._ctx.fillStyle = RGBtoHex(particle.getColor().getRed(), particle.getColor().getGreen(), particle.getColor().getBlue());
                 this._ctx.fill();
                 this._ctx.closePath();
 

@@ -34,11 +34,13 @@ var cloneDeep = require('lodash.clonedeep');
 export class EntityManager {
     private static _instance:EntityManager;
     private _entities:Map<string, GameEntity>;
+    private _players:Map<string, GameEntity>;
 
     public static getInstance() : EntityManager {
         if (this._instance === undefined) {
             this._instance = new EntityManager();
             this._instance._entities = new Map<string, GameEntity>();
+            this._instance._players = new Map<string, GameEntity>();
             this._instance.init();
         }
 
@@ -84,6 +86,14 @@ export class EntityManager {
 
     }
 
+    public registerPlayer(gameEntity: GameEntity) : void {
+        this._players.set(gameEntity.getName(),gameEntity);
+    }
+
+    public getPlayer(playerName: string) : GameEntity {
+        return this._players.get(playerName);
+    }
+
     public register(gameEntity:GameEntity) : void {
         this._entities.set(gameEntity.getName(), gameEntity);
     }
@@ -93,4 +103,5 @@ export class EntityManager {
         gameEntity.setId(IdGenerator.nextId());
         return gameEntity;
     }
+
 }

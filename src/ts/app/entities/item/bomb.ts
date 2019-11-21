@@ -13,6 +13,10 @@ import {GameMap} from "../../../lib/game/gameMap";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {EntityManager} from "../../../lib/game/entity/entityManager";
 import {DamageComponent} from "../../../lib/game/component/damageComponent";
+import {EventBus} from "../../../lib/event/eventBus";
+import {GameEvent} from "../../../lib/event/gameEvent";
+import {RenderingEffect} from "../../../lib/rendering/renderer";
+import {Color} from "../../../lib/rendering/Color";
 
 
 export class Bomb extends GameEntity {
@@ -44,6 +48,22 @@ export class Bomb extends GameEntity {
         let timerComponent: TimerComponent = new TimerComponent();
         timerComponent.setTimer(42);
         timerComponent.setCallback((gameEntity: GameEntity) => {
+
+            let explosionColor: Color = new Color();
+            explosionColor.setAlpha(25);
+            explosionColor.setRed(226);
+            explosionColor.setGreen(236);
+            explosionColor.setBlue(60);
+
+            EventBus.getInstance().publish(new GameEvent("rendering", {
+                offsetX: 6,
+                offsetY: 6,
+                width: 5,
+                height: 5,
+                color: explosionColor
+            } as RenderingEffect));
+
+
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
             GameMap.getInstance().setGameEntity("item", position.getX(), position.getY(), null);
 
@@ -61,15 +81,10 @@ export class Bomb extends GameEntity {
                 explosionPosition.setX(position.getX() - i);
                 explosionPosition.setY(position.getY());
 
-                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
-                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                if (!this.placeExplosion(explosionPosition, explosionLeft)) {
                     break;
                 }
 
-                explosionLeft.addComponent(explosionPosition);
-                explosionLeft.addComponent(new DamageComponent());
-
-                GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionLeft);
             }
 
             // right
@@ -80,15 +95,9 @@ export class Bomb extends GameEntity {
                 explosionPosition.setX(position.getX() + i);
                 explosionPosition.setY(position.getY());
 
-                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
-                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                if (!this.placeExplosion(explosionPosition, explosionRight)) {
                     break;
                 }
-
-                explosionRight.addComponent(new DamageComponent());
-                explosionRight.addComponent(explosionPosition);
-
-               GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionRight);
             }
 
             // up
@@ -99,15 +108,9 @@ export class Bomb extends GameEntity {
                 explosionPosition.setX(position.getX());
                 explosionPosition.setY(position.getY() - i);
 
-                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
-                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                if (!this.placeExplosion(explosionPosition, explosionTop)) {
                     break;
                 }
-
-                explosionTop.addComponent(explosionPosition);
-                explosionTop.addComponent(new DamageComponent());
-
-                GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionTop);
             }
 
             // bottom
@@ -118,15 +121,9 @@ export class Bomb extends GameEntity {
                 explosionPosition.setX(position.getX());
                 explosionPosition.setY(position.getY() + i);
 
-                if (GameMap.getInstance().isWall(explosionPosition.getX(),explosionPosition.getY()) &&
-                    !GameMap.getInstance().hasComponent("destructible",explosionPosition.getX(),explosionPosition.getY())) {
+                if (!this.placeExplosion(explosionPosition, explosionBottom)) {
                     break;
                 }
-
-                explosionBottom.addComponent(explosionPosition);
-                explosionBottom.addComponent(new DamageComponent());
-
-                GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionBottom);
             }
 
         });
@@ -150,6 +147,19 @@ export class Bomb extends GameEntity {
             velocity
         );
 
+    }
+
+    private placeExplosion(explosionPosition: PositionComponent, explosionEntity: GameEntity): boolean {
+        if (GameMap.getInstance().isWall(explosionPosition.getX(), explosionPosition.getY()) &&
+            !GameMap.getInstance().hasComponent("destructible", explosionPosition.getX(), explosionPosition.getY())) {
+            return false;
+        }
+
+        explosionEntity.addComponent(explosionPosition);
+        explosionEntity.addComponent(new DamageComponent());
+
+        GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionEntity);
+        return true;
     }
 
 
