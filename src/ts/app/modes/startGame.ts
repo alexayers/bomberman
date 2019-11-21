@@ -6,6 +6,7 @@ import {ParticleSystem} from "../../lib/game/system/particleSystem";
 import {Renderer} from "../../lib/rendering/renderer";
 import {Color} from "../../lib/rendering/color";
 import {EventBus} from "../../lib/event/eventBus";
+import {KeyboardInput} from "../../lib/input/keyboard";
 
 const bomberManImg = require("../../../resources/images/bombermanFace.png");
 const logoImg = require("../../../resources/images/logo.png");
@@ -67,12 +68,16 @@ export class StartGame extends OverLayBase implements OverLayScreen {
 
 
 
-        Renderer.getInstance().print("[ Press Any Key ]", 550, 800, "Garamond", 30, this._color);
+        Renderer.getInstance().print("[ Press Enter ]", 550, 800, "Garamond", 30, this._color);
 
     }
 
     public keyboard(gameEvent: GameEvent) : void {
-        EventBus.getInstance().publish(new GameEvent("startGame", null));
+
+        if (gameEvent.payload === KeyboardInput.ENTER) {
+            EventBus.getInstance().publish(new GameEvent("startGame", null));
+        }
+
     }
 
     public isActive(): boolean {

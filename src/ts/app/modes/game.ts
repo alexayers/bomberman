@@ -37,11 +37,19 @@ export class Game implements GameScreen {
         }
     }
 
-    public reset() : void {
+    public reset(startGame: boolean) : void {
         GameMap.getInstance().init();
         this._players  = [];
 
-        this._players.push(new WhitePlayer());
+        if (startGame) {
+            let whitePlayer : GameEntity = new WhitePlayer();
+            whitePlayer.removeComponent("ai");
+            this._players.push(whitePlayer);
+        } else {
+            this._players.push(new WhitePlayer());
+        }
+
+
         this._players.push(new BlackPlayer());
         this._players.push(new RedPlayer());
         this._players.push(new BluePlayer());

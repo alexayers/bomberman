@@ -9,7 +9,8 @@ import {SpeedComponent} from "../component/speedComponent";
 import {AiComponent} from "../component/aiComponent";
 import {AttackComponent} from "../component/attackComponent";
 import {GameMap} from "../gameMap";
-import {Point} from "../util/mathUtil";
+import {getRandomArrayElement, Point} from "../util/mathUtil";
+import {EnemyComponent} from "../component/enemyComponent";
 
 
 
@@ -30,16 +31,25 @@ export class AiSystem implements GameSystem {
             let npcX : number = position.getX();
             let npcY : number = position.getY();
 
-            let whitePoint : Point = this.findWhitePosition();
+            let enemyPoint : Point;
+            
+            if (this.hasNoValidEnemy(gameEntity)) {
+                enemyPoint = this.findNewEnemy(gameEntity);
 
-            if (whitePoint == null) {
+                console.log(enemyPoint);
+            } else {
+                let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
+                enemyPoint = this.findEnemyPosition(enemyComponent.getEnemyName());
+            }
+            
+            if (enemyPoint == null) {
                 return;
             }
 
-            let whiteX = whitePoint.x;
-            let whiteY = whitePoint.y;
+            let enemyX = enemyPoint.x;
+            let enemyY = enemyPoint.y;
 
-            let aStar : AStar = new AStar(npcX,npcY,whiteX, whiteY);
+            let aStar : AStar = new AStar(npcX,npcY,enemyX, enemyY);
 
             if (aStar.isPathFound()) {
                 let path : Array<PathNode> = aStar.getPath();
@@ -67,16 +77,16 @@ export class AiSystem implements GameSystem {
         }
     }
 
-    private findWhitePosition() : Point {
-        let whitePlayer : GameEntity = EntityManager.getInstance().getPlayer("whitePlayer");
-        let whitePosition : PositionComponent = whitePlayer.getComponent("position") as PositionComponent;
+    private findEnemyPosition(enemy:string) : Point {
+        let enemyPlayer : GameEntity = EntityManager.getInstance().getPlayer(enemy);
+        let enemyPosition : PositionComponent = enemyPlayer.getComponent("position") as PositionComponent;
 
-        let whiteX : number = whitePosition.getX();
-        let whiteY : number = whitePosition.getY();
+        let enemyX : number = enemyPosition.getX();
+        let enemyY : number = enemyPosition.getY();
 
-        for (let y = whiteY - 1; y < whiteY + 1; y++) {
-            for (let x = whiteX - 1; x < whiteX +1; x++) {
-                if (x == whiteX && y == whiteY) {
+        for (let y = enemyY - 1; y < enemyY + 1; y++) {
+            for (let x = enemyX - 1; x < enemyX +1; x++) {
+                if (x == enemyX && y == enemyY) {
                     continue;
                 } else if (!GameMap.getInstance().isWall(x,y)) {
                     return {
@@ -90,4 +100,31 @@ export class AiSystem implements GameSystem {
         return null;
     }
 
+    private findNewEnemy(gameEntity: GameEntity) : Point {
+        let possibleEnemies: Array<string> = ["whitePlayer","blackPlayer","redPlayer","blackPlayer"];
+        let actualEnemies: Array<string> = [];
+
+        for (let i = 0; i < possibleEnemies.length; i++) {
+            if (possibleEnemies[i] !== gameEntity.getName()) {
+                actualEnemies.push(possibleEnemies[i]);
+            }
+        }
+
+        let enemyName = actualEnemies[getRandomArrayElement(actualEnemies)];
+        let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
+        enemyComponent.setEnemyName(enemyName);
+
+        return this.findEnemyPosition(enemyName);
+    }
+
+    private hasNoValidEnemy(gameEntity: GameEntity) {
+
+        let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
+
+        if (enemyComponent.getEnemyName() === null) {
+            return true;
+        }
+
+        return false;
+    }
 }

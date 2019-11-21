@@ -74,6 +74,7 @@ export class Bomberman extends Application implements EventHandler {
             for (let key of this._gameOverlayScreen.keys()) {
                 if (this._gameOverlayScreen.get(key).isActive()) {
                     this._gameOverlayScreen.get(key).keyboard(gameEvent);
+                    return;
                 }
             }
 
@@ -81,20 +82,22 @@ export class Bomberman extends Application implements EventHandler {
         } else if (gameEvent.channel === "startGame") {
             this._deathCount = 0;
             let game : Game = this._gameScreens.get(GameMode.PLAYING) as Game;
-            game.reset();
+            game.reset(true);
             this._gameOverlayScreen.get("startGame").disable();
             this._gameOverlayScreen.get("gameOver").disable();
             this._gameOverlayScreen.get("victory").disable();
         } else if (gameEvent.channel === "gameOver") {
             this._gameOverlayScreen.get("gameOver").enable();
+            this._gameOverlayScreen.get("victory").disable();
         } else if (gameEvent.channel === "death") {
            this._deathCount++;
 
-           if (this._deathCount == 3) {
+           if (this._deathCount >= 3) {
                if (this._gameOverlayScreen.get("startGame").isActive()) {
+                   this._gameOverlayScreen.get("gameOver").disable();
                    this._deathCount = 0;
                    let game : Game = this._gameScreens.get(GameMode.PLAYING) as Game;
-                   game.reset();
+                   game.reset(false);
 
                    return;
                }
