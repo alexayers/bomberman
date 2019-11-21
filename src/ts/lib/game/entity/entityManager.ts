@@ -29,6 +29,7 @@ import {Skull} from "../../../app/entities/powerups/skull";
 import {SpeedUp} from "../../../app/entities/powerups/speedUp";
 import {SmokeParticle} from "../../../app/entities/particles/smokeParticle";
 import {GrassParticle} from "../../../app/entities/particles/grassParticle";
+import {MistParticles} from "../../../app/entities/particles/mistParticles";
 var cloneDeep = require('lodash.clonedeep');
 
 
@@ -82,6 +83,7 @@ export class EntityManager {
 
         this.register(new SmokeParticle());
         this.register(new GrassParticle());
+        this.register(new MistParticles());
     }
 
     private constructor() {

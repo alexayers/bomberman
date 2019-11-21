@@ -5,6 +5,7 @@ const path = require('path');
 
 module.exports = {
     entry: './src/ts/app.ts',
+    devtool: "source-map",
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: "bundle.js",
@@ -33,7 +34,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.mp3$/,
+                test: /\.ogg$/,
                 exclude: /node_modules/,
                 use: [
                     { loader: 'file-loader' }

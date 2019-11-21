@@ -5,7 +5,7 @@ import {GameMap} from "../gameMap";
 import {PositionComponent} from "../component/positionComponent";
 import {AnimateComponent} from "../component/animateComponent";
 import {GrassParticle} from "../../../app/entities/particles/grassParticle";
-import {ParticleFactory} from "../../../app/factories/ParticleFactory";
+import {ParticleFactory} from "../../../app/entities/particles/ParticleFactory";
 import {getRandomInt} from "../util/mathUtil";
 
 

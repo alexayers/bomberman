@@ -1,6 +1,7 @@
 import {EntityManager} from "./entity/entityManager";
 import {GameEntity} from "./entity/gameEntity";
 import {PositionComponent} from "./component/positionComponent";
+import {ParticleFactory} from "../../app/entities/particles/ParticleFactory";
 
 const level1 = require("../../../resources/maps/level1.json");
 
@@ -63,13 +64,16 @@ export class GameMap {
                     tileEntity = EntityManager.getInstance().getEntity("grassy");
                 } else if (tile === TileType.WATER_EDGE) {
                     tileEntity = EntityManager.getInstance().getEntity("waterEdge");
+                    this.generateMist(position.getX(),position.getY());
                 } else if (tile === TileType.WATER) {
                     tileEntity = EntityManager.getInstance().getEntity("water");
+                    this.generateMist(position.getX(),position.getY());
                 } else if (tile === TileType.WALL_STONE) {
                     tileEntity = EntityManager.getInstance().getEntity("wallStone");
                 } else if (tile === TileType.WATER_WALL) {
                     tileEntity = EntityManager.getInstance().getEntity("destroyedWaterWall");
                     itemEntity = EntityManager.getInstance().getEntity("waterWall");
+                    this.generateMist(position.getX(),position.getY());
                 } else if (tile === TileType.CRATE) {
                     tileEntity = EntityManager.getInstance().getEntity("destroyedGrass");
                     itemEntity = EntityManager.getInstance().getEntity("crate");
@@ -148,25 +152,6 @@ export class GameMap {
         }
 
 
-        /*
-        let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer"];
-
-        for (let i = 0; i < players.length; i++) {
-            let player = EntityManager.getInstance().getPlayer(players[i]);
-
-            if (player === undefined) {
-                continue;
-            }
-
-            let position : PositionComponent = player.getComponent("position") as PositionComponent;
-
-            if (position.getX() == x && position.getY() == y) {
-                return true;
-            }
-        }
-
-         */
-
         return false;
     }
 
@@ -211,5 +196,12 @@ export class GameMap {
 
 
         return false;
+    }
+
+    private generateMist(x: number, y: number) {
+        for (let i = 0; i < 4; i++) {
+            let mistParticle : GameEntity = ParticleFactory.getParticle("mistParticle", x, y);
+            this.addParticle(mistParticle);
+        }
     }
 }

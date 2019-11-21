@@ -82,24 +82,44 @@ export class Renderer implements EventHandler  {
 
 
     finalRender() : void {
+        let restoreRate : number = 4;
+
         if (this._renderingEffects.height > 0) {
-            this._renderingEffects.height--;
+            this._renderingEffects.height-=restoreRate;
+        }
+
+        if (this._renderingEffects.height < 0) {
+            this._renderingEffects.height = 0;
         }
 
         if (this._renderingEffects.width > 0) {
-            this._renderingEffects.width--;
+            this._renderingEffects.width-=restoreRate;
+        }
+
+        if (this._renderingEffects.width < 0) {
+            this._renderingEffects.width = 0;
         }
 
         if (this._renderingEffects.offsetX > 0) {
-            this._renderingEffects.offsetX--;
+            this._renderingEffects.offsetX-=restoreRate;
+        }
+
+        if (this._renderingEffects.offsetX < 0) {
+            this._renderingEffects.offsetX = 0;
         }
 
         if (this._renderingEffects.offsetY > 0) {
-            this._renderingEffects.offsetY--;
+            this._renderingEffects.offsetY-=restoreRate;
+        }
+
+        if (this._renderingEffects.offsetY < 0) {
+            this._renderingEffects.offsetY = 0;
         }
 
         if (this._renderingEffects.color.getAlpha() > 0) {
             this._renderingEffects.color.setAlpha(this._renderingEffects.color.getAlpha() - 1);
+        } else if (this._renderingEffects.height < 0) {
+            this._renderingEffects.height = 0;
         }
     }
 

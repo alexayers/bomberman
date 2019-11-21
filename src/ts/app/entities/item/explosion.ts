@@ -3,7 +3,7 @@ import {DamageComponent} from "../../../lib/game/component/damageComponent";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {GameMap} from "../../../lib/game/gameMap";
 import {DestroyedGrass} from "../tile/destroyedGrass";
-import {ParticleFactory} from "../../factories/ParticleFactory";
+import {ParticleFactory} from "../particles/ParticleFactory";
 import {SpriteSheet} from "../../../lib/rendering/spriteSheet";
 import {SpriteSheetManager} from "../../../lib/rendering/spriteSheetManager";
 import {AnimatedSprite} from "../../../lib/rendering/animatedSprite";

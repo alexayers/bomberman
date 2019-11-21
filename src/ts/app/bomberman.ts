@@ -17,6 +17,7 @@ import {Player} from "./entities/players/player";
 import {BlackPlayer} from "./entities/players/blackPlayer";
 import {RedPlayer} from "./entities/players/redPlayer";
 import {BluePlayer} from "./entities/players/bluePlayer";
+import {AudioManager} from "../lib/audo/audioManager";
 
 const framesPerSecond: number = 60;
 
@@ -38,6 +39,8 @@ export class Bomberman extends Game implements EventHandler {
 
         SpriteSheetManager.getInstance();
         SystemManager.getInstance();
+        AudioManager.getInstance();
+
         this._players.push(new WhitePlayer());
         this._players.push(new BlackPlayer());
         this._players.push(new RedPlayer());
@@ -132,6 +135,7 @@ export class Bomberman extends Game implements EventHandler {
         } else if (gameEvent.payload == KeyboardInput.SPACE) {
             let attackComponent: AttackComponent = new AttackComponent();
             this._players[0].addComponent(attackComponent);
+            AudioManager.getInstance().play("music");
         }
 
         velocity.setVelX(x);

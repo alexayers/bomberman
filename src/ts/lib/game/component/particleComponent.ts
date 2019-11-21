@@ -12,22 +12,55 @@ export class ParticleComponent implements GameComponent {
     private _height:number;
     private _color:Color;
     private _decay:number;
+    private _respawn:boolean;
+    private _alive:boolean;
+
+    private _originalX:number;
+    private _originalY:number;
 
     constructor() {
-        this._x = 0;
-        this._y =0;
+        this._x = null;
+        this._y = null;
         this._decay = 50;
+        this._respawn = false;
+        this._alive = true;
     }
 
     name(): string {
         return "particle";
     }
 
+    public setOriginalX(originalX: number) : void {
+        this._originalX = originalX;
+    }
+
+    public getOriginalX() : number {
+        return this._originalX;
+    }
+
+    public setOriginalY(originalY: number) : void {
+        this._originalY = originalY;
+    }
+
+    public getOriginalY() : number {
+        return this._originalY;
+    }
+
     public setX(x:number) : void {
+
+        if (this._x == null) {
+            this._originalX = x;
+        }
+
         this._x = x;
     }
 
     public setY(y:number) : void {
+
+        if (this._y == null) {
+            this._originalY = y;
+        }
+
         this._y = y;
     }
 
@@ -85,5 +118,21 @@ export class ParticleComponent implements GameComponent {
 
     public getDecay() : number {
         return this._decay;
+    }
+
+    public setRespawn(respawn: boolean) : void {
+        this._respawn = respawn;
+    }
+
+    public shouldRespawn() : boolean {
+        return this._respawn;
+    }
+
+    public setAlive(alive:boolean) : void {
+        this._alive = alive;
+    }
+
+    public isAlive() : boolean {
+        return this._alive;
     }
 }

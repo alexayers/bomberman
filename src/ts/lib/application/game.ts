@@ -3,6 +3,7 @@ import {EventBus} from "../event/eventBus";
 import {GameEvent} from "../event/gameEvent";
 
 
+
 export class Game {
 
     protected _renderer: Renderer;

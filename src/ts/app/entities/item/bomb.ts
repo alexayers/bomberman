@@ -19,6 +19,7 @@ import {RenderingEffect} from "../../../lib/rendering/renderer";
 import {Color} from "../../../lib/rendering/Color";
 import {OwnerComponent} from "../../../lib/game/component/ownerComponent";
 import {InventoryComponent} from "../../../lib/game/component/inventoryComponent";
+import {getRandomInt} from "../../../lib/game/util/mathUtil";
 
 
 export class Bomb extends GameEntity {
@@ -51,6 +52,7 @@ export class Bomb extends GameEntity {
         timerComponent.setTimer(20);
         timerComponent.setCallback((gameEntity: GameEntity) => {
 
+            EventBus.getInstance().publish(new GameEvent("audio","explosion" + getRandomInt(3)));
             let owner : OwnerComponent = gameEntity.getComponent("owner") as OwnerComponent;
 
             let player : GameEntity = EntityManager.getInstance().getPlayer(owner.getOwner());
@@ -64,10 +66,10 @@ export class Bomb extends GameEntity {
             explosionColor.setBlue(60);
 
             EventBus.getInstance().publish(new GameEvent("rendering", {
-                offsetX: 6,
-                offsetY: 6,
-                width: 5,
-                height: 5,
+                offsetX: getRandomInt(50),
+                offsetY: getRandomInt(50),
+                width: getRandomInt(8),
+                height: getRandomInt(8),
                 color: explosionColor
             } as RenderingEffect));
 

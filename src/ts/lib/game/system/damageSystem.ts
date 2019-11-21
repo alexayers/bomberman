@@ -37,9 +37,6 @@ export class DamageSystem implements GameSystem {
             this.killPlayer(position.getX(), position.getY());
 
             gameEntity.removeComponent("damage");
-
-
-            console.info("damaged");
         }
 
     }
