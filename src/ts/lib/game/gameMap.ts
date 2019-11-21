@@ -41,8 +41,12 @@ export class GameMap {
         return this._instance;
     }
 
-    private init(): void {
+    public init(): void {
         this._particles = new Array<GameEntity>();
+        this._level = new Map<string, Array<GameEntity>>();
+        this._level.set("tile", new Array<GameEntity>());
+        this._level.set("item", new Array<GameEntity>());
+        this._level.set("decal", new Array<GameEntity>());
 
         for (let y = 0; y < this._height; y++) {
             for (let x = 0; x < this._width; x++) {
@@ -105,11 +109,6 @@ export class GameMap {
     }
 
     private constructor() {
-        this._level = new Map<string, Array<GameEntity>>();
-        this._level.set("tile", new Array<GameEntity>());
-        this._level.set("item", new Array<GameEntity>());
-        this._level.set("decal", new Array<GameEntity>());
-
         this._width = 19;
         this._height = 14;
     }

@@ -23,7 +23,7 @@ export class Game implements GameScreen {
     private _players: Array<Player> = [];
     private _gameMap: GameMap;
 
-    init() {
+    public init() : void {
 
         this._players.push(new WhitePlayer());
         this._players.push(new BlackPlayer());
@@ -37,7 +37,17 @@ export class Game implements GameScreen {
         }
     }
 
-    gameLoop() {
+    public reset() : void {
+        GameMap.getInstance().init();
+        this._players  = [];
+
+        this._players.push(new WhitePlayer());
+        this._players.push(new BlackPlayer());
+        this._players.push(new RedPlayer());
+        this._players.push(new BluePlayer());
+    }
+
+    public gameLoop() : void {
 
         let gameEntityMap: Map<string, Array<GameEntity>> = this._gameMap.getMap();
         let gameSystems: Array<GameSystem> = SystemManager.getInstance().getSystems();
@@ -66,7 +76,7 @@ export class Game implements GameScreen {
 
     }
 
-    processEntities(layerName: string, gameEntityMap: Map<string, Array<GameEntity>>, gameSystems: Array<GameSystem>): void {
+    public processEntities(layerName: string, gameEntityMap: Map<string, Array<GameEntity>>, gameSystems: Array<GameSystem>): void {
         for (let i = 0; i < gameEntityMap.get(layerName).length; i++) {
             let gameEntity: GameEntity = gameEntityMap.get(layerName)[i];
 
@@ -79,7 +89,7 @@ export class Game implements GameScreen {
         }
     }
 
-    keyboard(gameEvent: GameEvent) : void {
+    public keyboard(gameEvent: GameEvent) : void {
         let speed: SpeedComponent = this._players[0].getComponent("speed") as SpeedComponent;
         let velocity: VelocityComponent = this._players[0].getComponent("velocity") as VelocityComponent;
         let direction: DirectionComponent = this._players[0].getComponent("direction") as DirectionComponent;

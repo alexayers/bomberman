@@ -8,7 +8,6 @@ import {DeadComponent} from "../component/deadComponent";
 import {DirectionComponent} from "../component/directionComponent";
 import {GameEvent} from "../../event/gameEvent";
 import {EventBus} from "../../event/eventBus";
-import {GameMode} from "../../../app/modes/modes";
 
 export class DamageSystem implements GameSystem {
 
@@ -59,7 +58,7 @@ export class DamageSystem implements GameSystem {
                     direction.setDirection("dead");
 
                     if (player.getName() === "whitePlayer") {
-                        EventBus.getInstance().publish(new GameEvent("modeChange", GameMode.GAME_OVER));
+                        EventBus.getInstance().publish(new GameEvent("gameOver", null));
                     } else {
                         EventBus.getInstance().publish(new GameEvent("death", null));
                     }

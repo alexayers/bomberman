@@ -2,6 +2,7 @@ import {Sprite} from "./spriteSheet";
 import {EventBus, EventHandler} from "../event/eventBus";
 import {GameEvent} from "../event/gameEvent";
 import {Color} from "./Color";
+import {RGBtoHex} from "../game/util/colorUtil";
 
 export interface RenderingEffect {
     offsetX:number,
@@ -133,5 +134,21 @@ export class Renderer implements EventHandler  {
 
     handleEvent(gameEvent: GameEvent): void {
         this._renderingEffects = gameEvent.payload;
+    }
+
+    renderImage(image: HTMLImageElement, x: number, y: number, width: number, height: number) {
+        this._ctx.drawImage(
+            image,
+            x,
+            y,
+            width,
+            height
+        );
+    }
+
+    print(msg: string, x: number, y: number, font: string, fontSize: number, color: Color) : void {
+        this._ctx.font = fontSize + "px " + font;
+        this._ctx.fillStyle = RGBtoHex(color.getRed(),color.getGreen(),color.getBlue());
+        this._ctx.fillText(msg, x, y);
     }
 }

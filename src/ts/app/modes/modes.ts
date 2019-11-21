@@ -4,5 +4,5 @@ export enum GameMode {
     PLAYING = 1,
     VICTORY =2,
     GAME_OVER = 3
-
 }
+
