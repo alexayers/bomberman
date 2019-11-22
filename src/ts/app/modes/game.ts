@@ -18,6 +18,7 @@ import {AttackComponent} from "../../lib/game/component/attackComponent";
 import {ParticleSystem} from "../../lib/game/system/particleSystem";
 import {SystemManager} from "../../lib/game/system/systemManager";
 import {GreenPlayer} from "../entities/players/greenPlayer";
+import {OrangePlayer} from "../entities/players/orangePlayer";
 
 
 export class Game implements GameScreen {
@@ -36,6 +37,7 @@ export class Game implements GameScreen {
         this._players.push(new RedPlayer());
         this._players.push(new BluePlayer());
         this._players.push(new GreenPlayer());
+        this._players.push(new OrangePlayer());
 
         this._gameMap = GameMap.getInstance();
 
@@ -68,6 +70,8 @@ export class Game implements GameScreen {
         this._players.push(new BlackPlayer());
         this._players.push(new RedPlayer());
         this._players.push(new BluePlayer());
+        this._players.push(new GreenPlayer());
+        this._players.push(new OrangePlayer());
     }
 
     public gameLoop() : void {

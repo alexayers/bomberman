@@ -11,7 +11,8 @@ export class OrangePlayer extends Player {
         super("orangePlayer");
 
         let position : PositionComponent = this.getComponent("position") as PositionComponent;
-        position.setX(1);
+        position.setX(10);
+        position.setX(10);
 
         this.addComponent(new AiComponent());
         this.addComponent(new EnemyComponent());

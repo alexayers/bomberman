@@ -92,7 +92,7 @@ export class Bomberman extends Application implements EventHandler {
         } else if (gameEvent.channel === "death") {
            this._deathCount++;
 
-           if (this._deathCount >= 3) {
+           if (this._deathCount >= 5) {
                if (this._gameOverlayScreen.get("startGame").isActive()) {
                    this._gameOverlayScreen.get("gameOver").disable();
                    this._deathCount = 0;

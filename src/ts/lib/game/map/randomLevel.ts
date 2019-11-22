@@ -68,7 +68,7 @@ export class RandomLevel implements Level {
                         }
                     } else {
                         let grassRand : number = getRandomInt(4);
-                        
+
                         if (grassRand == 1) {
                             this._randomLevel.push(Level1Tiles.BRICK);
                         } else  if (grassRand == 2) {

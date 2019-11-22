@@ -104,7 +104,7 @@ export class AiSystem implements GameSystem {
     }
 
     private findNewEnemy(gameEntity: GameEntity) : Point {
-        let possibleEnemies: Array<string> = ["whitePlayer","blackPlayer","redPlayer","blackPlayer"];
+        let possibleEnemies: Array<string> = ["whitePlayer","blackPlayer","redPlayer","blackPlayer","greenPlayer","orangePlayer"];
         let actualEnemies: Array<string> = [];
 
         for (let i = 0; i < possibleEnemies.length; i++) {

@@ -1,7 +1,7 @@
 import {EntityManager} from "../../../lib/game/entity/entityManager";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {ParticleComponent} from "../../../lib/game/component/particleComponent";
-import {getRandomInt} from "../../../lib/game/util/mathUtil";
+import {getRandomInt, positiveNegative} from "../../../lib/game/util/mathUtil";
 import {Color} from "../../../lib/rendering/color";
 import {GameEntity} from "../../../lib/game/entity/gameEntity";
 import {Renderer} from "../../../lib/rendering/renderer";
@@ -34,7 +34,7 @@ export class ParticleFactory {
             let particleComponent : ParticleComponent = particle.getComponent("particle") as ParticleComponent;
             particleComponent.setVelX(getRandomInt(4) * -1);
             particleComponent.setVelY(getRandomInt(4) * -1);
-            particleComponent.setX(x*64+getRandomInt(10));
+            particleComponent.setX(x*64+(getRandomInt(10) * positiveNegative()));
             particleComponent.setY(y*64+getRandomInt(10));
             particleComponent.setHeight(getRandomInt(15)+ 35);
             particleComponent.setWidth(getRandomInt(15) + 35);
@@ -47,10 +47,14 @@ export class ParticleFactory {
 
             let gray =getRandomInt(255);
 
+
             color.setRed(gray);
             color.setGreen(gray);
             color.setBlue(gray);
             color.setAlpha(0.20);
+
+
+
             particleComponent.setColor(color);
 
             particle.addComponent(
@@ -247,7 +251,7 @@ export class ParticleFactory {
             particle.addComponent(
                 particleComponent
             );
-        }   else if (particleName === "losingParticle") {
+        }  else if (particleName === "losingParticle") {
 
             if (particle == null) {
                 particle = EntityManager.getInstance().getEntity("losingParticle");
@@ -297,6 +301,44 @@ export class ParticleFactory {
             }
 
 
+            particleComponent.setColor(color);
+
+            particle.addComponent(
+                particleComponent
+            );
+        }   else if (particleName === "fireParticle") {
+
+            if (particle == null) {
+                particle = EntityManager.getInstance().getEntity("fireParticle");
+                particle.addComponent(new ParticleComponent());
+                particle.addComponent(new PositionComponent());
+            }
+
+            let someParticlePosition: PositionComponent = particle.getComponent("position") as PositionComponent;
+            someParticlePosition.setX(x*64);
+            someParticlePosition.setY(y*64);
+
+            particle.addComponent(someParticlePosition);
+
+            let particleComponent : ParticleComponent = particle.getComponent("particle") as ParticleComponent;
+            particleComponent.setVelX(getRandomInt(4) * -1 / 10);
+            particleComponent.setVelY(getRandomInt(4) * -1 / 10);
+            particleComponent.setX(x*64 + getRandomInt(8));
+            particleComponent.setY(y*64 + 60);
+            particleComponent.setHeight(getRandomInt(8));
+            particleComponent.setWidth(getRandomInt(8));
+            particleComponent.setDecay(getRandomInt(10));
+            particleComponent.setAlive(true);
+            particleComponent.setRenderOffsetX(Renderer.getInstance().getRenderOffsetX());
+            particleComponent.setRenderOffsetY(Renderer.getInstance().getRenderOffsetY());
+
+            let color : Color = new Color();
+            let gray =getRandomInt(255);
+
+            color.setRed(gray);
+            color.setGreen(gray);
+            color.setBlue(gray);
+            color.setAlpha(0.10);
             particleComponent.setColor(color);
 
             particle.addComponent(
