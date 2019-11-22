@@ -37,7 +37,7 @@ export class AudioManager implements EventHandler {
     }
 
     public play(name: string) : void {
-        //this._soundMap.get(name).play();
+        this._soundMap.get(name).play();
     }
 
     private constructor() {

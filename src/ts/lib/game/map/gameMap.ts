@@ -1,7 +1,7 @@
 import {GameEntity} from "../entity/gameEntity";
 import {PositionComponent} from "../component/positionComponent";
-import {Level1} from "./level1";
 import {Level} from "./level";
+import {RandomLevel} from "./randomLevel";
 
 
 export class GameMap {
@@ -24,7 +24,7 @@ export class GameMap {
     public init(): void {
 
         this._levels = new Map<string, Level>();
-        this._levels.set("level1", new Level1());
+        this._levels.set("level1", new RandomLevel());
 
 
         this._currentLevel = "level1";

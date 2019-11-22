@@ -10,8 +10,8 @@ export class WhitePlayer extends Player {
     constructor() {
         super("whitePlayer");
         let position : PositionComponent = this.getComponent("position") as PositionComponent;
-        position.setX(4);
-        position.setY(5);
+        position.setX(1);
+        position.setY(1);
 
         this.addComponent(new AiComponent());
         this.addComponent(new EnemyComponent());

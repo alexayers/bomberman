@@ -11,7 +11,8 @@ export class GreenPlayer extends Player {
         super("greenPlayer");
 
         let position : PositionComponent = this.getComponent("position") as PositionComponent;
-        position.setX(1);
+        position.setX(5);
+        position.setY(5);
 
         this.addComponent(new AiComponent());
         this.addComponent(new EnemyComponent());
