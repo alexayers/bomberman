@@ -22,7 +22,7 @@ export class AudioManager implements EventHandler {
     private init() : void {
         let soundCheck = new Audio();
 
-        this.register("music",music);
+        this.register("music",music, true);
         this.register("explosion1", explosion);
         this.register("explosion2", explosion);
         this.register("explosion3", explosion);
@@ -32,12 +32,12 @@ export class AudioManager implements EventHandler {
         }
     }
 
-    private register(name: string, audioFile: string) : void {
-        this._soundMap.set(name, new AudioFile(audioFile, false));
+    private register(name: string, audioFile: string, loop: boolean = false) : void {
+        this._soundMap.set(name, new AudioFile(audioFile, loop));
     }
 
     public play(name: string) : void {
-        this._soundMap.get(name).play();
+        //this._soundMap.get(name).play();
     }
 
     private constructor() {

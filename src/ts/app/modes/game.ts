@@ -1,7 +1,6 @@
 import {GameScreen} from "../../lib/application/gameScreen";
 import {Player} from "../entities/players/player";
-import {GameMap} from "../../lib/game/gameMap";
-import {SystemManager} from "../../lib/game/system/systemManager";
+import {GameMap} from "../../lib/game/map/gameMap";
 import {AudioManager} from "../../lib/audo/audioManager";
 import {WhitePlayer} from "../entities/players/whitePlayer";
 import {BlackPlayer} from "../entities/players/blackPlayer";
@@ -17,6 +16,7 @@ import {DirectionComponent} from "../../lib/game/component/directionComponent";
 import {KeyboardInput} from "../../lib/input/keyboard";
 import {AttackComponent} from "../../lib/game/component/attackComponent";
 import {ParticleSystem} from "../../lib/game/system/particleSystem";
+import {SystemManager} from "../../lib/game/system/systemManager";
 
 
 export class Game implements GameScreen {
@@ -37,9 +37,7 @@ export class Game implements GameScreen {
 
         this._gameMap = GameMap.getInstance();
 
-        for (let i = 0; i < 250; i++) {
-            GameMap.getInstance().addParticle(ParticleFactory.getParticle("rainParticle", null, null));
-        }
+
 
         this._backgroundParticles = [];
 
@@ -58,6 +56,10 @@ export class Game implements GameScreen {
             this._players.push(whitePlayer);
         } else {
             this._players.push(new WhitePlayer());
+        }
+
+        for (let i = 0; i < 250; i++) {
+            GameMap.getInstance().addParticle(ParticleFactory.getParticle("rainParticle", null, null));
         }
 
 

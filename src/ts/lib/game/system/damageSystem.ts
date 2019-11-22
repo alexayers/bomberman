@@ -1,15 +1,22 @@
 import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {PositionComponent} from "../component/positionComponent";
-import {GameMap} from "../gameMap";
+import {GameMap} from "../map/gameMap";
 import {EntityManager} from "../entity/entityManager";
 import {Player} from "../../../app/entities/players/player";
 import {DeadComponent} from "../component/deadComponent";
 import {DirectionComponent} from "../component/directionComponent";
 import {GameEvent} from "../../event/gameEvent";
 import {EventBus} from "../../event/eventBus";
+import {system} from "../../framework/framework";
 
+@system()
+// @ts-ignore
 export class DamageSystem implements GameSystem {
+
+    constructor() {
+        console.log("DamageSystem constructor");
+    }
 
     process(gameEntity: GameEntity): void {
 
@@ -18,12 +25,9 @@ export class DamageSystem implements GameSystem {
             let item = GameMap.getInstance().getGameEntity("item",position.getX(),position.getY());
 
             if (item != null && item.getName() === "crate") {
-                console.log("create destroy");
                 let randomPowerUps : string [] = ["bombUp","explosionUp","shieldUp","skull","speedUp"];
                 let  powerUpName = randomPowerUps[Math.floor(Math.random()*randomPowerUps.length)];
 
-
-                console.info(item.getName() );
                 let powerUp = EntityManager.getInstance().getEntity(powerUpName);
 
                 GameMap.getInstance().setGameEntity("item",position.getX(),position.getY(), powerUp);

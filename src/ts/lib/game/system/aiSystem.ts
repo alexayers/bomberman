@@ -8,13 +8,18 @@ import {VelocityComponent} from "../component/velocityComponent";
 import {SpeedComponent} from "../component/speedComponent";
 import {AiComponent} from "../component/aiComponent";
 import {AttackComponent} from "../component/attackComponent";
-import {GameMap} from "../gameMap";
+import {GameMap} from "../map/gameMap";
 import {getRandomArrayElement, Point} from "../util/mathUtil";
 import {EnemyComponent} from "../component/enemyComponent";
+import {system} from "../../framework/framework";
 
-
-
+@system()
+// @ts-ignore
 export class AiSystem implements GameSystem {
+
+    constructor() {
+        console.log("ai constructor");
+    }
 
     process(gameEntity: GameEntity): void {
 
@@ -35,8 +40,6 @@ export class AiSystem implements GameSystem {
             
             if (this.hasNoValidEnemy(gameEntity)) {
                 enemyPoint = this.findNewEnemy(gameEntity);
-
-                console.log(enemyPoint);
             } else {
                 let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
                 enemyPoint = this.findEnemyPosition(enemyComponent.getEnemyName());
@@ -122,6 +125,10 @@ export class AiSystem implements GameSystem {
         let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
 
         if (enemyComponent.getEnemyName() === null) {
+            return true;
+        }
+
+        if (EntityManager.getInstance().getPlayer(enemyComponent.getEnemyName()).hasComponent("dead")) {
             return true;
         }
 

@@ -1,13 +1,20 @@
 import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {PositionComponent} from "../component/positionComponent";
-import {GameMap} from "../gameMap";
+import {GameMap} from "../map/gameMap";
 import {EntityManager} from "../entity/entityManager";
 import {InventoryComponent} from "../component/inventoryComponent";
 import {OwnerComponent} from "../component/ownerComponent";
+import {system} from "../../framework/framework";
 
 
+@system()
+// @ts-ignore
 export class AttackSystem implements GameSystem {
+
+    constructor() {
+        console.log("attack constructor");
+    }
 
     process(gameEntity: GameEntity): void {
 

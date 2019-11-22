@@ -1,4 +1,4 @@
-import {GameMap} from "../gameMap";
+import {GameMap} from "../map/gameMap";
 import {PathNode} from "./pathNode";
 import {GameEntity} from "../entity/gameEntity";
 

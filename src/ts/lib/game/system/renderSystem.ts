@@ -3,8 +3,10 @@ import {GameEntity} from "../entity/gameEntity";
 import {AnimationComponent} from "../component/animationComponent";
 import {PositionComponent} from "../component/positionComponent";
 import {DirectionComponent} from "../component/directionComponent";
+import {system} from "../../framework/framework";
 
-
+@system()
+// @ts-ignore
 export class RenderSystem implements GameSystem {
      private _canvas: HTMLCanvasElement;
      private _ctx: CanvasRenderingContext2D;

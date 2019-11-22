@@ -1,4 +1,4 @@
-import {GameMap} from "../lib/game/gameMap";
+import {GameMap} from "../lib/game/map/gameMap";
 import {GameMode} from "./modes/modes";
 import {Game} from "./modes/game";
 import {GameScreen} from "../lib/application/gameScreen";

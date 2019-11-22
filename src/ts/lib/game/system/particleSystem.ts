@@ -1,16 +1,20 @@
 import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {ParticleComponent} from "../component/particleComponent";
-import {GameMap} from "../gameMap";
+import {GameMap} from "../map/gameMap";
 import {RGBtoHex} from "../util/colorUtil";
 import {ParticleFactory} from "../../../app/entities/particles/ParticleFactory";
+import {system} from "../../framework/framework";
 
 
+@system()
+// @ts-ignore
 export class ParticleSystem implements GameSystem {
     private _canvas: HTMLCanvasElement;
     private _ctx: CanvasRenderingContext2D;
 
     constructor() {
+        console.log("particle constructior");
         this._canvas = document.getElementById('canvas') as
             HTMLCanvasElement;
         this._ctx = this._canvas.getContext("2d");

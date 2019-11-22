@@ -3,8 +3,8 @@ import {SpriteSheet} from "./spriteSheet";
 const playerSprites = require("../../../resources/images/player.png");
 const playerDefinition = require("../../../resources/images/player.json");
 
-const levelSprites = require("../../../resources/images/level.png");
-const levelDefinition = require("../../../resources/images/level.json");
+const level1Sprites = require("../../../resources/images/level1.png");
+const level1Definition = require("../../../resources/images/level1.json");
 
 export class SpriteSheetManager {
     private static _instance: SpriteSheetManager;
@@ -30,8 +30,8 @@ export class SpriteSheetManager {
         playerSpriteSheet.load(playerSprites);
         this.register("players", playerSpriteSheet);
 
-        let levelSpriteSheet : SpriteSheet = new SpriteSheet(levelDefinition);
-        levelSpriteSheet.load(levelSprites);
+        let levelSpriteSheet : SpriteSheet = new SpriteSheet(level1Definition);
+        levelSpriteSheet.load(level1Sprites);
         this.register("level", levelSpriteSheet);
 
 

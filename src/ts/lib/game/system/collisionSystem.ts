@@ -1,16 +1,23 @@
 import {GameSystem} from "./gameSystem";
 import {GameEntity} from "../entity/gameEntity";
 import {VelocityComponent} from "../component/velocityComponent";
-import {GameMap} from "../gameMap";
+import {GameMap} from "../map/gameMap";
 import {PositionComponent} from "../component/positionComponent";
 import {AnimateComponent} from "../component/animateComponent";
 import {GrassParticle} from "../../../app/entities/particles/grassParticle";
 import {ParticleFactory} from "../../../app/entities/particles/ParticleFactory";
 import {getRandomInt} from "../util/mathUtil";
+import {system} from "../../framework/framework";
 
 
 
+@system()
+// @ts-ignore
 export class CollisionSystem implements GameSystem {
+
+    constructor() {
+        console.log("collision constructor");
+    }
 
     process(gameEntity: GameEntity): void {
 

@@ -7,7 +7,6 @@ import {DamageSystem} from "./damageSystem";
 import {ParticleSystem} from "./particleSystem";
 import {AiSystem} from "./aiSystem";
 
-
 export class SystemManager {
 
     private static _instance:SystemManager;
@@ -24,6 +23,7 @@ export class SystemManager {
     }
 
     private init() : void {
+
         this.register(new CollisionSystem());
         this.register(new TimerSystem());
         this.register(new AttackSystem());

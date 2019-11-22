@@ -9,7 +9,7 @@ import {TimerComponent} from "../../../lib/game/component/timerComponent";
 import {VelocityComponent} from "../../../lib/game/component/velocityComponent";
 import {DestructibleComponent} from "../../../lib/game/component/destructibleComponent";
 import {ExplosiveComponent} from "../../../lib/game/component/explosiveComponent";
-import {GameMap} from "../../../lib/game/gameMap";
+import {GameMap} from "../../../lib/game/map/gameMap";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {EntityManager} from "../../../lib/game/entity/entityManager";
 import {DamageComponent} from "../../../lib/game/component/damageComponent";
@@ -21,7 +21,6 @@ import {OwnerComponent} from "../../../lib/game/component/ownerComponent";
 import {InventoryComponent} from "../../../lib/game/component/inventoryComponent";
 import {getRandomInt, positiveNegative} from "../../../lib/game/util/mathUtil";
 import {FutureDamageComponent} from "../../../lib/game/component/futureDamage";
-
 
 export class Bomb extends GameEntity {
 
@@ -173,6 +172,8 @@ export class Bomb extends GameEntity {
         explosionEntity.addComponent(explosionPosition);
         explosionEntity.addComponent(new DamageComponent());
 
+        this.returnItemToOwner(explosionPosition);
+
         GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionEntity);
         return true;
     }
@@ -201,6 +202,18 @@ export class Bomb extends GameEntity {
         for (let i = 1; i <= explosive.getArea(); i++) {
             let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() ,position.getY() + i);
             tile.addComponent(new FutureDamageComponent());
+        }
+    }
+
+    private returnItemToOwner(explosionPosition: PositionComponent) {
+        let item = GameMap.getInstance().getGameEntity("item",  explosionPosition.getX(), explosionPosition.getY());
+
+        if (item != null && item.hasComponent("owner") && item.getName() === "bomb") {
+            let owner : OwnerComponent = item.getComponent("owner") as OwnerComponent;
+            let player: GameEntity = EntityManager.getInstance().getPlayer(owner.getOwner());
+            let inventory:InventoryComponent = player.getComponent("inventory") as InventoryComponent;
+            inventory.setCurrentItems(inventory.getCurrentItems() + 1);
+
         }
     }
 }
