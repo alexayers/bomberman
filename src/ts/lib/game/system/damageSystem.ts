@@ -42,7 +42,7 @@ export class DamageSystem implements GameSystem {
     }
 
     private killPlayer(x:number, y: number) : void {
-        let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer"];
+        let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer","orangePlayer","greenPlayer"];
 
         for (let i = 0; i < players.length; i++) {
             let player : Player = EntityManager.getInstance().getPlayer(players[i]);
