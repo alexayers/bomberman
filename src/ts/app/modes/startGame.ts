@@ -1,6 +1,6 @@
 import {GameEvent} from "../../lib/event/gameEvent";
 import {OverLayBase, OverLayScreen} from "../../lib/application/overLayScreen";
-import {ParticleFactory} from "../entities/particles/ParticleFactory";
+import {ParticleFactory} from "../entities/particles/particleFactory";
 import {GameEntity} from "../../lib/game/entity/gameEntity";
 import {ParticleSystem} from "../../lib/game/system/particleSystem";
 import {Renderer} from "../../lib/rendering/renderer";
@@ -50,7 +50,7 @@ export class StartGame extends OverLayBase implements OverLayScreen {
             this._particleSystem.process(this._particles[i]);
         }
 
-        Renderer.getInstance().renderImage(
+        Renderer.renderImage(
                 this._bomberManFace,
                 400,
                 30,
@@ -58,7 +58,7 @@ export class StartGame extends OverLayBase implements OverLayScreen {
             500
         );
 
-        Renderer.getInstance().renderImage(
+        Renderer.renderImage(
             this._logo,
             350,
             500,
@@ -68,15 +68,15 @@ export class StartGame extends OverLayBase implements OverLayScreen {
 
 
 
-        Renderer.getInstance().print("[ Press Enter ]", 750, 750, "Garamond", 30, this._color);
-        Renderer.getInstance().print("Arrows to Move. Spacebar to place bombs.", 520, 830, "Garamond", 20, this._color);
+        Renderer.print("[ Press Enter ]", 750, 750, "Garamond", 30, this._color);
+        Renderer.print("Arrows to Move. Spacebar to place bombs.", 520, 830, "Garamond", 20, this._color);
 
     }
 
     public keyboard(gameEvent: GameEvent) : void {
 
         if (gameEvent.payload === KeyboardInput.ENTER) {
-            EventBus.getInstance().publish(new GameEvent("startGame", null));
+            EventBus.publish(new GameEvent("startGame", null));
         }
 
     }

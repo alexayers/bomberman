@@ -7,43 +7,28 @@ const level1Sprites = require("../../../resources/images/level1.png");
 const level1Definition = require("../../../resources/images/level1.json");
 
 export class SpriteSheetManager {
-    private static _instance: SpriteSheetManager;
-    private _spriteSheets:Map<string, SpriteSheet>;
 
-    public static getInstance() : SpriteSheetManager {
+    private static _spriteSheets:Map<string, SpriteSheet> = new Map<string, SpriteSheet>();
 
-        if (this._instance === undefined) {
-            this._instance = new SpriteSheetManager();
-            this._instance._spriteSheets = new Map();
-            this._instance.init();
-        }
-
-        return this._instance;
-    }
-
-    private constructor() {
-
-    }
-
-    private init(): void {
+    public static init(): void {
         let playerSpriteSheet : SpriteSheet = new SpriteSheet(playerDefinition);
         playerSpriteSheet.load(playerSprites);
-        this.register("players", playerSpriteSheet);
+        SpriteSheetManager.register("players", playerSpriteSheet);
 
         let levelSpriteSheet : SpriteSheet = new SpriteSheet(level1Definition);
         levelSpriteSheet.load(level1Sprites);
-        this.register("level", levelSpriteSheet);
+        SpriteSheetManager.register("level", levelSpriteSheet);
 
 
         console.log("Loaded sprite sheets");
     }
 
-    public register(name : string, spriteSheet:SpriteSheet) : void {
+    public static register(name : string, spriteSheet:SpriteSheet) : void {
         console.log("Sprite Sheet ->" + name + " = " + spriteSheet);
-        this._spriteSheets.set(name, spriteSheet);
+        SpriteSheetManager._spriteSheets.set(name, spriteSheet);
     }
 
-    public getSpriteSheet(name: string) : SpriteSheet {
-        return this._spriteSheets.get(name);
+    public static getSpriteSheet(name: string) : SpriteSheet {
+        return SpriteSheetManager._spriteSheets.get(name);
     }
 }

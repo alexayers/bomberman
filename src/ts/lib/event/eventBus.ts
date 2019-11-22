@@ -3,21 +3,9 @@ import { GameEvent } from "./gameEvent";
 
 export class EventBus {
 
-    private static _instance: EventBus;
-    private _channels: Map<string, Array<EventHandler>>;
+    private static _channels: Map<string, Array<Function>> = new Map<string, Array<Function>>();
 
-    private constructor() { }
-
-    public static getInstance() {
-        if (!EventBus._instance) {
-            EventBus._instance = new EventBus();
-            EventBus._instance._channels = new Map();
-        }
-
-        return EventBus._instance;
-    }
-
-    public register(channel: string, eventhandler: EventHandler): void {
+    public static register(channel: string, eventhandler: Function): void {
         if (!this._channels.has(channel)) {
             console.log("Creating new channel ->" + channel);
             this._channels.set(channel, new Array());
@@ -26,20 +14,20 @@ export class EventBus {
         this._channels.get(channel).push(eventhandler);
     }
 
-    public publish(gameEvent: GameEvent) {
+    public static publish(gameEvent: GameEvent) {
 
         if (this._channels.has(gameEvent.channel)) {
             let listeners = this._channels.get(gameEvent.channel);
 
             for (let listener of listeners) {
-                listener.handleEvent(gameEvent);
+                try {
+                    listener(gameEvent);
+                } catch (e) {
+                    console.error("Incorrectly defined handler -> ", e);
+                }
             }
         } else {
             console.log("No listeners registered for channel -> " + gameEvent.channel);
         }
     }
-}
-
-export interface EventHandler {
-    handleEvent(gameEvent: GameEvent): void;
 }

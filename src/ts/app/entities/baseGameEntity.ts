@@ -11,8 +11,8 @@ export class BaseGameEntity extends GameEntity {
     constructor(name:string, spriteSheetName: string, sprite: string) {
         super(name);
 
-        let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet(spriteSheetName);
-        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet(spriteSheetName));
+        let spriteSheet: SpriteSheet = SpriteSheetManager.getSpriteSheet(spriteSheetName);
+        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getSpriteSheet(spriteSheetName));
         animatedSprite.addSprite(spriteSheet.getSprite(sprite,sprite));
 
         let animationComponent : AnimationComponent = new AnimationComponent();

@@ -16,8 +16,8 @@ export class WaterWall extends GameEntity {
         this.addComponent(new WallComponent());
         this.addComponent(new DestructibleComponent());
 
-        let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("level");
-        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("level"));
+        let spriteSheet: SpriteSheet = SpriteSheetManager.getSpriteSheet("level");
+        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getSpriteSheet("level"));
         animatedSprite.addSprite(spriteSheet.getSprite("waterPlant1","waterPlant1"));
         animatedSprite.addSprite(spriteSheet.getSprite("waterPlant2","waterPlant2"));
         animatedSprite.addSprite(spriteSheet.getSprite("waterPlant3","waterPlant3"));

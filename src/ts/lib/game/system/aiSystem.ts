@@ -64,7 +64,7 @@ export class AiSystem implements GameSystem {
 
                 let newNode : PathNode = path[path.length-1];
 
-                let item : GameEntity = GameMap.getInstance().getGameEntity("item", newNode.getX(), newNode.getY());
+                let item : GameEntity = GameMap.getGameEntity("item", newNode.getX(), newNode.getY());
 
                 if (item != null) {
                     gameEntity.addComponent(new AttackComponent());
@@ -81,7 +81,7 @@ export class AiSystem implements GameSystem {
     }
 
     private findEnemyPosition(enemy:string) : Point {
-        let enemyPlayer : GameEntity = EntityManager.getInstance().getPlayer(enemy);
+        let enemyPlayer : GameEntity = EntityManager.getPlayer(enemy);
         let enemyPosition : PositionComponent = enemyPlayer.getComponent("position") as PositionComponent;
 
         let enemyX : number = enemyPosition.getX();
@@ -91,7 +91,7 @@ export class AiSystem implements GameSystem {
             for (let x = enemyX - 1; x < enemyX +1; x++) {
                 if (x == enemyX && y == enemyY) {
                     continue;
-                } else if (!GameMap.getInstance().isWall(x,y)) {
+                } else if (!GameMap.isWall(x,y)) {
                     return {
                         x: x,
                         y: y
@@ -128,7 +128,7 @@ export class AiSystem implements GameSystem {
             return true;
         }
 
-        if (EntityManager.getInstance().getPlayer(enemyComponent.getEnemyName()).hasComponent("dead")) {
+        if (EntityManager.getPlayer(enemyComponent.getEnemyName()).hasComponent("dead")) {
             return true;
         }
 

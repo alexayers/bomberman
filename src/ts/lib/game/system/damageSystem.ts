@@ -22,15 +22,15 @@ export class DamageSystem implements GameSystem {
 
         if (gameEntity.hasComponent("damage")) {
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
-            let item = GameMap.getInstance().getGameEntity("item",position.getX(),position.getY());
+            let item = GameMap.getGameEntity("item",position.getX(),position.getY());
 
             if (item != null && item.getName() === "crate") {
                 let randomPowerUps : string [] = ["bombUp","explosionUp","shieldUp","skull","speedUp"];
                 let  powerUpName = randomPowerUps[Math.floor(Math.random()*randomPowerUps.length)];
 
-                let powerUp = EntityManager.getInstance().getEntity(powerUpName);
+                let powerUp = EntityManager.getEntity(powerUpName);
 
-                GameMap.getInstance().setGameEntity("item",position.getX(),position.getY(), powerUp);
+                GameMap.setGameEntity("item",position.getX(),position.getY(), powerUp);
 
             }
 
@@ -45,7 +45,7 @@ export class DamageSystem implements GameSystem {
         let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer","orangePlayer","greenPlayer"];
 
         for (let i = 0; i < players.length; i++) {
-            let player : Player = EntityManager.getInstance().getPlayer(players[i]);
+            let player : Player = EntityManager.getPlayer(players[i]);
 
             if (player !== undefined) {
 
@@ -62,9 +62,9 @@ export class DamageSystem implements GameSystem {
                     direction.setDirection("dead");
 
                     if (player.getName() === "whitePlayer") {
-                        EventBus.getInstance().publish(new GameEvent("gameOver", null));
+                        EventBus.publish(new GameEvent("gameOver", null));
                     } else {
-                        EventBus.getInstance().publish(new GameEvent("death", null));
+                        EventBus.publish(new GameEvent("death", null));
                     }
                 }
             }

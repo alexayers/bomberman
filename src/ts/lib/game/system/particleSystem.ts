@@ -3,7 +3,7 @@ import {GameEntity} from "../entity/gameEntity";
 import {ParticleComponent} from "../component/particleComponent";
 import {GameMap} from "../map/gameMap";
 import {RGBtoHex} from "../util/colorUtil";
-import {ParticleFactory} from "../../../app/entities/particles/ParticleFactory";
+import {ParticleFactory} from "../../../app/entities/particles/particleFactory";
 import {system} from "../../framework/framework";
 
 
@@ -49,7 +49,7 @@ export class ParticleSystem implements GameSystem {
                 this._ctx.fill();
                 this._ctx.closePath();
             } else if (!particle.isAlive() && !particle.shouldRespawn()) {
-                GameMap.getInstance().removeParticle(gameEntity.getId());
+                GameMap.removeParticle(gameEntity.getId());
             } else if (!particle.isAlive() && particle.shouldRespawn()) {
                  ParticleFactory.refreshParticle(gameEntity, gameEntity.getName(), particle.getX(), particle.getY());
             } else {

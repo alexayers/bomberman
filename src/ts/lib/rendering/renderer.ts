@@ -1,7 +1,5 @@
 import {Sprite} from "./spriteSheet";
-import {EventBus, EventHandler} from "../event/eventBus";
-import {GameEvent} from "../event/gameEvent";
-import {Color} from "./Color";
+import {Color} from "./color";
 import {RGBtoHex} from "../game/util/colorUtil";
 
 export interface RenderingEffect {
@@ -12,33 +10,23 @@ export interface RenderingEffect {
     color:Color
 }
 
-export class Renderer implements EventHandler  {
-    private static _instance:Renderer;
-    private _canvas: HTMLCanvasElement;
-    private _ctx: CanvasRenderingContext2D;
-    private _height: number = window.innerHeight;
-    private _width: number = window.innerWidth;
-    private _renderingEffects:RenderingEffect;
-    private _spriteSize:number;
+export class Renderer {
+    private static _canvas: HTMLCanvasElement;
+    private static _ctx: CanvasRenderingContext2D;
+    private static _height: number = window.innerHeight;
+    private static _width: number = window.innerWidth;
+    private static _renderingEffects:RenderingEffect;
+    private static _spriteSize:number;
 
-    public static getInstance() : Renderer {
-
-        if (this._instance === undefined) {
-            this._instance = new Renderer();
-        }
-
-        return this._instance;
-    }
-
-    private constructor() {
-        this._canvas = document.getElementById('canvas') as
+    public static init() {
+        Renderer._canvas = document.getElementById('canvas') as
             HTMLCanvasElement;
 
-        this._canvas.width = this._width;
-        this._canvas.height = this._height;
-        this._ctx = this._canvas.getContext("2d");
-        this._ctx.imageSmoothingEnabled = false;
-        this._renderingEffects = {
+        Renderer._canvas.width = Renderer._width;
+        Renderer._canvas.height = Renderer._height;
+        Renderer._ctx = Renderer._canvas.getContext("2d");
+        Renderer._ctx.imageSmoothingEnabled = false;
+        Renderer._renderingEffects = {
             offsetX: 0,
             offsetY: 0,
             width:0,
@@ -46,105 +34,98 @@ export class Renderer implements EventHandler  {
             color: new Color()
         };
 
-        this._spriteSize = 64;
-        EventBus.getInstance().register("rendering", this);
-
+        Renderer._spriteSize = 64;
     }
 
-    clearScreen() {
-        this._ctx.clearRect(0,0,this._canvas.width, this._canvas.height);
+    static clearScreen() : void {
+        Renderer._ctx.clearRect(0,0,Renderer._canvas.width, Renderer._canvas.height);
     }
 
-    render(sprite: Sprite, image:HTMLImageElement,x: number, y: number): void {
+    static render(sprite: Sprite, image:HTMLImageElement,x: number, y: number): void {
 
         try {
 
-            if (this._renderingEffects.color != null && this._renderingEffects.color.getAlpha() > 0) {
-           //     this._ctx.globalAlpha = this._renderingEffects.color.getAlpha() / 1000;
-           //     this._ctx.fillStyle = RGBtoHex(this._renderingEffects.color.getRed(),this._renderingEffects.color.getGreen(),this._renderingEffects.color.getBlue())
-            }
-
-            this._ctx.drawImage(
+            Renderer._ctx.drawImage(
                 image,
                 sprite.x,
                 sprite.y,
                 24,
                 24,
-                x + this._renderingEffects.offsetX + this.getRenderOffsetX(),
-                y +this._renderingEffects.offsetY  + this.getRenderOffsetY(),
-                this._spriteSize + this._renderingEffects.width,
-                this._spriteSize + this._renderingEffects.height
+                x + Renderer._renderingEffects.offsetX + Renderer.getRenderOffsetX(),
+                y +Renderer._renderingEffects.offsetY  + Renderer.getRenderOffsetY(),
+                Renderer._spriteSize + Renderer._renderingEffects.width,
+                Renderer._spriteSize + Renderer._renderingEffects.height
             );
         } catch (e) {
             Error("Unable to render");
         }
     }
 
-    public getRenderOffsetY(): number {
+    public static getRenderOffsetY(): number {
         return + 20;
     }
 
-    public getRenderOffsetX(): number {
+    public static getRenderOffsetX(): number {
         return + 100;
     }
 
 
-    finalRender() : void {
+    static finalRender() : void {
         let restoreRate : number = 4;
 
-        if (this._renderingEffects.height > 0) {
-            this._renderingEffects.height-=restoreRate;
+        if (Renderer._renderingEffects.height > 0) {
+            Renderer._renderingEffects.height-=restoreRate;
         }
 
-        if (this._renderingEffects.height < 0) {
-            this._renderingEffects.height = 0;
+        if (Renderer._renderingEffects.height < 0) {
+            Renderer._renderingEffects.height = 0;
         }
 
-        if (this._renderingEffects.width > 0) {
-            this._renderingEffects.width-=restoreRate;
+        if (Renderer._renderingEffects.width > 0) {
+            Renderer._renderingEffects.width-=restoreRate;
         }
 
-        if (this._renderingEffects.width < 0) {
-            this._renderingEffects.width = 0;
+        if (Renderer._renderingEffects.width < 0) {
+            Renderer._renderingEffects.width = 0;
         }
 
-        if (this._renderingEffects.offsetX > 0) {
-            this._renderingEffects.offsetX-=restoreRate;
+        if (Renderer._renderingEffects.offsetX > 0) {
+            Renderer._renderingEffects.offsetX-=restoreRate;
         }
 
-        if (this._renderingEffects.offsetX < 0) {
-            this._renderingEffects.offsetX = 0;
+        if (Renderer._renderingEffects.offsetX < 0) {
+            Renderer._renderingEffects.offsetX = 0;
         }
 
-        if (this._renderingEffects.offsetY > 0) {
-            this._renderingEffects.offsetY-=restoreRate;
+        if (Renderer._renderingEffects.offsetY > 0) {
+            Renderer._renderingEffects.offsetY-=restoreRate;
         }
 
-        if (this._renderingEffects.offsetY < 0) {
-            this._renderingEffects.offsetY = 0;
+        if (Renderer._renderingEffects.offsetY < 0) {
+            Renderer._renderingEffects.offsetY = 0;
         }
 
-        if (this._renderingEffects.color.getAlpha() > 0) {
-            this._renderingEffects.color.setAlpha(this._renderingEffects.color.getAlpha() - 1);
-        } else if (this._renderingEffects.height < 0) {
-            this._renderingEffects.height = 0;
-        }
-    }
-
-    public resize() {
-        if (this._canvas !== undefined) {
-            this._canvas.width = window.innerWidth;
-            this._canvas.height = window.innerHeight;
-            this._ctx.imageSmoothingEnabled = false;
+        if (Renderer._renderingEffects.color.getAlpha() > 0) {
+            Renderer._renderingEffects.color.setAlpha(Renderer._renderingEffects.color.getAlpha() - 1);
+        } else if (Renderer._renderingEffects.height < 0) {
+            Renderer._renderingEffects.height = 0;
         }
     }
 
-    handleEvent(gameEvent: GameEvent): void {
-        this._renderingEffects = gameEvent.payload;
+    public static resize() {
+        if (Renderer._canvas !== undefined) {
+            Renderer._canvas.width = window.innerWidth;
+            Renderer._canvas.height = window.innerHeight;
+            Renderer._ctx.imageSmoothingEnabled = false;
+        }
     }
 
-    renderImage(image: HTMLImageElement, x: number, y: number, width: number, height: number) {
-        this._ctx.drawImage(
+    static addRenderingEffect(renderingEffect: RenderingEffect): void {
+        Renderer._renderingEffects = renderingEffect;
+    }
+
+    static renderImage(image: HTMLImageElement, x: number, y: number, width: number, height: number) {
+        Renderer._ctx.drawImage(
             image,
             x,
             y,
@@ -153,9 +134,9 @@ export class Renderer implements EventHandler  {
         );
     }
 
-    print(msg: string, x: number, y: number, font: string, fontSize: number, color: Color) : void {
-        this._ctx.font = fontSize + "px " + font;
-        this._ctx.fillStyle = RGBtoHex(color.getRed(),color.getGreen(),color.getBlue());
-        this._ctx.fillText(msg, x, y);
+    static print(msg: string, x: number, y: number, font: string, fontSize: number, color: Color) : void {
+        Renderer._ctx.font = fontSize + "px " + font;
+        Renderer._ctx.fillStyle = RGBtoHex(color.getRed(),color.getGreen(),color.getBlue());
+        Renderer._ctx.fillText(msg, x, y);
     }
 }

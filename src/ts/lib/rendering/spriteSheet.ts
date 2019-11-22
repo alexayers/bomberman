@@ -55,7 +55,7 @@ export class SpriteSheet {
     }
 
     public render(ctx: CanvasRenderingContext2D, sprite: Sprite, x: number, y: number) {
-        Renderer.getInstance()
+        Renderer
             .render(sprite, this._image, x,y);
     }
 

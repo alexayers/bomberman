@@ -2,7 +2,7 @@ import {GameMap} from "../lib/game/map/gameMap";
 import {GameMode} from "./modes/modes";
 import {Game} from "./modes/game";
 import {GameScreen} from "../lib/application/gameScreen";
-import {EventBus, EventHandler} from "../lib/event/eventBus";
+import {EventBus} from "../lib/event/eventBus";
 import {GameEvent} from "../lib/event/gameEvent";
 import {Renderer} from "../lib/rendering/renderer";
 import {Application} from "../lib/application/application";
@@ -10,25 +10,26 @@ import {StartGame} from "./modes/startGame";
 import {Victory} from "./modes/victory";
 import {GameOver} from "./modes/gameOver";
 import {OverLayScreen} from "../lib/application/overLayScreen";
+import {EntityManager} from "../lib/game/entity/entityManager";
 
 
 const framesPerSecond: number = 60;
 
-export class Bomberman extends Application implements EventHandler {
+export class Bomberman extends Application {
 
     private _gameScreens:Map<GameMode,GameScreen>;
     private _gameOverlayScreen:Map<string,OverLayScreen>;
 
     private _gameMode:GameMode;
-    private _renderer:Renderer;
     private _deathCount: number = 0;
 
     private _demoTicks: number = 0;
 
     init() {
 
-        GameMap.getInstance();
-        this._renderer = Renderer.getInstance();
+        EntityManager.init();
+        GameMap.init();
+        Renderer.init();
 
         this._gameScreens = new Map<GameMode, GameScreen>();
         this._gameOverlayScreen = new Map<string,OverLayScreen>();
@@ -42,10 +43,13 @@ export class Bomberman extends Application implements EventHandler {
 
         this._gameMode = GameMode.PLAYING;
 
-        EventBus.getInstance().register("keyboardEvent", this);
-        EventBus.getInstance().register("gameOver", this);
-        EventBus.getInstance().register("death", this);
-        EventBus.getInstance().register("startGame", this);
+        EventBus.register("keyboardEvent", this.handleEvent.bind(this));
+
+        EventBus.register("gameOver", this.handleEvent.bind(this));
+
+        EventBus.register("death", this.handleEvent.bind(this));
+
+        EventBus.register("startGame", this.handleEvent.bind(this));
 
         this._gameOverlayScreen.get("startGame").enable();
         this.gameLoop();
@@ -54,7 +58,7 @@ export class Bomberman extends Application implements EventHandler {
     gameLoop() {
 
         this.demoMode();
-        this._renderer.clearScreen();
+        Renderer.clearScreen();
 
         this._gameScreens.get(this._gameMode).gameLoop();
 
@@ -64,7 +68,7 @@ export class Bomberman extends Application implements EventHandler {
             }
         }
 
-        this._renderer.finalRender();
+        Renderer.finalRender();
 
         setTimeout(() => {
             requestAnimationFrame(this.gameLoop.bind(this));
@@ -78,7 +82,7 @@ export class Bomberman extends Application implements EventHandler {
             if (this._demoTicks > 200) {
                 this._demoTicks = 0;
                 this._deathCount = 10;
-                EventBus.getInstance().publish(new GameEvent("death", null));
+                EventBus.publish(new GameEvent("death", null));
             }
         }
     }

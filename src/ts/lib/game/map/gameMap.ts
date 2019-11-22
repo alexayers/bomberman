@@ -5,51 +5,37 @@ import {RandomLevel} from "./randomLevel";
 
 
 export class GameMap {
+    protected static _levels:Map<string, Level>;
+    protected static _currentLevel:string;
+    private static _width: number;
+    private static _height: number;
 
-    private static _instance: GameMap;
-    protected _levels:Map<string, Level>;
-    protected _currentLevel:string;
-    private _width: number;
-    private _height: number;
 
-    public static getInstance(): GameMap {
-        if (this._instance === undefined) {
-            this._instance = new GameMap();
-            this._instance.init();
-        }
 
-        return this._instance;
+    public static init(): void {
+
+        GameMap._width = 19;
+        GameMap._height = 14;
+        GameMap._levels = new Map<string, Level>();
+        GameMap._levels.set("level1", new RandomLevel());
+        GameMap._currentLevel = "level1";
     }
 
-    public init(): void {
-
-        this._levels = new Map<string, Level>();
-        this._levels.set("level1", new RandomLevel());
-
-
-        this._currentLevel = "level1";
+    public static getGameEntity(layer: string, x: number, y: number): GameEntity {
+        return GameMap._levels.get(GameMap._currentLevel).getMap().get(layer)[x + (y * GameMap._width)];
     }
 
-    private constructor() {
-        this._width = 19;
-        this._height = 14;
+    public static getWidth() : number {
+        return GameMap._width;
     }
 
-    public getGameEntity(layer: string, x: number, y: number): GameEntity {
-        return this._levels.get(this._currentLevel).getMap().get(layer)[x + (y * this._width)];
-    }
-
-    public getWidth() : number {
-        return this._width;
-    }
-
-    public getHeight() : number {
-        return this._height;
+    public static getHeight() : number {
+        return GameMap._height;
     }
 
 
 
-    setGameEntity(layer: string, x: number, y: number, entity: GameEntity) {
+    static setGameEntity(layer: string, x: number, y: number, entity: GameEntity) {
 
         if (entity != null) {
             let position: PositionComponent = new PositionComponent();
@@ -58,12 +44,12 @@ export class GameMap {
             entity.addComponent(position);
         }
 
-        this._levels.get(this._currentLevel).getMap().get(layer)[x + (y * this._width)] = entity;
+        GameMap._levels.get(GameMap._currentLevel).getMap().get(layer)[x + (y * GameMap._width)] = entity;
     }
 
-    isWall(x: number, y: number) : boolean {
-        let tile : GameEntity = this.getGameEntity("tile", x,y);
-        let item : GameEntity = this.getGameEntity("item",x,y);
+    static isWall(x: number, y: number) : boolean {
+        let tile : GameEntity = GameMap.getGameEntity("tile", x,y);
+        let item : GameEntity = GameMap.getGameEntity("item",x,y);
 
         if (item != null && item.hasComponent("wall")) {
             return true;
@@ -77,14 +63,14 @@ export class GameMap {
         return false;
     }
 
-    hasComponent(componentName: string, x: number, y: number) {
-        let item : GameEntity = this.getGameEntity("item",x,y);
+    static hasComponent(componentName: string, x: number, y: number) {
+        let item : GameEntity = GameMap.getGameEntity("item",x,y);
 
         if (item != null && item.hasComponent(componentName)) {
             return true;
         }
 
-        let tile : GameEntity = this.getGameEntity("tile",x,y);
+        let tile : GameEntity = GameMap.getGameEntity("tile",x,y);
 
         if (tile != null && tile.hasComponent(componentName)) {
             return true;
@@ -93,25 +79,25 @@ export class GameMap {
         return false;
     }
 
-    public addParticle(gameEntity:GameEntity) : void {
-        this._levels.get(this._currentLevel).addParticle(gameEntity);
+    public static addParticle(gameEntity:GameEntity) : void {
+        GameMap._levels.get(GameMap._currentLevel).addParticle(gameEntity);
     }
 
-    public getParticles() : Array<GameEntity> {
-        return this._levels.get(this._currentLevel).getParticles();
+    public static getParticles() : Array<GameEntity> {
+        return GameMap._levels.get(GameMap._currentLevel).getParticles();
     }
 
-    public removeParticle(id: number) : void {
+    public static removeParticle(id: number) : void {
 
     }
 
-    public translateCoordinatesToIdx(x: number, y: number) :number {
-        return x + (y * this._width);
+    public static translateCoordinatesToIdx(x: number, y: number) :number {
+        return x + (y * GameMap._width);
     }
 
-    canDestroy(x: number, y: number) {
-        let tile : GameEntity = this.getGameEntity("tile", x,y);
-        let item : GameEntity = this.getGameEntity("item",x,y);
+    static canDestroy(x: number, y: number) {
+        let tile : GameEntity = GameMap.getGameEntity("tile", x,y);
+        let item : GameEntity = GameMap.getGameEntity("item",x,y);
 
         if (item != null && item.hasComponent("wall") && !item.hasComponent("destructible")) {
             return true;
@@ -126,10 +112,8 @@ export class GameMap {
         return false;
     }
 
-
-
-    isItemPresent(itemName: string, x: number, y: number) {
-        let item : GameEntity = this.getGameEntity("item",x,y);
+    static isItemPresent(itemName: string, x: number, y: number) {
+        let item : GameEntity = GameMap.getGameEntity("item",x,y);
 
         if (item != null && item.getName() === itemName) {
             return true;
@@ -138,7 +122,7 @@ export class GameMap {
         return false;
     }
 
-    getMap(): Map<string, Array<GameEntity>> {
-        return this._levels.get(this._currentLevel).getMap();
+    static getMap(): Map<string, Array<GameEntity>> {
+        return GameMap._levels.get(GameMap._currentLevel).getMap();
     }
 }

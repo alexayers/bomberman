@@ -5,7 +5,7 @@ import {GameMap} from "../map/gameMap";
 import {PositionComponent} from "../component/positionComponent";
 import {AnimateComponent} from "../component/animateComponent";
 import {GrassParticle} from "../../../app/entities/particles/grassParticle";
-import {ParticleFactory} from "../../../app/entities/particles/ParticleFactory";
+import {ParticleFactory} from "../../../app/entities/particles/particleFactory";
 import {getRandomInt} from "../util/mathUtil";
 import {system} from "../../framework/framework";
 
@@ -42,12 +42,12 @@ export class CollisionSystem implements GameSystem {
                     attemptedY= -1;
                 }
 
-                if (!GameMap.getInstance().isWall(position.getX() + attemptedX,position.getY() + attemptedY)) {
+                if (!GameMap.isWall(position.getX() + attemptedX,position.getY() + attemptedY)) {
 
                     if (getRandomInt(2) == 2) {
                         for (let i = 0; i < 50; i++) {
                             let grassParticle: GrassParticle = ParticleFactory.getParticle("grassParticle", position.getX(), position.getY());
-                            GameMap.getInstance().addParticle(grassParticle);
+                            GameMap.addParticle(grassParticle);
                         }
                     }
 

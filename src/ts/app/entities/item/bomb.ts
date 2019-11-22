@@ -15,8 +15,8 @@ import {EntityManager} from "../../../lib/game/entity/entityManager";
 import {DamageComponent} from "../../../lib/game/component/damageComponent";
 import {EventBus} from "../../../lib/event/eventBus";
 import {GameEvent} from "../../../lib/event/gameEvent";
-import {RenderingEffect} from "../../../lib/rendering/renderer";
-import {Color} from "../../../lib/rendering/Color";
+import {Renderer, RenderingEffect} from "../../../lib/rendering/renderer";
+import {Color} from "../../../lib/rendering/color";
 import {OwnerComponent} from "../../../lib/game/component/ownerComponent";
 import {InventoryComponent} from "../../../lib/game/component/inventoryComponent";
 import {getRandomInt, positiveNegative} from "../../../lib/game/util/mathUtil";
@@ -31,8 +31,8 @@ export class Bomb extends GameEntity {
         this.addComponent(new DestructibleComponent());
         this.addComponent(new ExplosiveComponent());
 
-        let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("level");
-        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("level"));
+        let spriteSheet: SpriteSheet = SpriteSheetManager.getSpriteSheet("level");
+        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getSpriteSheet("level"));
         animatedSprite.addSprite(spriteSheet.getSprite("bomb1", "bomb1"));
         animatedSprite.addSprite(spriteSheet.getSprite("bomb1", "bomb1"));
         animatedSprite.addSprite(spriteSheet.getSprite("bomb2", "bomb2"));
@@ -52,10 +52,10 @@ export class Bomb extends GameEntity {
         timerComponent.setTimer(20);
         timerComponent.setCallback((gameEntity: GameEntity) => {
 
-            EventBus.getInstance().publish(new GameEvent("audio","explosion" + getRandomInt(3)));
+            EventBus.publish(new GameEvent("audio","explosion" + getRandomInt(3)));
             let owner : OwnerComponent = gameEntity.getComponent("owner") as OwnerComponent;
 
-            let player : GameEntity = EntityManager.getInstance().getPlayer(owner.getOwner());
+            let player : GameEntity = EntityManager.getPlayer(owner.getOwner());
             let inventory : InventoryComponent = player.getComponent("inventory") as InventoryComponent;
             inventory.setCurrentItems(inventory.getCurrentItems() + 1);
 
@@ -66,22 +66,22 @@ export class Bomb extends GameEntity {
             explosionColor.setBlue(60);
 
 
-            EventBus.getInstance().publish(new GameEvent("rendering", {
-                offsetX: getRandomInt(50) * positiveNegative(),
-                offsetY: getRandomInt(50) * positiveNegative(),
-                width: getRandomInt(8) * positiveNegative(),
-                height: getRandomInt(8) * positiveNegative(),
-                color: explosionColor
-            } as RenderingEffect));
-
-
+            Renderer.addRenderingEffect(
+                {
+                    offsetX: getRandomInt(50) * positiveNegative(),
+                    offsetY: getRandomInt(50) * positiveNegative(),
+                    width: getRandomInt(8) * positiveNegative(),
+                    height: getRandomInt(8) * positiveNegative(),
+                    color: explosionColor
+                } as RenderingEffect
+            );
 
             let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
-            GameMap.getInstance().setGameEntity("item", position.getX(), position.getY(), null);
+            GameMap.setGameEntity("item", position.getX(), position.getY(), null);
 
-            let explosionMiddle: GameEntity = EntityManager.getInstance().getEntity("explosionMiddle");
+            let explosionMiddle: GameEntity = EntityManager.getEntity("explosionMiddle");
             explosionMiddle.addComponent(position);
-            GameMap.getInstance().setGameEntity("item", position.getX(), position.getY(), explosionMiddle);
+            GameMap.setGameEntity("item", position.getX(), position.getY(), explosionMiddle);
 
             let explosive: ExplosiveComponent = gameEntity.getComponent("explosive") as ExplosiveComponent;
 
@@ -89,7 +89,7 @@ export class Bomb extends GameEntity {
 
             // left
             for (let i = 1; i <= explosive.getArea(); i++) {
-                let explosionLeft: GameEntity = EntityManager.getInstance().getEntity("explosionLeft");
+                let explosionLeft: GameEntity = EntityManager.getEntity("explosionLeft");
                 let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX() - i);
@@ -103,7 +103,7 @@ export class Bomb extends GameEntity {
 
             // right
             for (let i = 1; i <= explosive.getArea(); i++) {
-                let explosionRight: GameEntity = EntityManager.getInstance().getEntity("explosionRight");
+                let explosionRight: GameEntity = EntityManager.getEntity("explosionRight");
                 let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX() + i);
@@ -116,7 +116,7 @@ export class Bomb extends GameEntity {
 
             // up
             for (let i = 1; i <= explosive.getArea(); i++) {
-                let explosionTop: GameEntity = EntityManager.getInstance().getEntity("explosionTop");
+                let explosionTop: GameEntity = EntityManager.getEntity("explosionTop");
                 let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX());
@@ -129,7 +129,7 @@ export class Bomb extends GameEntity {
 
             // bottom
             for (let i = 1; i <= explosive.getArea(); i++) {
-                let explosionBottom: GameEntity = EntityManager.getInstance().getEntity("explosionBottom");
+                let explosionBottom: GameEntity = EntityManager.getEntity("explosionBottom");
                 let explosionPosition: PositionComponent = new PositionComponent();
 
                 explosionPosition.setX(position.getX());
@@ -164,8 +164,8 @@ export class Bomb extends GameEntity {
     }
 
     private placeExplosion(explosionPosition: PositionComponent, explosionEntity: GameEntity): boolean {
-        if (GameMap.getInstance().isWall(explosionPosition.getX(), explosionPosition.getY()) &&
-            !GameMap.getInstance().hasComponent("destructible", explosionPosition.getX(), explosionPosition.getY())) {
+        if (GameMap.isWall(explosionPosition.getX(), explosionPosition.getY()) &&
+            !GameMap.hasComponent("destructible", explosionPosition.getX(), explosionPosition.getY())) {
             return false;
         }
 
@@ -174,7 +174,7 @@ export class Bomb extends GameEntity {
 
         this.returnItemToOwner(explosionPosition);
 
-        GameMap.getInstance().setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionEntity);
+        GameMap.setGameEntity("item", explosionPosition.getX(), explosionPosition.getY(), explosionEntity);
         return true;
     }
 
@@ -182,35 +182,35 @@ export class Bomb extends GameEntity {
     private setFutureDamage(position: PositionComponent, explosive: ExplosiveComponent) : void {
         // left
         for (let i = 1; i <= explosive.getArea(); i++) {
-            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() - i,position.getY());
+            let tile : GameEntity = GameMap.getGameEntity("tile", position.getX() - i,position.getY());
             tile.addComponent(new FutureDamageComponent());
         }
 
         // right
         for (let i = 1; i <= explosive.getArea(); i++) {
-            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() + i,position.getY());
+            let tile : GameEntity = GameMap.getGameEntity("tile", position.getX() + i,position.getY());
             tile.addComponent(new FutureDamageComponent());
         }
 
         // up
         for (let i = 1; i <= explosive.getArea(); i++) {
-            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX(),position.getY() - i);
+            let tile : GameEntity = GameMap.getGameEntity("tile", position.getX(),position.getY() - i);
             tile.addComponent(new FutureDamageComponent());
         }
 
         // bottom
         for (let i = 1; i <= explosive.getArea(); i++) {
-            let tile : GameEntity = GameMap.getInstance().getGameEntity("tile", position.getX() ,position.getY() + i);
+            let tile : GameEntity = GameMap.getGameEntity("tile", position.getX() ,position.getY() + i);
             tile.addComponent(new FutureDamageComponent());
         }
     }
 
     private returnItemToOwner(explosionPosition: PositionComponent) {
-        let item = GameMap.getInstance().getGameEntity("item",  explosionPosition.getX(), explosionPosition.getY());
+        let item = GameMap.getGameEntity("item",  explosionPosition.getX(), explosionPosition.getY());
 
         if (item != null && item.hasComponent("owner") && item.getName() === "bomb") {
             let owner : OwnerComponent = item.getComponent("owner") as OwnerComponent;
-            let player: GameEntity = EntityManager.getInstance().getPlayer(owner.getOwner());
+            let player: GameEntity = EntityManager.getPlayer(owner.getOwner());
             let inventory:InventoryComponent = player.getComponent("inventory") as InventoryComponent;
             inventory.setCurrentItems(inventory.getCurrentItems() + 1);
 

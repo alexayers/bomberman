@@ -20,7 +20,7 @@ export class ParticleFactory {
         if (particleName === "smokeParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("smokeParticle");
+                particle = EntityManager.getEntity("smokeParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -40,8 +40,8 @@ export class ParticleFactory {
             particleComponent.setWidth(getRandomInt(15) + 35);
             particleComponent.setDecay(getRandomInt(25));
             particleComponent.setAlive(true);
-            particleComponent.setRenderOffsetX(Renderer.getInstance().getRenderOffsetX());
-            particleComponent.setRenderOffsetY(Renderer.getInstance().getRenderOffsetY());
+            particleComponent.setRenderOffsetX(Renderer.getRenderOffsetX());
+            particleComponent.setRenderOffsetY(Renderer.getRenderOffsetY());
 
             let color : Color = new Color();
 
@@ -65,7 +65,7 @@ export class ParticleFactory {
         if (particleName === "grassParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("grassParticle");
+                particle = EntityManager.getEntity("grassParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -85,8 +85,8 @@ export class ParticleFactory {
             particleComponent.setWidth(getRandomInt(8));
             particleComponent.setDecay(getRandomInt(10));
             particleComponent.setAlive(true);
-            particleComponent.setRenderOffsetX(Renderer.getInstance().getRenderOffsetX());
-            particleComponent.setRenderOffsetY(Renderer.getInstance().getRenderOffsetY());
+            particleComponent.setRenderOffsetX(Renderer.getRenderOffsetX());
+            particleComponent.setRenderOffsetY(Renderer.getRenderOffsetY());
 
             let color : Color = new Color();
             let gray =getRandomInt(255);
@@ -103,7 +103,7 @@ export class ParticleFactory {
         }  else if (particleName === "mistParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("mistParticle");
+                particle = EntityManager.getEntity("mistParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -141,8 +141,8 @@ export class ParticleFactory {
             particleComponent.setDecay(getRandomInt(128));
             particleComponent.setRespawn(true);
             particleComponent.setAlive(true);
-            particleComponent.setRenderOffsetX(Renderer.getInstance().getRenderOffsetX());
-            particleComponent.setRenderOffsetY(Renderer.getInstance().getRenderOffsetY());
+            particleComponent.setRenderOffsetX(Renderer.getRenderOffsetX());
+            particleComponent.setRenderOffsetY(Renderer.getRenderOffsetY());
 
             let color : Color = new Color();
 
@@ -160,7 +160,7 @@ export class ParticleFactory {
         } else if (particleName === "rainParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("rainParticle");
+                particle = EntityManager.getEntity("rainParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -206,7 +206,7 @@ export class ParticleFactory {
         }  else if (particleName === "winningParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("winningParticle");
+                particle = EntityManager.getEntity("winningParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -254,7 +254,7 @@ export class ParticleFactory {
         }  else if (particleName === "losingParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("losingParticle");
+                particle = EntityManager.getEntity("losingParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -309,7 +309,7 @@ export class ParticleFactory {
         }   else if (particleName === "fireParticle") {
 
             if (particle == null) {
-                particle = EntityManager.getInstance().getEntity("fireParticle");
+                particle = EntityManager.getEntity("fireParticle");
                 particle.addComponent(new ParticleComponent());
                 particle.addComponent(new PositionComponent());
             }
@@ -329,8 +329,8 @@ export class ParticleFactory {
             particleComponent.setWidth(getRandomInt(8));
             particleComponent.setDecay(getRandomInt(10));
             particleComponent.setAlive(true);
-            particleComponent.setRenderOffsetX(Renderer.getInstance().getRenderOffsetX());
-            particleComponent.setRenderOffsetY(Renderer.getInstance().getRenderOffsetY());
+            particleComponent.setRenderOffsetX(Renderer.getRenderOffsetX());
+            particleComponent.setRenderOffsetY(Renderer.getRenderOffsetY());
 
             let color : Color = new Color();
             let gray =getRandomInt(255);

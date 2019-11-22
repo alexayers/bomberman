@@ -37,79 +37,70 @@ var cloneDeep = require('lodash.clonedeep');
 
 
 export class EntityManager {
-    private static _instance:EntityManager;
-    private _entities:Map<string, GameEntity>;
-    private _players:Map<string, GameEntity>;
+    private static _entities:Map<string, GameEntity> = new Map<string, GameEntity>();
+    private static _players:Map<string, GameEntity> = new Map<string, GameEntity>();
 
-    public static getInstance() : EntityManager {
-        if (this._instance === undefined) {
-            this._instance = new EntityManager();
-            this._instance._entities = new Map<string, GameEntity>();
-            this._instance._players = new Map<string, GameEntity>();
-            this._instance.init();
-        }
 
-        return this._instance;
-    }
+    public static init() : void {
+        EntityManager.register(new Brick());
+        EntityManager.register(new Grass());
+        EntityManager.register(new Wall());
+        EntityManager.register(new Grassy());
+        EntityManager.register(new WallStone());
+        EntityManager.register(new WaterEdge());
+        EntityManager.register(new WaterWall());
+        EntityManager.register(new Water());
+        EntityManager.register(new Crate());
+        EntityManager.register(new Bush());
+        EntityManager.register(new Mushrooms());
+        EntityManager.register(new Flowers());
+        EntityManager.register(new Bomb());
 
-    private init() : void {
-        this.register(new Brick());
-        this.register(new Grass());
-        this.register(new Wall());
-        this.register(new Grassy());
-        this.register(new WallStone());
-        this.register(new WaterEdge());
-        this.register(new WaterWall());
-        this.register(new Water());
-        this.register(new Crate());
-        this.register(new Bush());
-        this.register(new Mushrooms());
-        this.register(new Flowers());
-        this.register(new Bomb());
+        EntityManager.register(new ExplosionLeft());
+        EntityManager.register(new ExplosionRight());
+        EntityManager.register(new ExplosionTop());
+        EntityManager.register(new ExplosionBottom());
+        EntityManager.register(new ExplosionMiddle());
 
-        this.register(new ExplosionLeft());
-        this.register(new ExplosionRight());
-        this.register(new ExplosionTop());
-        this.register(new ExplosionBottom());
-        this.register(new ExplosionMiddle());
+        EntityManager.register(new DestoryedWaterWall());
+        EntityManager.register(new DestroyedGrass());
+        EntityManager.register(new DestroyedBrick());
+        EntityManager.register(new DestroyedBush());
 
-        this.register(new DestoryedWaterWall());
-        this.register(new DestroyedGrass());
-        this.register(new DestroyedBrick());
-        this.register(new DestroyedBush());
+        EntityManager.register(new BombUp());
+        EntityManager.register(new ExplosionUp());
+        EntityManager.register(new SheildUp());
+        EntityManager.register(new Skull());
+        EntityManager.register(new SpeedUp());
 
-        this.register(new BombUp());
-        this.register(new ExplosionUp());
-        this.register(new SheildUp());
-        this.register(new Skull());
-        this.register(new SpeedUp());
+        EntityManager.register(new SmokeParticle());
+        EntityManager.register(new GrassParticle());
+        EntityManager.register(new MistParticles());
+        EntityManager.register(new RainParticle());
+        EntityManager.register(new WinningParticle());
+        EntityManager.register(new LosingParticles());
 
-        this.register(new SmokeParticle());
-        this.register(new GrassParticle());
-        this.register(new MistParticles());
-        this.register(new RainParticle());
-        this.register(new WinningParticle());
-        this.register(new LosingParticles());
+        console.log("Entity Manager initialized");
     }
 
     private constructor() {
 
     }
 
-    public registerPlayer(gameEntity: GameEntity) : void {
-        this._players.set(gameEntity.getName(),gameEntity);
+    public static registerPlayer(gameEntity: GameEntity) : void {
+        EntityManager._players.set(gameEntity.getName(),gameEntity);
     }
 
-    public getPlayer(playerName: string) : GameEntity {
-        return this._players.get(playerName);
+    public static getPlayer(playerName: string) : GameEntity {
+        return EntityManager._players.get(playerName);
     }
 
-    public register(gameEntity:GameEntity) : void {
-        this._entities.set(gameEntity.getName(), gameEntity);
+    public static register(gameEntity:GameEntity) : void {
+        EntityManager._entities.set(gameEntity.getName(), gameEntity);
     }
 
-    public getEntity(name: string) : GameEntity {
-        let gameEntity: GameEntity = cloneDeep(this._entities.get(name));
+    public static getEntity(name: string) : GameEntity {
+        let gameEntity: GameEntity = cloneDeep(EntityManager._entities.get(name));
         gameEntity.setId(IdGenerator.nextId());
         return gameEntity;
     }

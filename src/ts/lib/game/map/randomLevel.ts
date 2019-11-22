@@ -37,11 +37,11 @@ export class RandomLevel implements Level {
     private generateLevel() {
         this._randomLevel = [];
 
-        for (let y = 0; y < GameMap.getInstance().getHeight(); y++) {
-            for (let x = 0; x < GameMap.getInstance().getWidth(); x++) {
-                if (y == 0 || y == GameMap.getInstance().getHeight() -1) {
+        for (let y = 0; y < GameMap.getHeight(); y++) {
+            for (let x = 0; x < GameMap.getWidth(); x++) {
+                if (y == 0 || y == GameMap.getHeight() -1) {
                     this._randomLevel.push(Level1Tiles.WALL_STONE);
-                } else if (x == 0 || x == GameMap.getInstance().getWidth() -1) {
+                } else if (x == 0 || x == GameMap.getWidth() -1) {
                     this._randomLevel.push(Level1Tiles.WALL);
                 } else {
                     let rand : number = getRandomInt(100);
@@ -114,14 +114,14 @@ export class RandomLevel implements Level {
 
         for (let i = 0; i < 4; i++) {
             let randomWaterPattern = getRandomInt(4) - 1;
-            let randomX: number = getRandomBetween(1, GameMap.getInstance().getWidth() - 3);
-            let randomY: number = getRandomBetween(1, GameMap.getInstance().getHeight() - 3);
+            let randomX: number = getRandomBetween(1, GameMap.getWidth() - 3);
+            let randomY: number = getRandomBetween(1, GameMap.getHeight() - 3);
 
             let offset: number = 0;
 
             for (let y = randomY; y < randomY + 2; y++) {
                 for (let x = randomX; x < randomX + 2; x++) {
-                    this._randomLevel[x + (y * GameMap.getInstance().getWidth())] = waterPatterns[randomWaterPattern][offset];
+                    this._randomLevel[x + (y * GameMap.getWidth())] = waterPatterns[randomWaterPattern][offset];
                     offset++;
                 }
             }
@@ -135,9 +135,9 @@ export class RandomLevel implements Level {
         this._level.set("item", new Array<GameEntity>());
         this._level.set("decal", new Array<GameEntity>());
 
-        for (let y = 0; y < GameMap.getInstance().getHeight(); y++) {
-            for (let x = 0; x < GameMap.getInstance().getWidth(); x++) {
-                let tile = this._randomLevel[x + (y *  GameMap.getInstance().getWidth())];
+        for (let y = 0; y < GameMap.getHeight(); y++) {
+            for (let x = 0; x < GameMap.getWidth(); x++) {
+                let tile = this._randomLevel[x + (y *  GameMap.getWidth())];
                 let tileEntity: GameEntity = null;
                 let itemEntity: GameEntity = null;
                 let position: PositionComponent = new PositionComponent();
@@ -145,36 +145,36 @@ export class RandomLevel implements Level {
                 position.setY(y);
 
                 if (tile === Level1Tiles.WALL) {
-                    tileEntity = EntityManager.getInstance().getEntity("wall");
+                    tileEntity = EntityManager.getEntity("wall");
                 } else if (tile === Level1Tiles.GRASS) {
-                    tileEntity = EntityManager.getInstance().getEntity("grass");
+                    tileEntity = EntityManager.getEntity("grass");
                 } else if (tile === Level1Tiles.BRICK) {
-                    tileEntity = EntityManager.getInstance().getEntity("destroyedBrick");
-                    itemEntity = EntityManager.getInstance().getEntity("brick");
+                    tileEntity = EntityManager.getEntity("destroyedBrick");
+                    itemEntity = EntityManager.getEntity("brick");
                 } else if (tile === Level1Tiles.GRASSY) {
-                    tileEntity = EntityManager.getInstance().getEntity("grassy");
+                    tileEntity = EntityManager.getEntity("grassy");
                 } else if (tile === Level1Tiles.WATER_EDGE) {
-                    tileEntity = EntityManager.getInstance().getEntity("waterEdge");
+                    tileEntity = EntityManager.getEntity("waterEdge");
                     this.generateMist(position.getX(),position.getY());
                 } else if (tile === Level1Tiles.WATER) {
-                    tileEntity = EntityManager.getInstance().getEntity("water");
+                    tileEntity = EntityManager.getEntity("water");
                     this.generateMist(position.getX(),position.getY());
                 } else if (tile === Level1Tiles.WALL_STONE) {
-                    tileEntity = EntityManager.getInstance().getEntity("wallStone");
+                    tileEntity = EntityManager.getEntity("wallStone");
                 } else if (tile === Level1Tiles.WATER_WALL) {
-                    tileEntity = EntityManager.getInstance().getEntity("destroyedWaterWall");
-                    itemEntity = EntityManager.getInstance().getEntity("waterWall");
+                    tileEntity = EntityManager.getEntity("destroyedWaterWall");
+                    itemEntity = EntityManager.getEntity("waterWall");
                     this.generateMist(position.getX(),position.getY());
                 } else if (tile === Level1Tiles.CRATE) {
-                    tileEntity = EntityManager.getInstance().getEntity("destroyedGrass");
-                    itemEntity = EntityManager.getInstance().getEntity("crate");
+                    tileEntity = EntityManager.getEntity("destroyedGrass");
+                    itemEntity = EntityManager.getEntity("crate");
                 } else if (tile === Level1Tiles.BUSH) {
-                    tileEntity = EntityManager.getInstance().getEntity("destroyedBush");
-                    itemEntity = EntityManager.getInstance().getEntity("bush");
+                    tileEntity = EntityManager.getEntity("destroyedBush");
+                    itemEntity = EntityManager.getEntity("bush");
                 } else if (tile === Level1Tiles.FLOWERS) {
-                    tileEntity = EntityManager.getInstance().getEntity("flowers");
+                    tileEntity = EntityManager.getEntity("flowers");
                 } else if (tile === Level1Tiles.MUSHROOMS) {
-                    tileEntity = EntityManager.getInstance().getEntity("mushrooms");
+                    tileEntity = EntityManager.getEntity("mushrooms");
                 }
 
                 if (tileEntity != null) {

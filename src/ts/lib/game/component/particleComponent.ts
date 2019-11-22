@@ -1,5 +1,5 @@
 import {GameComponent} from "./gameComponent";
-import {Color} from "../../rendering/Color";
+import {Color} from "../../rendering/color";
 
 
 export class ParticleComponent implements GameComponent {

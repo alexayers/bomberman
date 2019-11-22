@@ -24,7 +24,7 @@ export class AttackSystem implements GameSystem {
             let x : number = position.getX();
             let y : number = position.getY();
 
-            let mapEntity : GameEntity = GameMap.getInstance().getGameEntity("tile",x,y);
+            let mapEntity : GameEntity = GameMap.getGameEntity("tile",x,y);
 
             if (!mapEntity.hasComponent("wall")) {
                 let inventory: InventoryComponent = gameEntity.getComponent("inventory") as InventoryComponent;
@@ -35,7 +35,7 @@ export class AttackSystem implements GameSystem {
                     inventory.setCurrentItems(inventory.getCurrentItems() - 1);
                 }
 
-                let bomb : GameEntity = EntityManager.getInstance().getEntity("bomb");
+                let bomb : GameEntity = EntityManager.getEntity("bomb");
 
                 let position : PositionComponent = new PositionComponent();
                 position.setX(x);
@@ -52,7 +52,7 @@ export class AttackSystem implements GameSystem {
                     owner
                 );
 
-                GameMap.getInstance().setGameEntity("item",x,y, bomb);
+                GameMap.setGameEntity("item",x,y, bomb);
             }
 
 

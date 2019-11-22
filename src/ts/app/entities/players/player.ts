@@ -18,7 +18,7 @@ export class Player extends GameEntity {
     constructor(name: string) {
         super(name);
 
-        let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("players");
+        let spriteSheet: SpriteSheet = SpriteSheetManager.getSpriteSheet("players");
 
         let position : PositionComponent = new PositionComponent();
         position.setX(1);
@@ -36,7 +36,7 @@ export class Player extends GameEntity {
             renderPosition
         );
 
-        let frontSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        let frontSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getSpriteSheet("players"));
         frontSprite.addSprite(spriteSheet.getSprite(name,"front1"));
         frontSprite.addSprite(spriteSheet.getSprite(name,"front2"));
         frontSprite.addSprite(spriteSheet.getSprite(name,"front3"));
@@ -44,28 +44,28 @@ export class Player extends GameEntity {
         let animationComponent : AnimationComponent = new AnimationComponent();
         animationComponent.setAnimatedSprite("down",frontSprite);
 
-        let backSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        let backSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getSpriteSheet("players"));
         backSprite.addSprite(spriteSheet.getSprite(name,"back1"));
         backSprite.addSprite(spriteSheet.getSprite(name,"back2"));
         backSprite.addSprite(spriteSheet.getSprite(name,"back3"));
 
         animationComponent.setAnimatedSprite("up",backSprite);
 
-        let leftSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        let leftSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getSpriteSheet("players"));
         leftSprite.addSprite(spriteSheet.getSprite(name,"left1"));
         leftSprite.addSprite(spriteSheet.getSprite(name,"left2"));
         leftSprite.addSprite(spriteSheet.getSprite(name,"left3"));
 
         animationComponent.setAnimatedSprite("left",leftSprite);
 
-        let rightSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        let rightSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getSpriteSheet("players"));
         rightSprite.addSprite(spriteSheet.getSprite(name,"right1"));
         rightSprite.addSprite(spriteSheet.getSprite(name,"right2"));
         rightSprite.addSprite(spriteSheet.getSprite(name,"right3"));
 
         animationComponent.setAnimatedSprite("right",rightSprite);
 
-        let deadSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("players"));
+        let deadSprite: AnimatedSprite =new AnimatedSprite(SpriteSheetManager.getSpriteSheet("players"));
         deadSprite.addSprite(spriteSheet.getSprite(name,"death1"));
         deadSprite.addSprite(spriteSheet.getSprite(name,"death2"));
         deadSprite.addSprite(spriteSheet.getSprite(name,"death3"));
@@ -107,7 +107,7 @@ export class Player extends GameEntity {
             new InventoryComponent()
         );
 
-        EntityManager.getInstance().registerPlayer(this);
+        EntityManager.registerPlayer(this);
     }
 
 

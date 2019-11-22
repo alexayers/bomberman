@@ -9,8 +9,8 @@ export class GrassParticle extends GameEntity {
     constructor() {
         super("grassParticle");
 
-        let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("level");
-        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("level"));
+        let spriteSheet: SpriteSheet = SpriteSheetManager.getSpriteSheet("level");
+        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getSpriteSheet("level"));
         animatedSprite.addSprite(spriteSheet.getSprite("particle","particle"));
 
 

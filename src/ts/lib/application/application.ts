@@ -9,18 +9,19 @@ export class Application {
 
     constructor() {
 
-        SpriteSheetManager.getInstance();
-        AudioManager.getInstance();
+        Renderer.init();
+        SpriteSheetManager.init();
+        AudioManager.init();
 
         document.addEventListener('keydown', (event : KeyboardEvent) => {
-            EventBus.getInstance().publish(
+            EventBus.publish(
                 new GameEvent("keyboardEvent", event.keyCode)
             );
         });
     }
 
     resize() {
-        Renderer.getInstance().resize();
+        Renderer.resize();
     }
 
 }

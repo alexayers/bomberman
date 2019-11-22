@@ -5,7 +5,6 @@ import {GameEntity} from "../entity/gameEntity";
 
 export class AStar {
 
-    private _gameMap: GameMap = GameMap.getInstance();
     private _closedSet: Map<number, PathNode> = new Map<number, PathNode>();
     private _openSet: Map<number, PathNode> = new Map<number, PathNode>();
     private _path: Array<PathNode> = new Array<PathNode>();
@@ -23,7 +22,7 @@ export class AStar {
         this._endX = endX;
         this._endY = endY;
 
-        let idx: number = this._gameMap.translateCoordinatesToIdx(startX, startY);
+        let idx: number = GameMap.translateCoordinatesToIdx(startX, startY);
 
         let n: PathNode = new PathNode(startX, startY);
         n.setIdx(idx);
@@ -92,20 +91,20 @@ export class AStar {
     private calculateGValue(x: number, y: number): number {
         // Checking behind me
         if (x == (this._currentNode.getX() - 1) && y == this._currentNode.getY()) {
-            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX() - 1, this._currentNode.getY());
+            let gameEntity : GameEntity = GameMap.getGameEntity("item", this._currentNode.getX() - 1, this._currentNode.getY());
             return this.getTileWeight(gameEntity);
 
             // Checking in front of me
         } else if (x == (this._currentNode.getX() + 1) && y == this._currentNode.getY()) {
-            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX() + 1, this._currentNode.getY());
+            let gameEntity : GameEntity = GameMap.getGameEntity("item", this._currentNode.getX() + 1, this._currentNode.getY());
             return this.getTileWeight(gameEntity);
             // Checking above me
         } else if (x == (this._currentNode.getX()) && y == this._currentNode.getY() + 1) {
-            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX(), this._currentNode.getY() + 1);
+            let gameEntity : GameEntity = GameMap.getGameEntity("item", this._currentNode.getX(), this._currentNode.getY() + 1);
             return this.getTileWeight(gameEntity);
             // Checking below me
         } else if (x == (this._currentNode.getX()) && y == this._currentNode.getY() - 1) {
-            let gameEntity : GameEntity = GameMap.getInstance().getGameEntity("item", this._currentNode.getX(), this._currentNode.getY() -1 );
+            let gameEntity : GameEntity = GameMap.getGameEntity("item", this._currentNode.getX(), this._currentNode.getY() -1 );
             return this.getTileWeight(gameEntity);
             // Checking diagonal
         } else {
@@ -142,15 +141,15 @@ export class AStar {
                 } else {
                     if (y >= 0 &&
                         x >= 0 &&
-                        x < (this._gameMap.getWidth() - 1) &&
-                        y < (this._gameMap.getHeight() - 1) &&
-                        !GameMap.getInstance().canDestroy(x, y) &&
-                        !GameMap.getInstance().hasComponent("damage",x,y) &&
-                        !GameMap.getInstance().hasComponent("futureDamage",x,y) &&
-                        !GameMap.getInstance().isItemPresent("bomb",x,y)
+                        x < (GameMap.getWidth() - 1) &&
+                        y < (GameMap.getHeight() - 1) &&
+                        !GameMap.canDestroy(x, y) &&
+                        !GameMap.hasComponent("damage",x,y) &&
+                        !GameMap.hasComponent("futureDamage",x,y) &&
+                        !GameMap.isItemPresent("bomb",x,y)
                     ) {
                         let cost: number = this._currentNode.getG() + this.calculateGValue(x, y);
-                        let idx: number = GameMap.getInstance().translateCoordinatesToIdx(x, y);
+                        let idx: number = GameMap.translateCoordinatesToIdx(x, y);
 
                         if (this.isOnOpenedList(idx) && cost < this._openSet.get(idx).getG()) {
                             this._openSet.get(idx).setG(cost);
@@ -176,8 +175,8 @@ export class AStar {
     }
 
     private buildRoute(): void {
-        let startIdx: number = GameMap.getInstance().translateCoordinatesToIdx(this._startX, this._startY);
-        let idx: number = GameMap.getInstance().translateCoordinatesToIdx(this._endX, this._endY);
+        let startIdx: number = GameMap.translateCoordinatesToIdx(this._startX, this._startY);
+        let idx: number = GameMap.translateCoordinatesToIdx(this._endX, this._endY);
 
         while (idx != startIdx) {
             this._path.push(this._closedSet.get(idx));
@@ -196,7 +195,7 @@ export class AStar {
             this._currentNode = this.findLowestCost();
             this.addToClosedList(this._currentNode.getIdx(), this._currentNode);
 
-            if (this._currentNode.getIdx() == GameMap.getInstance().translateCoordinatesToIdx(this._endX, this._endY)) {
+            if (this._currentNode.getIdx() == GameMap.translateCoordinatesToIdx(this._endX, this._endY)) {
                 this.buildRoute();
 
                 pathFound = true;

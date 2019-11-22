@@ -6,7 +6,7 @@ import {WhitePlayer} from "../entities/players/whitePlayer";
 import {BlackPlayer} from "../entities/players/blackPlayer";
 import {RedPlayer} from "../entities/players/redPlayer";
 import {BluePlayer} from "../entities/players/bluePlayer";
-import {ParticleFactory} from "../entities/particles/ParticleFactory";
+import {ParticleFactory} from "../entities/particles/particleFactory";
 import {GameEntity} from "../../lib/game/entity/gameEntity";
 import {GameSystem} from "../../lib/game/system/gameSystem";
 import {GameEvent} from "../../lib/event/gameEvent";
@@ -24,7 +24,6 @@ import {OrangePlayer} from "../entities/players/orangePlayer";
 export class Game implements GameScreen {
 
     private _players: Array<Player> = [];
-    private _gameMap: GameMap;
     private _backgroundParticles:Array<GameEntity>;
     private _particleSystem:ParticleSystem;
 
@@ -39,10 +38,6 @@ export class Game implements GameScreen {
         this._players.push(new GreenPlayer());
         this._players.push(new OrangePlayer());
 
-        this._gameMap = GameMap.getInstance();
-
-
-
         this._backgroundParticles = [];
 
         for (let i = 0; i < 900; i++) {
@@ -51,7 +46,7 @@ export class Game implements GameScreen {
     }
 
     public reset(startGame: boolean) : void {
-        GameMap.getInstance().init();
+        GameMap.init();
         this._players  = [];
 
         if (startGame) {
@@ -63,7 +58,7 @@ export class Game implements GameScreen {
         }
 
         for (let i = 0; i < 250; i++) {
-            GameMap.getInstance().addParticle(ParticleFactory.getParticle("rainParticle", null, null));
+            GameMap.addParticle(ParticleFactory.getParticle("rainParticle", null, null));
         }
 
 
@@ -76,7 +71,7 @@ export class Game implements GameScreen {
 
     public gameLoop() : void {
 
-        let gameEntityMap: Map<string, Array<GameEntity>> = this._gameMap.getMap();
+        let gameEntityMap: Map<string, Array<GameEntity>> = GameMap.getMap();
         let gameSystems: Array<GameSystem> = SystemManager.getInstance().getSystems();
 
         for (let i = 0; i < this._backgroundParticles.length; i++) {
@@ -93,7 +88,7 @@ export class Game implements GameScreen {
             }
         }
 
-        let particles: Array<GameEntity> = GameMap.getInstance().getParticles();
+        let particles: Array<GameEntity> = GameMap.getParticles();
 
         for (let i = 0; i < particles.length; i++) {
             let gameEntity: GameEntity = particles[i];
@@ -143,7 +138,7 @@ export class Game implements GameScreen {
         } else if (gameEvent.payload == KeyboardInput.SPACE) {
             let attackComponent: AttackComponent = new AttackComponent();
             this._players[0].addComponent(attackComponent);
-            AudioManager.getInstance().play("music");
+            AudioManager.play("music");
         }
 
         velocity.setVelX(x);

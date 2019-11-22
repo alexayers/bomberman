@@ -3,7 +3,7 @@ import {DamageComponent} from "../../../lib/game/component/damageComponent";
 import {PositionComponent} from "../../../lib/game/component/positionComponent";
 import {GameMap} from "../../../lib/game/map/gameMap";
 import {DestroyedGrass} from "../tile/destroyedGrass";
-import {ParticleFactory} from "../particles/ParticleFactory";
+import {ParticleFactory} from "../particles/particleFactory";
 import {SpriteSheet} from "../../../lib/rendering/spriteSheet";
 import {SpriteSheetManager} from "../../../lib/rendering/spriteSheetManager";
 import {AnimatedSprite} from "../../../lib/rendering/animatedSprite";
@@ -19,8 +19,8 @@ export class Explosion extends GameEntity {
     }
 
     protected create(spriteName: string) : void {
-        let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("level");
-        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("level"));
+        let spriteSheet: SpriteSheet = SpriteSheetManager.getSpriteSheet("level");
+        let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getSpriteSheet("level"));
         animatedSprite.addSprite(spriteSheet.getSprite(spriteName,spriteName));
 
         let animationComponent : AnimationComponent = new AnimationComponent();
@@ -50,20 +50,20 @@ export class Explosion extends GameEntity {
 
     protected explosion(gameEntity: GameEntity): void {
         let position: PositionComponent = gameEntity.getComponent("position") as PositionComponent;
-        GameMap.getInstance().setGameEntity("item", position.getX(), position.getY(), null);
+        GameMap.setGameEntity("item", position.getX(), position.getY(), null);
 
-        let tile = GameMap.getInstance().getGameEntity("tile", position.getX(), position.getY());
+        let tile = GameMap.getGameEntity("tile", position.getX(), position.getY());
 
         if (tile.getName() === "grassy" || tile.getName() === "grass" || tile.getName() === "flowers" || tile.getName() === "mushrooms") {
             let damageTile: GameEntity = new DestroyedGrass();
             damageTile.addComponent(position);
 
-            GameMap.getInstance().setGameEntity("tile", position.getX(), position.getY(), damageTile);
+            GameMap.setGameEntity("tile", position.getX(), position.getY(), damageTile);
         }
 
         for (let i = 0; i < 250; i++) {
             let smokeParticle = ParticleFactory.getParticle("smokeParticle", position.getX(), position.getY());
-            GameMap.getInstance().addParticle(smokeParticle);
+            GameMap.addParticle(smokeParticle);
         }
 
         tile.addComponent(position);
