@@ -9,12 +9,9 @@ export class SmokeParticle extends GameEntity {
     constructor() {
         super("smokeParticle");
 
-
         let spriteSheet: SpriteSheet = SpriteSheetManager.getInstance().getSpriteSheet("level");
         let animatedSprite: AnimatedSprite = new AnimatedSprite(SpriteSheetManager.getInstance().getSpriteSheet("level"));
         animatedSprite.addSprite(spriteSheet.getSprite("particle","particle"));
-
-
 
         let directionComponent : DirectionComponent = new DirectionComponent();
         directionComponent.setDirection("down");
@@ -22,6 +19,8 @@ export class SmokeParticle extends GameEntity {
         this.addComponent(
             directionComponent
         );
+
+
 
     }
 

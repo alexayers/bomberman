@@ -1,0 +1,11 @@
+{
+  "velocityY": 4,
+  "velocityX": 4,
+  "xOffset": 10,
+  "yOffset": 10,
+  "minWidth": 15,
+  "maxWidth": 35,
+  "minHeight": 15,
+  "maxHeight": 35,
+  "decay": 25
+}
