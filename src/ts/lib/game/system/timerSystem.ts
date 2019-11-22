@@ -11,7 +11,7 @@ export class TimerSystem implements GameSystem {
 
 
     constructor() {
-        console.log("timer constructor");
+
     }
 
     process(gameEntity: GameEntity): void {

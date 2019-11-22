@@ -14,7 +14,7 @@ export class ParticleSystem implements GameSystem {
     private _ctx: CanvasRenderingContext2D;
 
     constructor() {
-        console.log("particle constructior");
+
         this._canvas = document.getElementById('canvas') as
             HTMLCanvasElement;
         this._ctx = this._canvas.getContext("2d");

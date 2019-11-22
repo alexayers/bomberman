@@ -16,7 +16,7 @@ import {system} from "../../framework/framework";
 export class CollisionSystem implements GameSystem {
 
     constructor() {
-        console.log("collision constructor");
+
     }
 
     process(gameEntity: GameEntity): void {

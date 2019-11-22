@@ -15,7 +15,7 @@ import {system} from "../../framework/framework";
 export class DamageSystem implements GameSystem {
 
     constructor() {
-        console.log("DamageSystem constructor");
+
     }
 
     process(gameEntity: GameEntity): void {

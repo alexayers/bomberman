@@ -23,6 +23,8 @@ export class Bomberman extends Application implements EventHandler {
     private _renderer:Renderer;
     private _deathCount: number = 0;
 
+    private _demoTicks: number = 0;
+
     init() {
 
         GameMap.getInstance();
@@ -50,6 +52,8 @@ export class Bomberman extends Application implements EventHandler {
     }
 
     gameLoop() {
+
+        this.demoMode();
         this._renderer.clearScreen();
 
         this._gameScreens.get(this._gameMode).gameLoop();
@@ -65,6 +69,18 @@ export class Bomberman extends Application implements EventHandler {
         setTimeout(() => {
             requestAnimationFrame(this.gameLoop.bind(this));
         }, 1000 / framesPerSecond);
+    }
+
+    private demoMode() : void {
+        if (this._gameOverlayScreen.get("startGame").isActive()) {
+            this._demoTicks++;
+
+            if (this._demoTicks > 200) {
+                this._demoTicks = 0;
+                this._deathCount = 10;
+                EventBus.getInstance().publish(new GameEvent("death", null));
+            }
+        }
     }
 
     handleEvent(gameEvent: GameEvent): void {

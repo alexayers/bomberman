@@ -13,7 +13,7 @@ import {system} from "../../framework/framework";
 export class AttackSystem implements GameSystem {
 
     constructor() {
-        console.log("attack constructor");
+
     }
 
     process(gameEntity: GameEntity): void {

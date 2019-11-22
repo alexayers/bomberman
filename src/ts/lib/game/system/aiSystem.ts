@@ -18,7 +18,7 @@ import {system} from "../../framework/framework";
 export class AiSystem implements GameSystem {
 
     constructor() {
-        console.log("ai constructor");
+
     }
 
     process(gameEntity: GameEntity): void {
