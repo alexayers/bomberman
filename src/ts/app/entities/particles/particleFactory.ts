@@ -26,16 +26,16 @@ export class ParticleFactory {
             }
 
             let someParticlePosition: PositionComponent = particle.getComponent("position") as PositionComponent;
-            someParticlePosition.setX(x*64);
-            someParticlePosition.setY(y*64);
+            someParticlePosition.setX(x*Renderer.getSpriteSize());
+            someParticlePosition.setY(y*Renderer.getSpriteSize());
 
             particle.addComponent(someParticlePosition);
 
             let particleComponent : ParticleComponent = particle.getComponent("particle") as ParticleComponent;
             particleComponent.setVelX(getRandomInt(4) * -1);
             particleComponent.setVelY(getRandomInt(4) * -1);
-            particleComponent.setX(x*64+(getRandomInt(10) * positiveNegative()));
-            particleComponent.setY(y*64+getRandomInt(10));
+            particleComponent.setX(x*Renderer.getSpriteSize()+(getRandomInt(10) * positiveNegative()));
+            particleComponent.setY(y*Renderer.getSpriteSize()+getRandomInt(10));
             particleComponent.setHeight(getRandomInt(15)+ 35);
             particleComponent.setWidth(getRandomInt(15) + 35);
             particleComponent.setDecay(getRandomInt(25));
@@ -79,8 +79,8 @@ export class ParticleFactory {
             let particleComponent : ParticleComponent = particle.getComponent("particle") as ParticleComponent;
             particleComponent.setVelX(getRandomInt(4) * -1 / 10);
             particleComponent.setVelY(getRandomInt(4) * -1 / 10);
-            particleComponent.setX(x*64 + getRandomInt(8));
-            particleComponent.setY(y*64 + 60);
+            particleComponent.setX(x*Renderer.getSpriteSize() + getRandomInt(8));
+            particleComponent.setY(y*Renderer.getSpriteSize() + 60);
             particleComponent.setHeight(getRandomInt(8));
             particleComponent.setWidth(getRandomInt(8));
             particleComponent.setDecay(getRandomInt(10));
@@ -109,8 +109,8 @@ export class ParticleFactory {
             }
 
             let someParticlePosition: PositionComponent = particle.getComponent("position") as PositionComponent;
-            someParticlePosition.setX(x*64);
-            someParticlePosition.setY(y*64);
+            someParticlePosition.setX(x*Renderer.getSpriteSize());
+            someParticlePosition.setY(y*Renderer.getSpriteSize());
             particle.addComponent(someParticlePosition);
 
             let particleComponent: ParticleComponent = particle.getComponent("particle") as ParticleComponent;
@@ -129,8 +129,8 @@ export class ParticleFactory {
             }
 
             if (!refresh) {
-                particleComponent.setX(x*64+getRandomInt(10));
-                particleComponent.setY(y*64+getRandomInt(10));
+                particleComponent.setX(x*Renderer.getSpriteSize()+getRandomInt(10));
+                particleComponent.setY(y*Renderer.getSpriteSize()+getRandomInt(10));
             } else {
                 particleComponent.setX(particleComponent.getOriginalX());
                 particleComponent.setY(particleComponent.getOriginalY());
@@ -222,11 +222,11 @@ export class ParticleFactory {
 
 
             if (!refresh) {
-                particleComponent.setX(getRandomInt(2048));
-                particleComponent.setY(getRandomInt(1024));
+                particleComponent.setX(getRandomInt(Renderer.getCanvasWidth()));
+                particleComponent.setY(getRandomInt(Renderer.getCanvasHeight()));
             } else {
-                particleComponent.setX(getRandomInt(2048));
-                particleComponent.setY(getRandomInt(1024) );
+                particleComponent.setX(getRandomInt(Renderer.getCanvasWidth()));
+                particleComponent.setY(getRandomInt(Renderer.getCanvasHeight()) );
             }
 
             particleComponent.setHeight(getRandomInt(800));
@@ -270,11 +270,11 @@ export class ParticleFactory {
 
 
             if (!refresh) {
-                particleComponent.setX(getRandomInt(2048));
-                particleComponent.setY(getRandomInt(1024));
+                particleComponent.setX(getRandomInt(Renderer.getCanvasWidth()));
+                particleComponent.setY(getRandomInt(Renderer.getCanvasHeight()));
             } else {
-                particleComponent.setX(getRandomInt(2048));
-                particleComponent.setY(getRandomInt(1024) );
+                particleComponent.setX(getRandomInt(Renderer.getCanvasWidth()));
+                particleComponent.setY(getRandomInt(Renderer.getCanvasHeight()) );
             }
 
             particleComponent.setHeight(getRandomInt(800));
@@ -323,8 +323,8 @@ export class ParticleFactory {
             let particleComponent : ParticleComponent = particle.getComponent("particle") as ParticleComponent;
             particleComponent.setVelX(getRandomInt(4) * -1 / 10);
             particleComponent.setVelY(getRandomInt(4) * -1 / 10);
-            particleComponent.setX(x*64 + getRandomInt(8));
-            particleComponent.setY(y*64 + 60);
+            particleComponent.setX(x*Renderer.getSpriteSize() + getRandomInt(8));
+            particleComponent.setY(y*Renderer.getSpriteSize() + 60);
             particleComponent.setHeight(getRandomInt(8));
             particleComponent.setWidth(getRandomInt(8));
             particleComponent.setDecay(getRandomInt(10));

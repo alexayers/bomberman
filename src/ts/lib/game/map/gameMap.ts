@@ -14,8 +14,8 @@ export class GameMap {
 
     public static init(): void {
 
-        GameMap._width = 19;
-        GameMap._height = 14;
+        GameMap._width = 28;
+        GameMap._height = 16;
         GameMap._levels = new Map<string, Level>();
         GameMap._levels.set("level1", new RandomLevel());
         GameMap._currentLevel = "level1";

@@ -30,7 +30,7 @@ export class Renderer {
             color: new Color()
         };
 
-        Renderer._spriteSize = 64;
+        Renderer._spriteSize = 32;
     }
 
     static clearScreen() : void {
@@ -62,11 +62,11 @@ export class Renderer {
     }
 
     public static getRenderOffsetY(): number {
-        return + 20;
+        return Renderer._canvas.offsetTop + 5;
     }
 
     public static getRenderOffsetX(): number {
-        return + 100;
+        return Renderer._canvas.offsetTop + 20;
     }
 
 
@@ -114,10 +114,10 @@ export class Renderer {
 
     public static resize() {
         if (Renderer._canvas !== undefined) {
-            console.log("reiszing");
             Renderer._canvas.width = window.innerWidth;
             Renderer._canvas.height = window.innerHeight;
             Renderer._ctx.imageSmoothingEnabled = false;
+            Renderer._spriteSize = Renderer._canvas.width / 32;
         }
     }
 
@@ -141,6 +141,10 @@ export class Renderer {
         Renderer._ctx.fillText(msg, x, y);
     }
 
+    static getSpriteSize() : number {
+        return this._spriteSize;
+    }
+
     static fillAndClosePath() {
         Renderer._ctx.fill();
         Renderer._ctx.closePath();
@@ -161,5 +165,13 @@ export class Renderer {
 
     static setAlpha(alpha: number) {
         Renderer._ctx.globalAlpha = alpha;
+    }
+
+    static getCanvasWidth() : number{
+        return Renderer._canvas.width;
+    }
+
+    static getCanvasHeight() : number {
+        return Renderer._canvas.height;
     }
 }
