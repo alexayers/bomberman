@@ -13,8 +13,6 @@ export interface RenderingEffect {
 export class Renderer {
     private static _canvas: HTMLCanvasElement;
     private static _ctx: CanvasRenderingContext2D;
-    private static _height: number = window.innerHeight;
-    private static _width: number = window.innerWidth;
     private static _renderingEffects:RenderingEffect;
     private static _spriteSize:number;
 
@@ -22,8 +20,6 @@ export class Renderer {
         Renderer._canvas = document.getElementById('canvas') as
             HTMLCanvasElement;
 
-        Renderer._canvas.width = Renderer._width;
-        Renderer._canvas.height = Renderer._height;
         Renderer._ctx = Renderer._canvas.getContext("2d");
         Renderer._ctx.imageSmoothingEnabled = false;
         Renderer._renderingEffects = {
@@ -118,6 +114,7 @@ export class Renderer {
 
     public static resize() {
         if (Renderer._canvas !== undefined) {
+            console.log("reiszing");
             Renderer._canvas.width = window.innerWidth;
             Renderer._canvas.height = window.innerHeight;
             Renderer._ctx.imageSmoothingEnabled = false;
