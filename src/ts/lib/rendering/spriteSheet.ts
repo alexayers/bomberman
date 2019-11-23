@@ -54,6 +54,10 @@ export class SpriteSheet {
         throw Error("Unable to find sprite ->" + spriteName);
     }
 
+    public getImage(): HTMLImageElement {
+        return this._image;
+    }
+
     public render(ctx: CanvasRenderingContext2D, sprite: Sprite, x: number, y: number) {
         Renderer
             .render(sprite, this._image, x,y);

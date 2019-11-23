@@ -44,4 +44,8 @@ export class AnimatedSprite {
     public getCurrentSprite() : Sprite {
         return this._sprites[this._currentFrame];
     }
+
+    public getSpriteSheet() : SpriteSheet {
+        return this._spriteSheet;
+    }
 }

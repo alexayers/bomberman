@@ -1,7 +1,6 @@
 import {GameComponent} from "./gameComponent";
 import {Color} from "../../rendering/color";
 
-
 export class ParticleComponent implements GameComponent {
 
     private _x:number;
@@ -165,4 +164,5 @@ export class ParticleComponent implements GameComponent {
     public setRenderOffsetY(renderOffset:number) : void {
         this._renderOffsetY = renderOffset;
     }
+
 }

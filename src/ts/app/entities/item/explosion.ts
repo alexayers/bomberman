@@ -61,7 +61,7 @@ export class Explosion extends GameEntity {
             GameMap.setGameEntity("tile", position.getX(), position.getY(), damageTile);
         }
 
-        for (let i = 0; i < 250; i++) {
+        for (let i = 0; i < 100; i++) {
             let smokeParticle = ParticleFactory.getParticle("smokeParticle", position.getX(), position.getY());
             GameMap.addParticle(smokeParticle);
         }

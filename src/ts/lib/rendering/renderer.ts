@@ -41,6 +41,10 @@ export class Renderer {
         Renderer._ctx.clearRect(0,0,Renderer._canvas.width, Renderer._canvas.height);
     }
 
+    static setColor(color: Color): void {
+        Renderer._ctx.fillStyle = RGBtoHex(color.getRed(), color.getGreen(), color.getBlue());
+    }
+
     static render(sprite: Sprite, image:HTMLImageElement,x: number, y: number): void {
 
         try {
@@ -138,5 +142,27 @@ export class Renderer {
         Renderer._ctx.font = fontSize + "px " + font;
         Renderer._ctx.fillStyle = RGBtoHex(color.getRed(),color.getGreen(),color.getBlue());
         Renderer._ctx.fillText(msg, x, y);
+    }
+
+    static fillAndClosePath() {
+        Renderer._ctx.fill();
+        Renderer._ctx.closePath();
+    }
+
+    static beginPath() {
+        Renderer._ctx.beginPath();
+    }
+
+    static rect(x: number, y: number, width: number, height: number) {
+        Renderer._ctx.rect(
+            x,
+            y,
+            width,
+            height
+        );
+    }
+
+    static setAlpha(alpha: number) {
+        Renderer._ctx.globalAlpha = alpha;
     }
 }
