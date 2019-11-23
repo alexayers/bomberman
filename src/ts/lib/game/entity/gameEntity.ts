@@ -6,7 +6,7 @@ import {IdGenerator} from "./idGenerator";
 export class GameEntity {
 
     private _id:number;
-    private _name:string;
+    private readonly _name:string;
     private _componentMap:Map<string, GameComponent>;
 
 

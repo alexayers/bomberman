@@ -55,12 +55,8 @@ export class GameMap {
             return true;
         }
 
-        if (tile.hasComponent("wall")) {
-            return true;
-        }
+        return tile.hasComponent("wall");
 
-
-        return false;
     }
 
     static hasComponent(componentName: string, x: number, y: number) {
@@ -72,11 +68,9 @@ export class GameMap {
 
         let tile : GameEntity = GameMap.getGameEntity("tile",x,y);
 
-        if (tile != null && tile.hasComponent(componentName)) {
-            return true;
-        }
+        return tile != null && tile.hasComponent(componentName);
 
-        return false;
+
     }
 
     public static addParticle(gameEntity:GameEntity) : void {
@@ -103,23 +97,13 @@ export class GameMap {
             return true;
         }
 
-        if (tile.hasComponent("wall")) {
-            return true;
-        }
-
-
-
-        return false;
+        return tile.hasComponent("wall");
     }
 
     static isItemPresent(itemName: string, x: number, y: number) {
         let item : GameEntity = GameMap.getGameEntity("item",x,y);
 
-        if (item != null && item.getName() === itemName) {
-            return true;
-        }
-
-        return false;
+        return item != null && item.getName() === itemName;
     }
 
     static getMap(): Map<string, Array<GameEntity>> {

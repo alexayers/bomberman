@@ -5,8 +5,8 @@ export class AnimatedSprite {
     private _tick:number;
     private _frameRate:number;
     private _currentFrame:number;
-    private _spriteSheet:SpriteSheet;
-    private _sprites:Array<Sprite>;
+    private readonly _spriteSheet:SpriteSheet;
+    private readonly _sprites:Array<Sprite>;
 
     constructor(spriteSheet:SpriteSheet) {
         this._spriteSheet = spriteSheet;

@@ -38,11 +38,11 @@ export class AiSystem implements GameSystem {
 
             let enemyPoint : Point;
             
-            if (this.hasNoValidEnemy(gameEntity)) {
-                enemyPoint = this.findNewEnemy(gameEntity);
+            if (AiSystem.hasNoValidEnemy(gameEntity)) {
+                enemyPoint = AiSystem.findNewEnemy(gameEntity);
             } else {
                 let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
-                enemyPoint = this.findEnemyPosition(enemyComponent.getEnemyName());
+                enemyPoint = AiSystem.findEnemyPosition(enemyComponent.getEnemyName());
             }
             
             if (enemyPoint == null) {
@@ -80,7 +80,7 @@ export class AiSystem implements GameSystem {
         }
     }
 
-    private findEnemyPosition(enemy:string) : Point {
+    private static findEnemyPosition(enemy:string) : Point {
         let enemyPlayer : GameEntity = EntityManager.getPlayer(enemy);
         let enemyPosition : PositionComponent = enemyPlayer.getComponent("position") as PositionComponent;
 
@@ -103,7 +103,7 @@ export class AiSystem implements GameSystem {
         return null;
     }
 
-    private findNewEnemy(gameEntity: GameEntity) : Point {
+    private static findNewEnemy(gameEntity: GameEntity) : Point {
         let possibleEnemies: Array<string> = ["whitePlayer","blackPlayer","redPlayer","blackPlayer","greenPlayer","orangePlayer"];
         let actualEnemies: Array<string> = [];
 
@@ -117,10 +117,10 @@ export class AiSystem implements GameSystem {
         let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
         enemyComponent.setEnemyName(enemyName);
 
-        return this.findEnemyPosition(enemyName);
+        return AiSystem.findEnemyPosition(enemyName);
     }
 
-    private hasNoValidEnemy(gameEntity: GameEntity) {
+    private static hasNoValidEnemy(gameEntity: GameEntity) {
 
         let enemyComponent : EnemyComponent = gameEntity.getComponent("enemy") as EnemyComponent;
 

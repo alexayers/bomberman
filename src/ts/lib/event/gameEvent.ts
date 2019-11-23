@@ -1,8 +1,8 @@
 
 
 export class GameEvent {
-    private _channel: string;
-    private _payload: any;
+    private readonly _channel: string;
+    private readonly _payload: any;
 
     constructor(channel: string, payload: any) {
         this._channel = channel;

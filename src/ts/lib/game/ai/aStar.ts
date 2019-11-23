@@ -10,10 +10,10 @@ export class AStar {
     private _path: Array<PathNode> = new Array<PathNode>();
     private _currentNode: PathNode = new PathNode(0, 0);
 
-    private _startX: number;
-    private _startY: number;
-    private _endX: number;
-    private _endY: number;
+    private readonly _startX: number;
+    private readonly _startY: number;
+    private readonly _endX: number;
+    private readonly _endY: number;
 
 
     public constructor(startX: number, startY: number, endX: number, endY: number) {

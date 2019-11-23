@@ -34,14 +34,14 @@ export class DamageSystem implements GameSystem {
 
             }
 
-            this.killPlayer(position.getX(), position.getY());
+            DamageSystem.killPlayer(position.getX(), position.getY());
 
             gameEntity.removeComponent("damage");
             gameEntity.removeComponent("futureDamage");
         }
     }
 
-    private killPlayer(x:number, y: number) : void {
+    private static killPlayer(x:number, y: number) : void {
         let players : Array<string> = ["whitePlayer","blackPlayer","redPlayer","bluePlayer","orangePlayer","greenPlayer"];
 
         for (let i = 0; i < players.length; i++) {
