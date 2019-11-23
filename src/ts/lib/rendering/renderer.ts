@@ -1,6 +1,7 @@
 import {Sprite} from "./spriteSheet";
 import {Color} from "./color";
 import {RGBtoHex} from "../game/util/colorUtil";
+import {GameMap} from "../game/map/gameMap";
 
 export interface RenderingEffect {
     offsetX:number,
@@ -14,7 +15,8 @@ export class Renderer {
     private static _canvas: HTMLCanvasElement;
     private static _ctx: CanvasRenderingContext2D;
     private static _renderingEffects:RenderingEffect;
-    private static _spriteSize:number;
+    private static _spriteWidth:number;
+    private static _spriteHeight:number;
 
     public static init() {
         Renderer._canvas = document.getElementById('canvas') as
@@ -30,7 +32,8 @@ export class Renderer {
             color: new Color()
         };
 
-        Renderer._spriteSize = 32;
+        Renderer._spriteWidth = 32;
+        Renderer._spriteHeight = 32;
     }
 
     static clearScreen() : void {
@@ -53,8 +56,8 @@ export class Renderer {
                 24,
                 x + Renderer._renderingEffects.offsetX + Renderer.getRenderOffsetX(),
                 y +Renderer._renderingEffects.offsetY  + Renderer.getRenderOffsetY(),
-                Renderer._spriteSize + Renderer._renderingEffects.width,
-                Renderer._spriteSize + Renderer._renderingEffects.height
+                Renderer._spriteWidth + Renderer._renderingEffects.width,
+                Renderer._spriteHeight + Renderer._renderingEffects.height
             );
         } catch (e) {
             Error("Unable to render");
@@ -62,11 +65,11 @@ export class Renderer {
     }
 
     public static getRenderOffsetY(): number {
-        return Renderer._canvas.offsetTop + 5;
+        return 0;
     }
 
     public static getRenderOffsetX(): number {
-        return Renderer._canvas.offsetTop + 20;
+        return 0;
     }
 
 
@@ -117,7 +120,8 @@ export class Renderer {
             Renderer._canvas.width = window.innerWidth;
             Renderer._canvas.height = window.innerHeight;
             Renderer._ctx.imageSmoothingEnabled = false;
-            Renderer._spriteSize = Renderer._canvas.width / 32;
+            Renderer._spriteWidth = Renderer._canvas.width / GameMap.getWidth();
+            Renderer._spriteHeight = Renderer._canvas.height / GameMap.getHeight();
         }
     }
 
@@ -141,8 +145,12 @@ export class Renderer {
         Renderer._ctx.fillText(msg, x, y);
     }
 
-    static getSpriteSize() : number {
-        return this._spriteSize;
+    static getSpriteWidth() : number {
+        return this._spriteWidth;
+    }
+
+    static getSpriteHeight() : number {
+        return this._spriteHeight;
     }
 
     static fillAndClosePath() {

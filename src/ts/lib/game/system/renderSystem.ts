@@ -30,7 +30,7 @@ export class RenderSystem implements GameSystem {
                 let renderPosition : RenderPositionComponent = gameEntity.getComponent("renderPosition") as RenderPositionComponent;
                 renderPosition;
 
-                animation.getAnimatedSprite(direction.getDirection()).render(this._ctx,position.getX() * Renderer.getSpriteSize(),position.getY() * Renderer.getSpriteSize());
+                animation.getAnimatedSprite(direction.getDirection()).render(this._ctx,position.getX() * Renderer.getSpriteWidth(),position.getY() * Renderer.getSpriteHeight());
 
                 if (gameEntity.hasComponent("animate")) {
                     animation.getAnimatedSprite(direction.getDirection()).animate();
@@ -38,7 +38,7 @@ export class RenderSystem implements GameSystem {
                 }
 
             } else {
-                animation.getAnimatedSprite(direction.getDirection()).render(this._ctx,position.getX() * Renderer.getSpriteSize(),position.getY() * Renderer.getSpriteSize());
+                animation.getAnimatedSprite(direction.getDirection()).render(this._ctx,position.getX() * Renderer.getSpriteWidth(),position.getY() * Renderer.getSpriteHeight());
                 animation.getAnimatedSprite(direction.getDirection()).animate();
             }
 
