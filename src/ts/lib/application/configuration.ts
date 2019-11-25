@@ -12,7 +12,7 @@ export class ConfigurationManager {
     }
 
     private static saveConfiguration() {
-        
+
         if (ConfigurationManager.doesConfiguratinoExist()) {
             console.log("Configuration already exists");
         }
