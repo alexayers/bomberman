@@ -17,7 +17,11 @@ export class AudioFile {
             this._audio.pause();
         }
 
-        this._audio.play();
+        try {
+            this._audio.play();
+        } catch (e) {
+
+        }
     }
 
     public pause() : void {

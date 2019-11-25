@@ -1,16 +1,21 @@
 import {EventBus} from "../event/eventBus";
 import {GameEvent} from "../event/gameEvent";
 import {AudioFile} from "./audioFile";
+import {ConfigurationManager} from "../application/configuration";
 
 const music = require("../../../resources/audio/music.ogg");
 const explosion = require("../../../resources/audio/explosion.ogg");
 
 export class AudioManager {
     private static _soundMap : Map<string, AudioFile> = new Map<string, AudioFile>();
-
+    private static _audioEnabled:boolean;
 
     public static init() : void {
         let soundCheck = new Audio();
+
+        this._audioEnabled = ConfigurationManager.getValue("audioEnabled") as boolean;
+
+        console.log("Is audio enabled? " + this._audioEnabled);
 
         AudioManager.register("music",music, true);
         AudioManager.register("explosion1", explosion);
@@ -29,7 +34,10 @@ export class AudioManager {
     }
 
     public static play(name: string) : void {
-        AudioManager._soundMap.get(name).play();
+        if (this._audioEnabled) {
+            AudioManager._soundMap.get(name).play();
+        }
+
     }
 
     public static handleEvent(gameEvent: GameEvent): void {

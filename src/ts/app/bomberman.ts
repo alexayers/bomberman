@@ -27,6 +27,7 @@ export class Bomberman extends Application {
 
     init() {
 
+
         EntityManager.init();
         GameMap.init();
         Renderer.init();

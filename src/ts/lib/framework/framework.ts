@@ -28,9 +28,6 @@ export class Framework {
         console.log("Registering system class ->" + target.name);
 
         let guy = new target.prototype.constructor();
-
-        console.log(guy);
-
         this._systemClasses.push(guy);
     }
 

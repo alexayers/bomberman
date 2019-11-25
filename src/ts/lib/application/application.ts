@@ -3,12 +3,16 @@ import {GameEvent} from "../event/gameEvent";
 import {SpriteSheetManager} from "../rendering/spriteSheetManager";
 import {AudioManager} from "../audo/audioManager";
 import {Renderer} from "../rendering/renderer";
+import {WebStorage} from "../filesystem/webStorage";
+import {ConfigurationManager} from "./configuration";
 
 
 export class Application {
 
     constructor() {
 
+        WebStorage.init();
+        ConfigurationManager.init();
         Renderer.init();
         SpriteSheetManager.init();
         AudioManager.init();
